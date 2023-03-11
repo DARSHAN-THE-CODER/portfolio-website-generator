@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
     res.json({ message: "Server running" });
 });
 
-app.get('/api/v1',defaultRouter)
+app.use('/api/v1',defaultRouter)
 
 app.listen(PORT, () => {
     console.log(`Server listening at http://localhost:${PORT}`);
