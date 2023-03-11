@@ -4,6 +4,9 @@ import Sidebar from '@/components/sidebar'
 import Navbar from '@/components/navbar'
 import About from '@/components/about'
 import Resume from '@/components/resume'
+import Portfolio from '@/components/portfolio'
+import { useState } from 'react'
+
 export default function Home() {
 
   // const [user, setUser] = {
@@ -39,7 +42,8 @@ export default function Home() {
   //       github: "https://github.com/DARSHAN-THE-CODER",
   //       category: "Web development",
   //       techUsed: ["react", "express", "mongoose", "node js"],
-  //       date: "30 Jan 2023"
+  //       date: "30 Jan 2023",
+  //       thumbnail: "https://codingnepalweb.com/wp-content/uploads/2021/05/img_6092ae49e2e72.jpg"
   //     },
   //     {
   //       name: "Todo Website",
@@ -47,45 +51,46 @@ export default function Home() {
   //       github: "https://github.com/DARSHAN-THE-CODER",
   //       category: "Web development",
   //       techUsed: ["react", "express", "mongoose", "node js"],
-  //       date: "30 Jan 2023"
+  //       date: "30 Jan 2023",
+  //       thumbnail: "https://codingnepalweb.com/wp-content/uploads/2021/05/img_6092ae49e2e72.jpg"
   //     }
   //   ],
-    // education: [
-    //   {
-    //     priority: 1,
-    //     from: 2010,
-    //     to: 2012,
-    //     institution: "XYZ institution, davanagere",
-    //     description: "lorel epsum ",
-    //     percentage: "80%"
-    //   },
-    //   {
-    //     priority: 2,
-    //     from: 2012,
-    //     to: 2015,
-    //     institution: "XYZ institution, Bangalore",
-    //     description: "lorel epsum xyzz ijdc ijdnc wi",
-    //     percentage: "89%"
-    //   }
-    // ],
-    // experience: [
-    //   {
-    //     priority: 1,
-    //     from: 2020,
-    //     to: 2022,
-    //     company: "XYZ institution, Bangalore",
-    //     description: "lorel epsum xyzz ijdc ijdnc wi",
-    //     role: "SDE"
-    //   },
-    //   {
-    //     priority: 2,
-    //     from: 2022,
-    //     to: 2023,
-    //     company: "XYZ institution, Bangalore",
-    //     description: "lorel epsum xyzz ijdc ijdnc wi",
-    //     role: "SDE 2"
-    //   }
-    // ]
+  // education: [
+  //   {
+  //     priority: 1,
+  //     from: 2010,
+  //     to: 2012,
+  //     institution: "XYZ institution, davanagere",
+  //     description: "lorel epsum ",
+  //     percentage: "80%"
+  //   },
+  //   {
+  //     priority: 2,
+  //     from: 2012,
+  //     to: 2015,
+  //     institution: "XYZ institution, Bangalore",
+  //     description: "lorel epsum xyzz ijdc ijdnc wi",
+  //     percentage: "89%"
+  //   }
+  // ],
+  // experience: [
+  //   {
+  //     priority: 1,
+  //     from: 2020,
+  //     to: 2022,
+  //     company: "XYZ institution, Bangalore",
+  //     description: "lorel epsum xyzz ijdc ijdnc wi",
+  //     role: "SDE"
+  //   },
+  //   {
+  //     priority: 2,
+  //     from: 2022,
+  //     to: 2023,
+  //     company: "XYZ institution, Bangalore",
+  //     description: "lorel epsum xyzz ijdc ijdnc wi",
+  //     role: "SDE 2"
+  //   }
+  // ]
   // }
 
   let user = {
@@ -117,14 +122,38 @@ export default function Home() {
     description: "The most modern and high-quality design made at a professional level"
   }]
 
+  let projects = [
+    {
+      name: "Todo Website",
+      description: "to-do list website to manage tasks effectively",
+      github: "https://github.com/DARSHAN-THE-CODER",
+      category: "Web development",
+      techUsed: ["react", "express", "mongoose", "node js"],
+      date: "30 Jan 2023",
+      thumbnail: "https://codingnepalweb.com/wp-content/uploads/2021/05/img_6092ae49e2e72.jpg",
+      liveLink: ""
+    },
+    {
+      name: "Todo Website",
+      description: "to-do list website to manage tasks effectively",
+      github: "https://github.com/DARSHAN-THE-CODER",
+      category: "Web development",
+      techUsed: ["react", "express", "mongoose", "node js"],
+      date: "30 Jan 2023",
+      thumbnail: "https://learn.microsoft.com/en-us/azure/app-service/media/tutorial-java-spring-cosmosdb/spring-todo-app-running-locally.jpg",
+      liveLink:""
+    }
+  ]
+  const [activeNav, setActiveNav] = useState("About")
   return (
     <>
       <main>
         <Sidebar user={user} />
         <div class="main-content">
-          <Navbar />
-          <About {...user.user} />
-          <Resume />
+          <Navbar activeNav={activeNav} setActiveNav={setActiveNav} />
+          <About activeNav={activeNav} {...user.user} />
+          <Resume activeNav={activeNav} />
+          <Portfolio activeNav={activeNav} projects={projects} />
         </div>
       </main>
     </>

@@ -1,5 +1,6 @@
+import Script from 'next/script'
 
-function Resume() {
+function Resume({activeNav}) {
     let education = [
         {
             priority: 1,
@@ -53,7 +54,7 @@ function Resume() {
         }
     ]
     return (
-        <article className="resume active" data-page="resume">
+        <article className={`resume ${activeNav === "Resume" ? "active" : ""}`} data-page="resume">
             <header>
                 <h2 className="h2 article-title">Resume</h2>
             </header>

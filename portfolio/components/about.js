@@ -1,6 +1,6 @@
 // import {ion-icon} from "@ionic/react"
 
-function About({ about }) {
+function About({ about, activeNav }) {
 
     let aboutCards = [{
         title: "Web Design",
@@ -16,7 +16,7 @@ function About({ about }) {
 
 
     return (
-        <article class="about " data-page="about">
+        <article class={`about ${activeNav === "About" ? "active" : ""}`} data-page="about">
             <header>
                 <h2 class="h2 article-title">About me</h2>
             </header>
