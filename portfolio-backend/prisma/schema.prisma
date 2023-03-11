@@ -12,7 +12,8 @@ datasource db {
 
 model User {
   id            Int            @id @default(autoincrement())
-  email         String         @unique  
+  email         String         @unique
+  username      String         @unique  
   name          String
   password      String
   address       String
@@ -27,34 +28,37 @@ model User {
   projects      Projects[]
   education     Education[]
   experience    Experience[]
+  aboutCards    About[]
+  skills        Skills[]
+  contactResponses  ContactFormResponses[]
 }
 
 model SocialLinks {
   id            Int                @id @default(autoincrement())
-  user          User?          @relation(fields: [email], references: [email], onDelete: Cascade, onUpdate: Cascade)
-  email         String?
+  user          User?          @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
+  username      String
   linkName      String
   url           String
 }
 
 model Projects {
   id            Int                @id @default(autoincrement())
-  user          User?          @relation(fields: [email], references: [email], onDelete: Cascade, onUpdate: Cascade)
-  email         String?
+  user          User?          @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
+  username      String?
   name          String
   description   String
-  website       String
+  liveLink      String
   github        String
   category      String
   date          DateTime
+  thumbnail     String
   techUsed      String[]
-  tags          String[]
 }
 
 model Education {
   id            Int                @id @default(autoincrement())
-  user          User?          @relation(fields: [email], references: [email], onDelete: Cascade, onUpdate: Cascade)
-  email         String?
+  user          User?          @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
+  username      String?
   priority      Int
   from          String
   to            String
@@ -65,6 +69,38 @@ model Education {
 
 model Experience {
   id            Int                @id @default(autoincrement())
-  user          User?          @relation(fields: [email], references: [email], onDelete: Cascade, onUpdate: Cascade)
-  email         String?
+  user          User?          @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
+  username      String
+  role          String
+  company       String
+  from          String
+  to            String
+  priority      Int
+  description   String
+}
+
+model About{
+  id            Int                @id @default(autoincrement())
+  user          User?          @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
+  username      String
+  title         String
+  description   String
+}
+
+model Skills{
+  id            Int                @id @default(autoincrement())
+  user          User?          @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
+  username      String
+  title         String
+  percentage    String
+}
+
+model ContactFormResponses {
+  id            Int                @id @default(autoincrement())
+  user          User?          @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
+  username      String
+  senderName    String
+  senderMail    String
+  message       String
+  date          DateTime        @default(now())
 }
