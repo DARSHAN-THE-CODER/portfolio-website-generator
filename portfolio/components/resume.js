@@ -102,7 +102,7 @@ function Resume({activeNav}) {
                 <ol className="timeline-list">
                     {
                         experience?.map((exp, index) => (
-                            <li className="timeline-item">
+                            <li className="timeline-item" key={index}>
 
                                 <h4 className="h4 timeline-item-title">{exp.role}</h4>
                                 <h5 className="timeline-text timeline-item-title">{exp.company}</h5>
@@ -124,7 +124,7 @@ function Resume({activeNav}) {
                 <ul className="skills-list content-card">
                     {
                         skills?.map((skill, index) => (
-                            <li className="skills-item">
+                            <li className="skills-item" key={index}>
 
                                 <div className="title-wrapper">
                                     <h5 className="h5">{skill.name}</h5>

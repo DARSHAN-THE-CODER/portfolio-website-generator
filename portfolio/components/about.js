@@ -16,14 +16,14 @@ function About({ about, activeNav }) {
 
 
     return (
-        <article class={`about ${activeNav === "About" ? "active" : ""}`} data-page="about">
+        <article className={`about ${activeNav === "About" ? "active" : ""}`} data-page="about">
             <header>
-                <h2 class="h2 article-title">About me</h2>
+                <h2 className="h2 article-title">About me</h2>
             </header>
-            <figure class="w-full m-auto flex justify-center mb-10">
+            <figure className="w-full m-auto flex justify-center mb-10">
                 <img src='https://i.ibb.co/42fb14D/New-doc-07-Mar-2023-6-22-pm.jpg' alt='dsjc' style={{ height: "300px", borderRadius: "30px" }} loading="lazy" />
             </figure>
-            <section class="about-text">
+            <section className="about-text">
                 {
                     about?.map((a, index) => (
                         <p key={index}>
@@ -33,18 +33,18 @@ function About({ about, activeNav }) {
                 }
             </section>
 
-            <section class="service">
+            <section className="service">
 
-                <h3 class="h3 service-title">What i'm doing</h3>
+                <h3 className="h3 service-title">What i'm doing</h3>
 
-                <ul class="service-list">
+                <ul className="service-list">
                     {
                         aboutCards?.map((card, index) => (
-                            <li class="service-item" key={index}>
-                                <div class="service-content-box">
-                                    <h4 class="h4 service-item-title">{card?.title}</h4>
+                            <li className="service-item" key={index}>
+                                <div className="service-content-box">
+                                    <h4 className="h4 service-item-title">{card?.title}</h4>
 
-                                    <p class="service-item-text">
+                                    <p className="service-item-text">
                                         {card?.description}
                                     </p>
                                 </div>

@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 // import m from "../assets/avatar-1.png"
 
 function Sidebar({user}) {
 
     // console.log(m)
+    const [sidebarActive, setSidebarActive] = useState(false)
+
     return (
-        <aside className="sidebar" data-sidebar>
+        <aside className={`sidebar ${sidebarActive ? "active" : ""}`} data-sidebar>
 
             <div className="sidebar-info">
 
@@ -20,7 +22,7 @@ function Sidebar({user}) {
                     <p className="title">{user.user.shortDesc}</p>
                 </div>
 
-                <button className="info_more-btn" data-sidebar-btn>
+                <button className="info_more-btn active" data-sidebar-btn onClick={() => setSidebarActive(!sidebarActive)}>
                     <span>Show Contacts</span>
 
                     <ion-icon name="chevron-down"></ion-icon>
@@ -28,7 +30,7 @@ function Sidebar({user}) {
 
             </div>
 
-            <div className="sidebar-info_more">
+            <div className="sidebar-info_more active">
 
                 <div className="separator"></div>
 

@@ -5,6 +5,7 @@ import Navbar from '@/components/navbar'
 import About from '@/components/about'
 import Resume from '@/components/resume'
 import Portfolio from '@/components/portfolio'
+import ContactForm from '@/components/contactForm'
 import { useState } from 'react'
 
 export default function Home() {
@@ -149,11 +150,12 @@ export default function Home() {
     <>
       <main>
         <Sidebar user={user} />
-        <div class="main-content">
+        <div className="main-content">
           <Navbar activeNav={activeNav} setActiveNav={setActiveNav} />
           <About activeNav={activeNav} {...user.user} />
           <Resume activeNav={activeNav} />
           <Portfolio activeNav={activeNav} projects={projects} />
+          <ContactForm activeNav={activeNav}/>
         </div>
       </main>
     </>

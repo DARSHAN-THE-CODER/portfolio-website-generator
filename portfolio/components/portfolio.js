@@ -41,7 +41,7 @@ function Portfolio({ projects, activeNav }) {
                     <div className="flex flex-wrap w-full">
                         {
                             activeProject?.pro?.techUsed?.map((tech, index) => (
-                                <p className="active rounded-lg border-[1px] text-[white] p-2 m-2">
+                                <p className="active rounded-lg border-[1px] text-[white] p-2 m-2" key={index}>
                                     {tech}
                                 </p>
                             ))
@@ -57,7 +57,7 @@ function Portfolio({ projects, activeNav }) {
                     <ul className="project-list">
                         {
                             projects?.map((project, index) => (
-                                <li className="project-item  active" data-filter-item data-category="web development">
+                                <li className="project-item  active" data-filter-item data-category="web development" key={index}>
 
                                     <a href="#">
                                         <figure className="project-img" onClick={() => (setActiveProject({ status: true, pro: project }))}>
