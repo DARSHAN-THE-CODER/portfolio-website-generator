@@ -24,6 +24,7 @@ model User {
   shortDesc     String?
   about         String?
   phone         String?
+  isPaid        Boolean        @default(false)  
   socialLinks   SocialLinks[]
   projects      Projects[]
   education     Education[]

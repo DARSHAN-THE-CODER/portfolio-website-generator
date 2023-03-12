@@ -1,0 +1,86 @@
+@baseURL=http://localhost:8080/api/v1/user
+
+### Create User
+POST {{baseURL}}
+Content-Type: application/json
+
+{
+    "name" : "Test test", 
+    "email": "darshanv@gmail.com", 
+    "password": "1234", 
+    "username" : "testuser"
+}
+
+### Get User
+GET {{baseURL}}/testuser
+
+### Update User
+PATCH {{baseURL}}/testuser
+Content-Type: application/json
+
+{
+    "name": "Darshan V",
+    "address": "PES , Bangalore",
+    "photoURL": "https://i.ibb.co/42fb14D/New-doc-07-Mar-2023-6-22-pm.jpg",
+    "gender": "male",
+    "shortDesc": "Full stack developer",
+    "about": "A self-taught , quality-focused and passionate software developer interested in the field of Web development, I love to solve real world problems",
+    "phone": "+91 8431143130"
+}
+
+### Login user
+POST {{baseURL}}/login
+Content-Type: application/json
+
+{
+    "username": "testuser",
+    "password": "1234"
+}
+
+### add social links
+POST {{baseURL}}/social-links/testuser
+Content-Type: application/json
+
+{
+    "data":[{"linkName":"Github","url":"https://github.com/DARSHAN-THE-CODER"},{"linkName":"linkedin","url":"http://linkedin.com"}]
+}
+
+### add about-cards
+POST {{baseURL}}/about-cards/testuser
+Content-Type: application/json
+
+{
+    "data": [{"title":"Photography", "description": "The most modern and high-quality design made at a professional level"}]
+}
+
+### add skills
+POST {{baseURL}}/skills/testuser
+Content-Type: application/json
+
+{
+    "data":[{"title":"C++","percentage":"76"}, {"title":"Python","percentage":"84"}]
+}
+
+### update social links
+PATCH {{baseURL}}/social-links/3
+Content-Type: application/json
+
+{   "linkName": "linkedin 123",
+    "url": "http://linkedin.com"
+}
+
+### update about-cards
+PATCH {{baseURL}}/about-cards/3
+Content-Type: application/json
+
+{   "title": "Photography 123",
+    "description": "The most modern and high-quality design made at a professional level"
+}
+
+### update skills
+PATCH {{baseURL}}/skills/3
+Content-Type: application/json
+
+{   "title": "C++",
+    "percentage": "96"
+}

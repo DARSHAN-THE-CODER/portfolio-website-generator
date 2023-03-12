@@ -72,14 +72,16 @@ const userLogin = async (req, res) => {
         const user = await prisma.user.findUnique({
             where: { username: username },
         });
+        console.log(user)
         if (!user) {
-            res.status(401).json({ error: "user not found" });
+            return res.status(401).json({ error: "user not found" });
         }
         if (user.password === password) {
-            res.json(user);
+            return res.json(user);
         } else {
-            res.status(401).json({ error: "Invalid credentials" });
+            return res.status(401).json({ error: "Invalid credentials" });
         }
+
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -208,6 +210,61 @@ const deleteAboutCard = async (req, res) => {
     }
 }
 
+const updateSocialLink = async (req, res) => {
+    const { id } = req.params;
+    const data = { ...req.body };
+    console.log(data)
+    try {
+        const updatedLink = await prisma.socialLinks.update({
+            where: { id: parseInt(id) },
+            data: {
+                ...data
+            },
+        });
+        res.json(updatedLink);
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const updateAboutCard = async (req, res) => {
+    const { id } = req.params;
+    const data = { ...req.body };
+    console.log(data)
+    try {
+        const updatedCard = await prisma.about.update({
+            where: { id: parseInt(id) },
+            data: {
+                ...data
+            },
+        });
+        res.json(updatedCard);
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const updateSkill = async (req, res) => {
+    const { id } = req.params;
+    const data = { ...req.body };
+    console.log(data)
+    try {
+        const updatedSkill = await prisma.skills.update({
+            where: { id: parseInt(id) },
+            data: {
+                ...data
+            },
+        });
+        res.json(updatedSkill);
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: error.message });
+    }
+}
+
+
 
 module.exports = {
     createUser,
@@ -220,5 +277,9 @@ module.exports = {
 
     deleteAboutCard,
     deleteSkill,
-    deleteSocialLink
+    deleteSocialLink,
+
+    updateAboutCard,
+    updateSkill,
+    updateSocialLink
 }
