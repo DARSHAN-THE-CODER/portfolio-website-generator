@@ -74,7 +74,7 @@ function Resume({activeNav}) {
                         education?.map((edu, index) => (
                             <li className="timeline-item" key={index}>
 
-                                <h4 className="h4 timeline-item-title">{edu.institution}</h4>
+                                <h4 className="h4 timeline-item-title flex">{edu.institution} {"   "}<span className='ml-4 italic'>{edu.percentage}</span></h4>
 
                                 <span>{edu.from} - {edu.to}</span>
 
@@ -139,7 +139,8 @@ function Resume({activeNav}) {
                 </ul>
 
             </section>
-
+            <section>
+            </section>
         </article>
     )
 }
