@@ -17,9 +17,9 @@ const checkUsername = async (req, res) => {
         const userExists = await prisma.user.findUnique({
             where: { username: username }
         })
-        if(userExists)
+        if (userExists)
             return res.status(200).send()
-        
+
         return res.status(202).send()
     } catch (err) {
         console.log("error while checking username", err)
@@ -64,7 +64,8 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { username } = req.params;
-    const data = { ...req.body };
+    const data = req.body.data
+    ;
     try {
         const user = await prisma.user.update({
             where: { username: username },
@@ -74,6 +75,7 @@ const updateUser = async (req, res) => {
         });
         res.json(user);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: error.message });
     }
 }
@@ -125,6 +127,11 @@ const userSocialLinks = async (req, res) => {
     const data = req.body.data;
     console.log(data)
     try {
+        await prisma.socialLinks.deleteMany({
+            where: {
+                username: username
+            }
+        })
         const userSocialLinks = await Promise.all(
             data.map(async (link) => {
                 const createdLink = await prisma.socialLinks.create({
@@ -153,6 +160,12 @@ const userAboutCards = async (req, res) => {
     const { username } = req.params;
     const data = req.body.data;
     try {
+        await prisma.about.deleteMany({
+            where: {
+                username: username
+            }
+        })
+
         const userAboutCards = await Promise.all(
             data.map(async (card) => {
                 const createdCard = await prisma.about.create({
@@ -171,6 +184,7 @@ const userAboutCards = async (req, res) => {
             )
         );
         res.status(201).json(userAboutCards);
+
     } catch (error) {
         console.log(error)
         res.status(500).json({ error: error.message });
@@ -182,8 +196,15 @@ const createUserSkills = async (req, res) => {
 
     const data = req.body.data;
 
-    // i will get data in this format [{name: "HTML", percentage: 90}, {name: "CSS", percentage: 80}}]
+    console.log(data)
     try {
+
+        await prisma.skills.deleteMany({
+            where: {
+                username: username
+            }
+        })
+
         const userSkills = await Promise.all(
             data.map(async (skill) => {
                 const createdSkill = await prisma.skills.create({

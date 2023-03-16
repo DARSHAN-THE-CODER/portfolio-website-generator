@@ -8,6 +8,12 @@ const createEducation = async (req, res) => {
     const data = req.body.data;
     try {
         // use await Promise.all
+        await prisma.education.deleteMany({
+            where: {
+                username: username
+            }
+        })
+        
         const education = await Promise.all(data.map(async (item) => {
             const education = await prisma.education.create({
                 data: {

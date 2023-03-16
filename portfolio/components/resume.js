@@ -1,62 +1,62 @@
 import Script from 'next/script'
 
-function Resume({activeNav}) {
-    let education = [
-        {
-            priority: 1,
-            from: 2010,
-            to: 2012,
-            institution: "XYZ institution, davanagere",
-            description: "lorel epsum ",
-            percentage: "80%"
-        },
-        {
-            priority: 2,
-            from: 2012,
-            to: 2015,
-            institution: "XYZ institution, Bangalore",
-            description: "lorel epsum xyzz ijdc ijdnc wi",
-            percentage: "89%"
-        }
-    ]
+function Resume({activeNav, education, experience, skills, isPreview=false}) {
+    // let education = [
+    //     {
+    //         priority: 1,
+    //         from: 2010,
+    //         to: 2012,
+    //         institution: "XYZ institution, davanagere",
+    //         description: "lorel epsum ",
+    //         percentage: "80%"
+    //     },
+    //     {
+    //         priority: 2,
+    //         from: 2012,
+    //         to: 2015,
+    //         institution: "XYZ institution, Bangalore",
+    //         description: "lorel epsum xyzz ijdc ijdnc wi",
+    //         percentage: "89%"
+    //     }
+    // ]
 
-    let experience = [
-        {
-            priority: 1,
-            from: 2020,
-            to: 2022,
-            company: "XYZ institution, Bangalore",
-            description: "lorel epsum xyzz ijdc ijdnc wi",
-            role: "SDE"
-        },
-        {
-            priority: 2,
-            from: 2022,
-            to: 2023,
-            company: "XYZ institution, Bangalore",
-            description: "lorel epsum xyzz ijdc ijdnc wi",
-            role: "SDE 2"
-        }
-    ]
+    // let experience = [
+    //     {
+    //         priority: 1,
+    //         from: 2020,
+    //         to: 2022,
+    //         company: "XYZ institution, Bangalore",
+    //         description: "lorel epsum xyzz ijdc ijdnc wi",
+    //         role: "SDE"
+    //     },
+    //     {
+    //         priority: 2,
+    //         from: 2022,
+    //         to: 2023,
+    //         company: "XYZ institution, Bangalore",
+    //         description: "lorel epsum xyzz ijdc ijdnc wi",
+    //         role: "SDE 2"
+    //     }
+    // ]
 
-    let skills = [
-        {
-            name: "Web Development",
-            percentage: "90"
-        },
-        {
-            name: "C++",
-            percentage: "70"
-        },
-        {
-            name: "AWS",
-            percentage: "50"
-        }
-    ]
+    // let skills = [
+    //     {
+    //         name: "Web Development",
+    //         percentage: "90"
+    //     },
+    //     {
+    //         name: "C++",
+    //         percentage: "70"
+    //     },
+    //     {
+    //         name: "AWS",
+    //         percentage: "50"
+    //     }
+    // ]
     return (
         <article className={`resume ${activeNav === "Resume" ? "active" : ""}`} data-page="resume">
             <header>
-                <h2 className="h2 article-title">Resume</h2>
+                <h2 className="h2 article-title">Resume {isPreview && ("(Preview)")}</h2>
             </header>
 
             <section className="timeline">
@@ -127,7 +127,7 @@ function Resume({activeNav}) {
                             <li className="skills-item" key={index}>
 
                                 <div className="title-wrapper">
-                                    <h5 className="h5">{skill.name}</h5>
+                                    <h5 className="h5">{skill.title}</h5>
                                     <data value={skill.percentage}>{skill.percentage}%</data>
                                 </div>
                                 <div className="skill-progress-bg">

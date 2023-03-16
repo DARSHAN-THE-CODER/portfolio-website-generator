@@ -8,6 +8,12 @@ const createProject = async (req, res) => {
     const data = req.body.data;
     try {
         // use await promise.all
+        await prisma.project.deleteMany({
+            where: {
+                username: username
+            }
+        })
+        
         const project = await Promise.all(data.map(async (item) => {
             const project = await prisma.projects.create({
                 data: {

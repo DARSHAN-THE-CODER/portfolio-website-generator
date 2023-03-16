@@ -112,7 +112,7 @@ function Sidebar({user}) {
 
                     <li className="social-item">
                         <a href="#" className="social-link">
-                            <ion-icon name="logo-instagram"></ion-icon>
+                            <ion-icon name="logo-Instagram"></ion-icon>
                         </a>
                     </li>
 

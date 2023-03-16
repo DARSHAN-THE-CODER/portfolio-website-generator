@@ -1,23 +1,23 @@
 import React, { useState } from 'react'
 
-function Navbar({ activeNav, setActiveNav }) {
-    const [navLinks, setNavLinks] = useState([
-        {
-            name: "About"
-        },
-        {
-            name: "Resume"
-        },
-        {
-            name: "Portfolio"
-        },
-        {
-            name: "Blog"
-        },
-        {
-            name: "Contact"
-        }
-    ])
+function Navbar({ activeNav, setActiveNav, navLinks, setNavLinks }) {
+    // const [navLinks, setNavLinks] = useState([
+    //     {
+    //         name: "About"
+    //     },
+    //     {
+    //         name: "Resume"
+    //     },
+    //     {
+    //         name: "Portfolio"
+    //     },
+    //     {
+    //         name: "Blog"
+    //     },
+    //     {
+    //         name: "Contact"
+    //     }
+    // ])
     return (
         <nav className="navbar">
 

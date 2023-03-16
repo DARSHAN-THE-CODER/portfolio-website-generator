@@ -7,6 +7,13 @@ const createExperience = async (req, res) => {
     const {username} = req.params;
     const data = req.body.data;
     try {
+        // use await Promise.all
+        await prisma.experience.deleteMany({
+            where: {
+                username: username
+            }
+        })
+        
         const experience = await Promise.all(data.map(async (item) => {
             const experience = await prisma.experience.create({
                 data: {

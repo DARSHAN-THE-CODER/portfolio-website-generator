@@ -1816,7 +1816,12 @@
       width: 75%;
       margin: 0;
     }
-  
+    
+    .dashboard-content {
+      min-width: 85%;
+      width: 85%;
+      margin: auto;
+    }
   
   
     /**

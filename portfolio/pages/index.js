@@ -10,6 +10,24 @@ import { useState } from 'react'
 
 export default function Home() {
 
+  const [navLinks, setNavLinks] = useState([
+    {
+        name: "About"
+    },
+    {
+        name: "Resume"
+    },
+    {
+        name: "Portfolio"
+    },
+    {
+        name: "Blog"
+    },
+    {
+        name: "Contact"
+    }
+])
+
   // const [user, setUser] = {
   //   user: {
   //     id: 1,
@@ -151,7 +169,7 @@ export default function Home() {
       <main>
         <Sidebar user={user} />
         <div className="main-content">
-          <Navbar activeNav={activeNav} setActiveNav={setActiveNav} />
+          <Navbar activeNav={activeNav} setActiveNav={setActiveNav} navLinks={navLinks} setNavLinks={setNavLinks}/>
           <About activeNav={activeNav} {...user.user} />
           <Resume activeNav={activeNav} />
           <Portfolio activeNav={activeNav} projects={projects} />
