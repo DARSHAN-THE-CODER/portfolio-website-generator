@@ -1,0 +1,41 @@
+@baseURL=http://localhost:8080/api/v1/projects
+
+### Create a new project
+POST {{baseURL}}/darshanv
+Content-Type: application/json
+
+{
+    "data": [
+    {
+      "name": "Todo Website",
+      "description": "to-do list website to manage tasks effectively",
+      "github": "https://github.com/DARSHAN-THE-CODER",
+      "category": "Web development",
+      "techUsed": ["react", "express", "mongoose", "node js"],
+      "date": "30 Jan 2023",
+      "thumbnail": "https://codingnepalweb.com/wp-content/uploads/2021/05/img_6092ae49e2e72.jpg",
+      "liveLink": ""
+    },
+    {
+      "name": "Todo Website",
+      "description": "to-do list website to manage tasks effectively",
+      "github": "https://github.com/DARSHAN-THE-CODER",
+      "category": "Web development",
+      "techUsed": ["react", "express", "mongoose", "node js"],
+      "date": "30 Jan 2023",
+      "thumbnail": "https://learn.microsoft.com/en-us/azure/app-service/media/tutorial-java-spring-cosmosdb/spring-todo-app-running-locally.jpg",
+      "liveLink":""
+    }
+  ]
+}
+
+### Get all projects
+GET {{baseURL}}/darshanv
+
+### Update project
+PATCH {{baseURL}}/2
+Content-Type: application/json
+
+{
+    "liveLink": "https://github.com/DARSHAN-THE-CODER"
+}

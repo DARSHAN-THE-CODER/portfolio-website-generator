@@ -1,5 +1,8 @@
 @baseURL=http://localhost:8080/api/v1/user
 
+### Get all users
+GET {{baseURL}}
+
 ### Create User
 POST {{baseURL}}
 Content-Type: application/json
@@ -12,7 +15,7 @@ Content-Type: application/json
 }
 
 ### Get User
-GET {{baseURL}}/testuser
+GET {{baseURL}}/darshanv
 
 ### Update User
 PATCH {{baseURL}}/testuser
@@ -84,3 +87,6 @@ Content-Type: application/json
 {   "title": "C++",
     "percentage": "96"
 }
+
+### delete user
+DELETE {{baseURL}}/darshanv2

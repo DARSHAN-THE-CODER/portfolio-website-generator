@@ -2,7 +2,11 @@ const express = require('express')
 
 const router = express.Router()
 
-const { createUser, getUser, updateUser, userLogin, userSocialLinks, userAboutCards, createUserSkills, deleteAboutCard, deleteSkill, deleteSocialLink, updateAboutCard, updateSocialLink, updateSkill } = require('../controllers/user.controller')
+const { getAllUsers, checkUsername, createUser, getUser, updateUser, userLogin, deleteUser, userSocialLinks, userAboutCards, createUserSkills, deleteAboutCard, deleteSkill, deleteSocialLink, updateAboutCard, updateSocialLink, updateSkill } = require('../controllers/user.controller')
+
+router.get('/', getAllUsers)
+
+router.get('/username/:username', checkUsername)
 
 router.post('/', createUser)
 
@@ -29,5 +33,7 @@ router.delete('/skills/:id', deleteSkill)
 router.delete('/social-links/:id', deleteSocialLink)
 
 router.delete('/about-cards/:id', deleteAboutCard)
+
+router.delete('/:username', deleteUser)
 
 module.exports = router

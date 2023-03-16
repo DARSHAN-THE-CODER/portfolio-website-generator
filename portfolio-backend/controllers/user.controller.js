@@ -1,13 +1,46 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await prisma.user.findMany();
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const checkUsername = async (req, res) => {
+    const { username } = req.params
+    console.log(username)
+    try {
+        const userExists = await prisma.user.findUnique({
+            where: { username: username }
+        })
+        if(userExists)
+            return res.status(200).send()
+        
+        return res.status(202).send()
+    } catch (err) {
+        console.log("error while checking username", err)
+        return res.status(500).json({ error: err.message });
+    }
+}
+
 const createUser = async (req, res) => {
     const { name, email, password, username } = req.body;
     try {
-        // find if user exists with that username first 
-        const userExists = await prisma.user.findUnique({
-            where: { username: username },
+        // find if user exists with that username first or with email id
+
+        const userExists = await prisma.user.findFirst({
+            where: {
+                OR: [
+                    { username: username },
+                    { email: email }
+                ]
+            }
         });
+
         if (userExists) {
             return res.status(400).json({ error: 'User already exists' });
         }
@@ -264,13 +297,27 @@ const updateSkill = async (req, res) => {
     }
 }
 
-
+const deleteUser = async (req, res) => {
+    const { username } = req.params;
+    try {
+        const deletedUser = await prisma.user.delete({
+            where: { username: username },
+        });
+        res.json(deletedUser);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
 
 module.exports = {
+    getAllUsers,
+    checkUsername,
     createUser,
     updateUser,
     getUser,
     userLogin,
+    deleteUser,
+
     userSocialLinks,
     userAboutCards,
     createUserSkills,

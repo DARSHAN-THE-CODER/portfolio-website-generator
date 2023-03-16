@@ -24,6 +24,8 @@ model User {
   shortDesc     String?
   about         String?
   phone         String?
+  dob           String?
+  githubUsername String?
   isPaid        Boolean        @default(false)  
   socialLinks   SocialLinks[]
   projects      Projects[]
@@ -51,7 +53,7 @@ model Projects {
   liveLink      String
   github        String
   category      String
-  date          DateTime
+  date          String
   thumbnail     String
   techUsed      String[]
 }
@@ -104,4 +106,9 @@ model ContactFormResponses {
   senderMail    String
   message       String
   date          DateTime        @default(now())
+}
+
+model AllowedDomains {
+  id            Int                @id @default(autoincrement())
+  username      String
 }

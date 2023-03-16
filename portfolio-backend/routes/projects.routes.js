@@ -4,9 +4,9 @@ const router = express.Router()
 
 const { getProject, createProject, updateProject, deleteProject } = require('../controllers/projects.controller')
 
-router.get('/:username', getProject)
-
 router.post('/:username', createProject)
+
+router.get('/:username', getProject)
 
 router.patch('/:id', updateProject)
 

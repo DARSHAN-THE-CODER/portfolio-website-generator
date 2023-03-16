@@ -1,0 +1,40 @@
+@baseURL=http://localhost:8080/api/v1/education
+
+### create new education record
+POST {{baseURL}}/darshanv
+Content-Type: application/json
+
+{
+    "data": [
+        {
+            "priority": 1,
+            "from": "2010",
+            "to": "2012",
+            "institution": "XYZ institution, davanagere",
+            "description": "lorel epsum ",
+            "percentage": "80%"
+        },
+        {
+            "priority": 2,
+            "from": "2012",
+            "to": "2015",
+            "institution": "XYZ institution, Bangalore",
+            "description": "lorel epsum xyzz ijdc ijdnc wi",
+            "percentage": "89%"
+        }
+    ]
+}
+
+### get all education records
+GET {{baseURL}}/darshanv
+
+### update education record
+PATCH {{baseURL}}/1
+Content-Type: application/json
+
+{
+    "from": "2008"
+}
+
+### delete education record
+DELETE {{baseURL}}/2

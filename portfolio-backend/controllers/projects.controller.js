@@ -1,58 +1,63 @@
 
-const {PrismaClient} = require('@prisma/client');
+const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
 const createProject = async (req, res) => {
-    const {username} = req.params;
-    const data = req.body;
+    const { username } = req.params;
+    const data = req.body.data;
     try {
-        const project = await prisma.project.create({
-            data: data.map((item) => ({
-                ...item,
-                user: {
-                    connect: {
-                        username: username
+        // use await promise.all
+        const project = await Promise.all(data.map(async (item) => {
+            const project = await prisma.projects.create({
+                data: {
+                    ...item,
+                    user: {
+                        connect: {
+                            username: username
+                        }
                     }
                 }
-            }))
-        });
+            });
+            return project;
+        }
+        ));
         res.json(project);
     } catch (error) {
-        res.status(500).json({error: error.message});
+        res.status(500).json({ error: error.message });
     }
 }
 
 const deleteProject = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     try {
-        const project = await prisma.project.delete({
-            where: {id: Number(id)}
+        const project = await prisma.projects.delete({
+            where: { id: Number(id) }
         });
         res.json(project);
     } catch (error) {
-        res.status(500).json({error: error.message});
+        res.status(500).json({ error: error.message });
     }
 }
 
 const updateProject = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     const data = req.body;
     try {
-        const project = await prisma.project.update({
-            where: {id: Number(id)},
+        const project = await prisma.projects.update({
+            where: { id: Number(id) },
             data: data
         });
         res.json(project);
     } catch (error) {
-        res.status(500).json({error: error.message});
+        res.status(500).json({ error: error.message });
     }
 }
 
 const getProject = async (req, res) => {
-    const {username} = req.params;
+    const { username } = req.params;
     try {
-        const project = await prisma.project.findMany({
+        const project = await prisma.projects.findMany({
             where: {
                 user: {
                     username: username
@@ -61,7 +66,7 @@ const getProject = async (req, res) => {
         });
         res.json(project);
     } catch (error) {
-        res.status(500).json({error: error.message});
+        res.status(500).json({ error: error.message });
     }
 }
 

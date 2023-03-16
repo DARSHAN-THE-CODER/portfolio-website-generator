@@ -5,18 +5,22 @@ const prisma = new PrismaClient();
 
 const createExperience = async (req, res) => {
     const {username} = req.params;
-    const data = req.body;
+    const data = req.body.data;
     try {
-        const experience = await prisma.experience.create({
-            data: data.map((item) => ({
-                ...item,
-                user: {
-                    connect: {
-                        username: username
+        const experience = await Promise.all(data.map(async (item) => {
+            const experience = await prisma.experience.create({
+                data: {
+                    ...item,
+                    user: {
+                        connect: {
+                            username: username
+                        }
                     }
                 }
-            }))
-        });
+            });
+            return experience;
+        }
+        ));
         res.json(experience);
     } catch (error) {
         res.status(500).json({error: error.message});
