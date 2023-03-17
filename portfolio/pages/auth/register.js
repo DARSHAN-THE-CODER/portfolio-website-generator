@@ -119,7 +119,12 @@ function Register() {
                         />
                     </div>
                     <p className="text-gray-400 italic flex">Already have an account ? <span className="text-white ml-2 hover:underline"><Link href={"/auth/login"}>Login</Link></span> </p>
-                    <div className="form-group mt-4" >
+                    <div className="form-group mt-4 flex" >
+                        <button className={`form-btn m-auto`} data-nav-link
+                            onClick={() => router.push("/")}
+                        >
+                            Back
+                        </button>
                         <button className="form-btn m-auto" type="submit" disabled={isEmpty()}>
                             Register
                         </button>

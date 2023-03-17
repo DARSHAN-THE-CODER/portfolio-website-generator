@@ -50,6 +50,7 @@ function Login() {
     }
     return (
         <article className="active md:w-[70vw] flex justify-center mt-[100px] m-auto">
+
             <header>
                 <h2 className="h2 article-title">Login</h2>
             </header>
@@ -66,7 +67,12 @@ function Login() {
                         />
                     </div>
                     <p className="text-gray-400 italic flex">Don't have an account ? <span className="text-white ml-2 hover:underline"><Link href={"/auth/register"}>Register</Link></span> </p>
-                    <div className="form-group mt-4" >
+                    <div className="form-group mt-4 flex" >
+                        <button className={`form-btn m-auto`} data-nav-link
+                            onClick={() => router.push("/")}
+                        >
+                            Back
+                        </button>
                         <button className="form-btn m-auto" type="submit" disabled={isEmpty()}>
                             Login
                         </button>

@@ -11,7 +11,8 @@ export default function Home() {
   const [isDomain, setIsDomain] = useState(false)
   const [username, setUsername] = useState("")
   const router = useRouter()
-
+  var console = {};
+  console.log = function () { };
   useEffect(() => {
     let location = window.location.hostname;
     let check = location.split(".");
@@ -39,6 +40,13 @@ export default function Home() {
     }
   }, [])
 
+  function handlePush(term){
+    if(term === "login"){
+      router.push("/auth/login")
+    } else{
+      router.push("/auth/register")
+    }
+  }
   return (
     <>
 
@@ -55,14 +63,14 @@ export default function Home() {
                   <div class="flex md:order-2 gap-2">
                     <button
                       type='button'
-                      // onClick={() => handleSaveBasic()}
+                      onClick={() => handlePush("login")}
                       className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
                     >
                       Login
                     </button>
                     <button
                       type='button'
-                      // onClick={() => handleSaveBasic()}
+                      onClick={() => handlePush("register")}
                       className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
                     >
                       Register
