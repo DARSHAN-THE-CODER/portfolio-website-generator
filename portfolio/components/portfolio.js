@@ -54,7 +54,7 @@ function Portfolio({ projects, activeNav }) {
                     <header>
                         <h2 className="h2 article-title">Portfolio</h2>
                     </header>
-                    <ul className="project-list">
+                    <ul className="project-list flex flex-wrap">
                         {
                             projects?.map((project, index) => (
                                 <li className="project-item  active" data-filter-item data-category="web development" key={index}>

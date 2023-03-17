@@ -3,6 +3,7 @@ import Navbar from "@/components/navbar"
 import About from "@/components/about"
 import AboutForm from "@/components/dashboard/aboutForm"
 import ResumeForm from "@/components/dashboard/resumeForm"
+import ProjectsForm from "@/components/dashboard/projectsForm"
 import axios from "axios"
 import { toast } from 'react-toastify'
 import { APIURL } from "@/utils/api.utils"
@@ -58,6 +59,7 @@ function Dashboard() {
                 <Navbar activeNav={activeNav} setActiveNav={setActiveNav} navLinks={navLinks} setNavLinks={setNavLinks} />
                 <AboutForm activeNav={activeNav} />
                 <ResumeForm activeNav={activeNav} />
+                <ProjectsForm activeNav={activeNav} />
             </div>
         </div>
     )

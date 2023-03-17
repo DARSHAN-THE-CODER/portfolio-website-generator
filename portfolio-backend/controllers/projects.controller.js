@@ -8,7 +8,7 @@ const createProject = async (req, res) => {
     const data = req.body.data;
     try {
         // use await promise.all
-        await prisma.project.deleteMany({
+        await prisma.projects.deleteMany({
             where: {
                 username: username
             }
@@ -30,6 +30,7 @@ const createProject = async (req, res) => {
         ));
         res.json(project);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: error.message });
     }
 }

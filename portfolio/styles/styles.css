@@ -1885,3 +1885,7 @@
     .timeline-text { max-width: 700px; }
   
   }
+
+  .xd {
+    color: var(--orange-yellow-crayola);
+  }

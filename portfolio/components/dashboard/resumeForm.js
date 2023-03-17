@@ -142,21 +142,21 @@ function ResumeForm({ activeNav }) {
     function handleSaveEducation() {
         console.log(education)
         let temp = education;
-        temp.forEach((item) => { delete item.id; delete item?.username })
 
         console.log(temp)
 
-        const hasEmptyValues = education.some(obj =>
+        const hasEmptyValues = temp.some(obj =>
             Object.values(obj).some(value => {
                 const trimmedValue = value.toString().trim();
                 console.log(trimmedValue.length)
                 return trimmedValue === "" || trimmedValue === null || trimmedValue === undefined || trimmedValue.length === 0;
             })
         );
-            console.log(hasEmptyValues)
+        console.log(hasEmptyValues)
         if (hasEmptyValues) {
             return toast.error("Please fill all the fields")
         } else {
+            temp.forEach((item) => { delete item.id; delete item?.username })
             axios.post(`${APIURL}/education/${username}`, { data: temp })
                 .then((res) => {
                     console.log(res)
@@ -174,35 +174,63 @@ function ResumeForm({ activeNav }) {
     function handleSaveExperience() {
         console.log(experience)
         let temp = experience;
-        temp.forEach((item) => { delete item.id; delete item?.username })
-
         console.log(temp)
-        axios.post(`${APIURL}/experience/${username}`, { data: temp })
-            .then((res) => {
-                console.log(res)
-                toast.success("Experience details saved")
-            }
-            )
-            .catch((err) => {
-                console.log(err)
-                toast.error("Error saving experience details")
-            }
-            )
+
+        const hasEmptyValues = temp.some(obj =>
+            Object.values(obj).some(value => {
+                const trimmedValue = value.toString().trim();
+                console.log(trimmedValue.length)
+                return trimmedValue === "" || trimmedValue === null || trimmedValue === undefined || trimmedValue.length === 0;
+            })
+        );
+        console.log(hasEmptyValues)
+        if (hasEmptyValues) {
+            return toast.error("Please fill all the fields")
+        } else {
+            temp.forEach((item) => { delete item.id; delete item?.username })
+            axios.post(`${APIURL}/experience/${username}`, { data: temp })
+                .then((res) => {
+                    console.log(res)
+                    toast.success("Experience details saved")
+                }
+                )
+                .catch((err) => {
+                    console.log(err)
+                    toast.error("Error saving experience details")
+                }
+                )
+        }
     }
 
     function handleSaveSkills() {
         console.log(skills)
-        axios.post(`${APIURL}/user/skills/${username}`, { data: skills })
-            .then((res) => {
-                console.log(res)
-                toast.success("Skills details saved")
-            }
-            )
-            .catch((err) => {
-                console.log(err)
-                toast.error("Error saving skills details")
-            }
-            )
+        let temp = skills;
+
+        const hasEmptyValues = temp.some(obj =>
+            Object.values(obj).some(value => {
+                const trimmedValue = value.toString().trim();
+                console.log(trimmedValue.length)
+                return trimmedValue === "" || trimmedValue === null || trimmedValue === undefined || trimmedValue.length === 0;
+            })
+        );
+        console.log(hasEmptyValues)
+        if (hasEmptyValues) {
+            return toast.error("Please fill all the fields")
+        } 
+        else {
+            temp.forEach((item) => { delete item.id; delete item?.username })
+            axios.post(`${APIURL}/user/skills/${username}`, { data: temp })
+                .then((res) => {
+                    console.log(res)
+                    toast.success("Skills details saved")
+                }
+                )
+                .catch((err) => {
+                    console.log(err)
+                    toast.error("Error saving skills details")
+                }
+                )
+        }
     }
 
     return (
@@ -234,6 +262,7 @@ function ResumeForm({ activeNav }) {
                                 </div>
                                 {education?.map((inputSet, index) => (
                                     <EducationInputSet
+                                        
                                         className="bg-gray-300"
                                         key={inputSet.id}
                                         id={inputSet.id}

@@ -68,11 +68,11 @@ function AboutForm({ activeNav }) {
                         axios.get(`${APIURL}/user/${check[0]}`)
                             .then((res) => {
                                 console.log(res.data)
-                                const { socialLinks, projects, education, experience, skills, contactResponses,updatedAt, id, ...imp } = res.data;
+                                const { socialLinks, projects, education, experience, skills, contactResponses, updatedAt, id, ...imp } = res.data;
                                 console.log(imp)
                                 setAboutCards(imp.aboutCards)
-                                
-                                setIdCounter(imp.aboutCards[imp.aboutCards.length - 1]?.id + 1)
+
+                                setIdCounter((imp.aboutCards[imp.aboutCards.length - 1]?.id + 1) || 1)
                                 delete imp.aboutCards;
                                 setAbout(imp)
                             }
@@ -124,17 +124,33 @@ function AboutForm({ activeNav }) {
 
     function handleSaveAboutCards() {
         console.log(aboutCards)
-        axios.post(`${APIURL}/user/about-cards/${username}`, { data: aboutCards })
-            .then((res) => {
-                console.log(res)
-                toast.success("About cards saved successfully")
-            }
-            )
-            .catch((err) => {
-                console.log(err)
-                toast.error("Error saving about cards")
-            }
-            )
+        let temp = aboutCards;
+
+        console.log(temp)
+
+        const hasEmptyValues = temp.some(obj =>
+            Object.values(obj).some(value => {
+                const trimmedValue = value.toString().trim();
+                console.log(trimmedValue.length)
+                return trimmedValue === "" || trimmedValue === null || trimmedValue === undefined || trimmedValue.length === 0;
+            })
+        );
+        console.log(hasEmptyValues)
+        if (hasEmptyValues) {
+            return toast.error("Please fill all the fields")
+        } else{
+            axios.post(`${APIURL}/user/about-cards/${username}`, { data: aboutCards })
+                .then((res) => {
+                    console.log(res)
+                    toast.success("About cards saved successfully")
+                }
+                )
+                .catch((err) => {
+                    console.log(err)
+                    toast.error("Error saving about cards")
+                }
+                )
+        }
     }
 
     function handleSaveBasic() {
