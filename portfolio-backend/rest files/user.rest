@@ -36,7 +36,7 @@ POST {{baseURL}}/login
 Content-Type: application/json
 
 {
-    "username": "testuser",
+    "username": "darshanv",
     "password": "1234"
 }
 
@@ -90,3 +90,19 @@ Content-Type: application/json
 
 ### delete user
 DELETE {{baseURL}}/darshanv2
+
+### POST contact form
+POST {{baseURL}}/form-response/darshanv
+Content-Type: application/json
+
+{
+    "senderName": "xyz",
+    "senderMail": "abc@gmail.com",
+    "message": "Hello from xyz, Hello from xyz, Hello from xyz, Hello from xyz, Hello from xyz, Hello from xyz"
+}
+
+### get form responses
+GET {{baseURL}}/form-response/darshanv
+
+### delete form response
+DELETE {{baseURL}}/form-response/darshanv

@@ -8,8 +8,8 @@ import { useRouter } from 'next/router';
 import ProjectsInput from '../form/ProjectsInput'
 import Portfolio from '../portfolio'
 
-function ProjectsForm({ activeNav }) {
-    const [username, setUsername] = useState("")
+function ProjectsForm({ activeNav, username }) {
+    // const [username, setUsername] = useState("")
 
     const router = useRouter();
 
@@ -18,34 +18,31 @@ function ProjectsForm({ activeNav }) {
     const [projId, setProjId] = useState(1)
 
     useEffect(() => {
-        let location = window.location.hostname;
-        let check = location.split(".");
-        console.log(check)
-        if (check[0] !== "localhost") {
-            axios.get(`${APIURL}/user/username/${check[0]}`)
-                .then((res) => {
-                    // console.log(res)
-                    if (res.status === 200) {
-                        setUsername(check[0])
-                        axios.get(`${APIURL}/user/${check[0]}`)
-                            .then((res) => {
-                                console.log(res.data.projects)
-                                setProjId(Number(res.data.projects[res.data.projects.length - 1]?.id + 1) || 1)
-                                setProjects(res.data.projects)
-                            }
-                            )
-                    }
-                    else {
-                        return toast.error(`No user found with username ${check[0]}`)
-                        // router.push('https://www.mytechfolio.tech');
-                        // router.push('http://www.mytechfolio.tech');
-                    }
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+
+        if (username) {
+            axios.get(`${APIURL}/user/username/${username}`)
+            .then((res) => {
+                // console.log(res)
+                if (res.status === 200) {
+                    axios.get(`${APIURL}/user/${username}`)
+                        .then((res) => {
+                            console.log(res.data.projects)
+                            setProjId(Number(res.data.projects[res.data.projects.length - 1]?.id + 1) || 1)
+                            setProjects(res.data.projects)
+                        }
+                        )
+                }
+                else {
+                    return toast.error(`No user found with username ${username}`)
+                    // router.push('https://www.mytechfolio.tech');
+                    // router.push('http://www.mytechfolio.tech');
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         }
-    }, [])
+    }, [username])
 
     // for education records
     const handleInputChange = (id, field, value) => {
@@ -83,19 +80,19 @@ function ProjectsForm({ activeNav }) {
         console.log(temp)
         if (hasEmptyValues) {
             return toast.error("Please fill all the fields")
-        } else{
+        } else {
             temp.forEach((item) => { delete item.id; delete item?.username })
             axios.post(`${APIURL}/projects/${username}`, { data: temp })
-            .then((res) => {
-                console.log(res)
-                if (res.status === 200) {
-                    toast.success("Projects details saved successfully")
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-                toast.error("Something went wrong")   
-            })
+                .then((res) => {
+                    console.log(res)
+                    if (res.status === 200) {
+                        toast.success("Projects details saved successfully")
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                    toast.error("Something went wrong")
+                })
         }
     }
     return (

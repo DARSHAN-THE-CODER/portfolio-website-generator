@@ -10,13 +10,8 @@ import { useState, useEffect } from 'react'
 
 import axios from 'axios'
 import { APIURL } from '@/utils/api.utils'
-import MainPage from './main'
-import { toast } from 'react-toastify'
-import { useRouter } from 'next/router'
 
-export default function Home() {
-
-  const [isDomain, setIsDomain] = useState(false)
+export default function MainPage({username}) {
 
   const [navLinks, setNavLinks] = useState([
     {
@@ -36,35 +31,18 @@ export default function Home() {
     }
   ])
 
-  const [username, setUsername] = useState("")
-  const router = useRouter()
+//   const [username, setUsername] = useState("")
+  const [user, setUser] = useState({})
 
   useEffect(() => {
-    let location = window.location.hostname;
-    let check = location.split(".");
-    console.log(check)
-    if (check[0] !== "localhost") {
-      axios.get(`${APIURL}/user/username/${check[0]}`)
+    if(username){
+        axios.get(`${APIURL}/user/${username}`)
         .then((res) => {
-          console.log(res)
-          if (res.status === 200) {
-            setUsername(check[0])
-            setIsDomain(true)
-          }
-          else {
-            toast.error(`No user found with username ${check[0]}`)
-            router.push('/');
-            return
-          }
+            console.log(res.data)
+            setUser(res.data)
         })
-        .catch((err) => {
-          console.log(err)
-        })
-      
-    } else {
-      
     }
-  }, [])
+  }, [username])
 
   // const [user, setUser] = {
   //   user: {
@@ -150,22 +128,22 @@ export default function Home() {
   // ]
   // }
 
-  let user = {
-    user: {
+//   let user = {
+//     user: {
 
-      id: 1,
-      email: "reachdarshanv@gmail.com",
-      name: "Darshan V",
-      password: "darshan",
-      address: "",
-      photoURL: "",
-      gender: "male",
-      shortDesc: "Full stack developer",
-      phone: "+91 8431143130",
-      birthday: "23 Sep 2002",
-      about: ["A self-taught , quality-focused and passionate software developer interested in the field of Web development", "I love to solve real world problems"]
-    }
-  }
+//       id: 1,
+//       email: "reachdarshanv@gmail.com",
+//       name: "Darshan V",
+//       password: "darshan",
+//       address: "",
+//       photoURL: "",
+//       gender: "male",
+//       shortDesc: "Full stack developer",
+//       phone: "+91 8431143130",
+//       birthday: "23 Sep 2002",
+//       about: ["A self-taught , quality-focused and passionate software developer interested in the field of Web development", "I love to solve real world problems"]
+//     }
+//   }
 
   let aboutCards = [{
     title: "Web Design",
@@ -204,16 +182,16 @@ export default function Home() {
   const [activeNav, setActiveNav] = useState("About")
   return (
     <>
-
-        {
-          isDomain ? <MainPage username={username} />
-            :
-            (
-              <div className='text-white m-auto'>
-                You are at right place :)
-              </div>
-            )
-        }
+      <main>
+        <Sidebar user={user} />
+        <div className="main-content">
+          <Navbar activeNav={activeNav} setActiveNav={setActiveNav} navLinks={navLinks} setNavLinks={setNavLinks} />
+          <About username={username} activeNav={activeNav} {...user} />
+          <Resume activeNav={activeNav} username={username} {...user}/>
+          <Portfolio activeNav={activeNav} projects={projects} username={username} {...user}/>
+          <ContactForm activeNav={activeNav} username={username}/>
+        </div>
+      </main>
     </>
   )
 }

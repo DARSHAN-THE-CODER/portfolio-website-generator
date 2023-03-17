@@ -48,38 +48,34 @@ const InputSet = ({ id, title, description, onInputChange, onRemoveClick, nnn })
 };
 
 
-function AboutForm({ activeNav }) {
+function AboutForm({ activeNav, username }) {
     const [about, setAbout] = useState({})
     const [aboutCards, setAboutCards] = useState([{ id: 0, title: "", description: "" }]);
 
     const [idCounter, setIdCounter] = useState(1)
-    const [username, setUsername] = useState("")
+    // const [username, setUsername] = useState("")
 
     useEffect(() => {
-        let location = window.location.hostname;
-        let check = location.split(".");
-        console.log(check)
-        if (check[0] !== "localhost") {
-            axios.get(`${APIURL}/user/username/${check[0]}`)
+            if(username)
+            {axios.get(`${APIURL}/user/username/${username}`)
                 .then((res) => {
                     // console.log(res)
                     if (res.status === 200) {
-                        setUsername(check[0])
-                        axios.get(`${APIURL}/user/${check[0]}`)
+                        axios.get(`${APIURL}/user/${username}`)
                             .then((res) => {
                                 console.log(res.data)
                                 const { socialLinks, projects, education, experience, skills, contactResponses, updatedAt, id, ...imp } = res.data;
                                 console.log(imp)
-                                setAboutCards(imp.aboutCards)
+                                setAboutCards(imp?.aboutCards)
 
-                                setIdCounter((imp.aboutCards[imp.aboutCards.length - 1]?.id + 1) || 1)
+                                setIdCounter(  (imp?.aboutCards[imp?.aboutCards?.length - 1]?.id + 1) || 1)
                                 delete imp.aboutCards;
                                 setAbout(imp)
                             }
                             )
                     }
                     else {
-                        return toast.error(`No user found with username ${check[0]}`)
+                        return toast.error(`No user found with username ${username}`)
                         // router.push('https://www.mytechfolio.tech');
                         // router.push('http://www.mytechfolio.tech');
                     }
@@ -88,7 +84,7 @@ function AboutForm({ activeNav }) {
                     console.log(err)
                 })
         }
-    }, [])
+    }, [username])
 
 
     const handleInputChange = (id, field, value) => {

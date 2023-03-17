@@ -13,13 +13,13 @@ function Sidebar({user}) {
             <div className="sidebar-info">
 
                 <figure className="avatar-box">
-                    <Image src={user?.user?.gender === "male" ?  "/../public/assets/avatar1.png" : "/../assets/public/avatar2.png"} alt={user?.user.name} height={40} width={40} />
+                    <Image src={user?.gender === "male" ?  "/../public/assets/avatar1.png" : "/../assets/public/avatar2.png"} alt={user?.name} height={40} width={40} />
                 </figure>
 
                 <div className="info-content">
-                    <h1 className="name" title="Richard hanrick">{user.user.name}</h1>
+                    <h1 className="name" title="Richard hanrick">{user?.name}</h1>
 
-                    <p className="title">{user.user.shortDesc}</p>
+                    <p className="title">{user?.shortDesc}</p>
                 </div>
 
                 <button className="info_more-btn active" data-sidebar-btn onClick={() => setSidebarActive(!sidebarActive)}>
@@ -45,7 +45,7 @@ function Sidebar({user}) {
                         <div className="contact-info">
                             <p className="contact-title">Email</p>
 
-                            <a href="mailto:richard@example.com" className="contact-link">{user.user.email}</a>
+                            <a href="mailto:richard@example.com" className="contact-link">{user?.email}</a>
                         </div>
 
                     </li>
@@ -59,7 +59,7 @@ function Sidebar({user}) {
                         <div className="contact-info">
                             <p className="contact-title">Phone</p>
 
-                            <a href="tel:+12133522795" className="contact-link">{user.user.phone}</a>
+                            <a href="tel:+12133522795" className="contact-link">{user?.phone}</a>
                         </div>
 
                     </li>
@@ -73,7 +73,7 @@ function Sidebar({user}) {
                         <div className="contact-info">
                             <p className="contact-title">Birthday</p>
 
-                            <time dateTime="1982-06-23">{user.user.birthday}</time>
+                            <time dateTime="1982-06-23">{user?.birthday}</time>
                         </div>
 
                     </li>
@@ -87,7 +87,7 @@ function Sidebar({user}) {
                         <div className="contact-info">
                             <p className="contact-title">Location</p>
 
-                            <address>Sacramento, California, USA</address>
+                            <address>{user?.address}</address>
                         </div>
 
                     </li>

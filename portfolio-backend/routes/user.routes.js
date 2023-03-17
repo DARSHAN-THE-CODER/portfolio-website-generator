@@ -2,11 +2,15 @@ const express = require('express')
 
 const router = express.Router()
 
-const { getAllUsers, checkUsername, createUser, getUser, updateUser, userLogin, deleteUser, userSocialLinks, userAboutCards, createUserSkills, deleteAboutCard, deleteSkill, deleteSocialLink, updateAboutCard, updateSocialLink, updateSkill } = require('../controllers/user.controller')
+const { getAllUsers, checkUsername, createUser, getUser, updateUser, userLogin, deleteUser, userSocialLinks, userAboutCards, createUserSkills, deleteAboutCard, deleteSkill, deleteSocialLink, updateAboutCard, updateSocialLink, updateSkill, contactFormSend, getFormResponses, deleteFormResponses, deleteResponseById } = require('../controllers/user.controller')
 
 router.get('/', getAllUsers)
 
 router.get('/username/:username', checkUsername)
+
+router.get('/form-response/:username', getFormResponses)
+
+router.post('/form-response/:username', contactFormSend)
 
 router.post('/', createUser)
 
@@ -33,6 +37,10 @@ router.delete('/skills/:id', deleteSkill)
 router.delete('/social-links/:id', deleteSocialLink)
 
 router.delete('/about-cards/:id', deleteAboutCard)
+
+router.delete('/form-response/id/:id', deleteResponseById)
+
+router.delete('/form-response/:username', deleteFormResponses)
 
 router.delete('/:username', deleteUser)
 

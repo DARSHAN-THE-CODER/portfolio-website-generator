@@ -102,7 +102,8 @@ const getUser = async (req, res) => {
 }
 
 const userLogin = async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password } = req.body.data;
+    console.log(username, password)
     try {
         const user = await prisma.user.findUnique({
             where: { username: username },
@@ -112,7 +113,7 @@ const userLogin = async (req, res) => {
             return res.status(401).json({ error: "user not found" });
         }
         if (user.password === password) {
-            return res.json(user);
+            return res.status(200).json(user);
         } else {
             return res.status(401).json({ error: "Invalid credentials" });
         }
@@ -330,6 +331,78 @@ const deleteUser = async (req, res) => {
     }
 }
 
+const contactFormSend = async (req, res) => {
+    const { username } = req.params;
+    const { senderName, senderMail, message } = req.body.data;
+    try {
+        const contactForm = await prisma.contactFormResponses.create({
+            data: {
+                senderName: senderName,
+                senderMail: senderMail,
+                message: message,
+                user: {
+                    connect: {
+                        username: username
+                    }
+                }
+            }
+        });
+        res.status(201).json(contactForm);
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const getFormResponses = async (req, res) => {
+    const { username } = req.params;
+    try {
+        const formResponses = await prisma.contactFormResponses.findMany({
+            where: {
+                username: username
+            }
+        });
+        res.status(201).json(formResponses);
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const deleteFormResponses = async (req, res) => {
+    const { username} = req.params;
+    try {
+        const deleteFormResponses = await prisma.contactFormResponses.deleteMany({
+            where: {
+                username: username
+            }
+        });
+        res.status(201).json(deleteFormResponses);
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const deleteResponseById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deleteFormResponse = await prisma.contactFormResponses.delete({
+            where:{
+                id: parseInt(id)
+            }
+        })
+        res.status(200).json(deleteFormResponse)
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = {
     getAllUsers,
     checkUsername,
@@ -349,5 +422,10 @@ module.exports = {
 
     updateAboutCard,
     updateSkill,
-    updateSocialLink
+    updateSocialLink,
+
+    contactFormSend,
+    getFormResponses,
+    deleteFormResponses,
+    deleteResponseById
 }

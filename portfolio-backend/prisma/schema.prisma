@@ -95,7 +95,7 @@ model Skills{
   user          User?          @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
   username      String
   title         String
-  percentage    String
+  percentage    Int
 }
 
 model ContactFormResponses {

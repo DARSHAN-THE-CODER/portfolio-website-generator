@@ -1,18 +1,18 @@
 // import {ion-icon} from "@ionic/react"
 
-function About({ about, activeNav }) {
+function About({ about, activeNav, username, aboutCards }) {
 
-    let aboutCards = [{
-        title: "Web Design",
-        description: "The most modern and high-quality design made at a professional level"
-    }, {
-        title: "Mobile Apps",
-        description: "The most modern and high-quality design made at a professional level"
-    },
-    {
-        title: "Photography",
-        description: "The most modern and high-quality design made at a professional level"
-    }]
+    // let aboutCards = [{
+    //     title: "Web Design",
+    //     description: "The most modern and high-quality design made at a professional level"
+    // }, {
+    //     title: "Mobile Apps",
+    //     description: "The most modern and high-quality design made at a professional level"
+    // },
+    // {
+    //     title: "Photography",
+    //     description: "The most modern and high-quality design made at a professional level"
+    // }]
 
 
     return (
@@ -24,13 +24,9 @@ function About({ about, activeNav }) {
                 <img src='https://i.ibb.co/42fb14D/New-doc-07-Mar-2023-6-22-pm.jpg' alt='dsjc' style={{ height: "300px", borderRadius: "30px" }} loading="lazy" />
             </figure>
             <section className="about-text">
-                {
-                    about?.map((a, index) => (
-                        <p key={index}>
-                            {a}
+                        <p >
+                            {about}
                         </p>
-                    ))
-                }
             </section>
 
             <section className="service">

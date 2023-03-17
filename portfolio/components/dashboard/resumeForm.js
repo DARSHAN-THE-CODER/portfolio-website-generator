@@ -11,9 +11,9 @@ import Resume from '../resume'
 
 import { useRouter } from 'next/router';
 
-function ResumeForm({ activeNav }) {
+function ResumeForm({ activeNav, username }) {
 
-    const [username, setUsername] = useState("")
+    // const [username, setUsername] = useState("")
 
     const router = useRouter();
 
@@ -28,23 +28,19 @@ function ResumeForm({ activeNav }) {
 
     console.log(edId)
     useEffect(() => {
-        let location = window.location.hostname;
-        let check = location.split(".");
-        console.log(check)
-        if (check[0] !== "localhost") {
-            axios.get(`${APIURL}/user/username/${check[0]}`)
+
+            if (username){axios.get(`${APIURL}/user/username/${username}`)
                 .then((res) => {
                     // console.log(res)
                     if (res.status === 200) {
-                        setUsername(check[0])
-                        axios.get(`${APIURL}/user/${check[0]}`)
+                        axios.get(`${APIURL}/user/${username}`)
                             .then((res) => {
-                                console.log(res.data)
-                                console.log(res.data.skills.length);
-                                console.log(res.data.skills[res.data.skills.length - 1]?.id)
+                                // console.log(res.data)
+                                // console.log(res.data.skills.length);
+                                // console.log(res.data.skills[res.data.skills.length - 1]?.id)
 
-                                setEdId(Number(res.data.education[res.data.education.length - 1]?.id + 1) || 1)
-                                setExpId(Number(res.data.experience[res.data.experience.length - 1]?.id + 1) || 1)
+                                setEdId(Number(res?.data?.education[res?.data?.education?.length - 1]?.id + 1) || 1)
+                                setExpId(Number(res?.data?.experience[res?.data?.experience?.length - 1]?.id + 1) || 1)
                                 setSkillId(Number(res.data.skills[res.data.skills.length - 1]?.id + 1) || 1)
 
                                 setEducation(res.data.education)
@@ -54,16 +50,15 @@ function ResumeForm({ activeNav }) {
                             )
                     }
                     else {
-                        return toast.error(`No user found with username ${check[0]}`)
+                        return toast.error(`No user found with username ${username}`)
                         // router.push('https://www.mytechfolio.tech');
                         // router.push('http://www.mytechfolio.tech');
                     }
                 })
                 .catch((err) => {
                     console.log(err)
-                })
-        }
-    }, [])
+                })}
+    }, [username])
 
     // for education records
     const handleEducationInputChange = (id, field, value) => {
