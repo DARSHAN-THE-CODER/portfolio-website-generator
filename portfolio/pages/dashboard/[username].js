@@ -27,9 +27,9 @@ function Dashboard() {
         {
             name: "PortfolioForm"
         },
-        {
-            name: "Blog"
-        },
+        // {
+        //     name: "Blog"
+        // },
         {
             name: "ContactFormResponses"
         }]

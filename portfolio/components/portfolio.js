@@ -40,7 +40,7 @@ function Portfolio({ projects, activeNav }) {
                     <h3 class="h3 service-title m-4">Tech used </h3>
                     <div className="flex flex-wrap w-full">
                         {
-                            activeProject?.pro?.techUsed?.map((tech, index) => (
+                            activeProject?.pro?.techUsed && activeProject?.pro?.techUsed?.map((tech, index) => (
                                 <p className="active rounded-lg border-[1px] text-[white] p-2 m-2" key={index}>
                                     {tech}
                                 </p>

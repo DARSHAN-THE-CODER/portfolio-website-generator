@@ -4,6 +4,7 @@ import Link from "next/link"
 import axios from "axios"
 import { APIURL } from "@/utils/api.utils"
 import { toast } from "react-toastify"
+import { useRouter } from "next/router"
 
 function Register() {
     const [user, setUser] = useState({})
@@ -15,6 +16,8 @@ function Register() {
     const [hasNoNumbers, setHasNoNumbers] = useState(true);
     const [hasNoSpaces, setHasNoSpaces] = useState(true);
     const [hasNoSpecialChars, setHasNoSpecialChars] = useState(true);
+
+    const router = useRouter();
 
     const handleUsernameChange = (event) => {
         const newUsername = event.target.value;
@@ -37,30 +40,36 @@ function Register() {
     function handleSubmit(e) {
         e.preventDefault()
         console.log("inside fn", user)
-        if(!isValid){
-            toast.error("Username must be at least 3 lowercase letters and contain no numbers, spaces, or special characters.")
+        if (user.name.toString().trim().length === 0 || user.email.toString().trim().length === 0 || user.username.toString().trim().length === 0 || user.password.toString().trim().length === 0) {
+            toast.error("All fields are required")
             return
-        }else{
-        axios.get(`${APIURL}/user/username/${user.username}`)
-            .then((res) => {
-                console.log(res.status)
-                if (res.status === 200) {
-                    toast.error("Username already exists")
-                } else {
-                    axios.post(`${APIURL}/user`, user)
-                        .then((res) => {
-                            console.log(res)
-                            toast.success("User created successfully")
-                        })
-                        .catch((err) => {
-                            toast.error(err.response.data.error)
-                            console.log(err.response.data.error)
-                        })
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        } else {
+            if (!isValid) {
+                toast.error("Username must be at least 3 lowercase letters and contain no numbers, spaces, or special characters.")
+                return
+            } else {
+                axios.get(`${APIURL}/user/username/${user.username}`)
+                    .then((res) => {
+                        console.log(res.status)
+                        if (res.status === 200) {
+                            toast.error("Username already exists")
+                        } else {
+                            axios.post(`${APIURL}/user`, user)
+                                .then((res) => {
+                                    console.log(res)
+                                    toast.success("User created successfully")
+                                    router.push('/auth/login')
+                                })
+                                .catch((err) => {
+                                    toast.error(err.response.data.error)
+                                    console.log(err.response.data.error)
+                                })
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
         }
     }
     function isEmpty() {

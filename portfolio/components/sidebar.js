@@ -73,7 +73,7 @@ function Sidebar({user}) {
                         <div className="contact-info">
                             <p className="contact-title">Birthday</p>
 
-                            <time dateTime="1982-06-23">{user?.birthday}</time>
+                            <time dateTime="1982-06-23">{user?.dob}</time>
                         </div>
 
                     </li>
@@ -94,7 +94,7 @@ function Sidebar({user}) {
 
                 </ul>
 
-                <div className="separator"></div>
+                {/* <div className="separator"></div>
 
                 <ul className="social-list">
 
@@ -116,7 +116,7 @@ function Sidebar({user}) {
                         </a>
                     </li>
 
-                </ul>
+                </ul> */}
             </div>
         </aside>
     )

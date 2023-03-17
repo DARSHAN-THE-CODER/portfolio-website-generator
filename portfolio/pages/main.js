@@ -189,7 +189,7 @@ export default function MainPage({username}) {
           <About username={username} activeNav={activeNav} {...user} />
           <Resume activeNav={activeNav} username={username} {...user}/>
           <Portfolio activeNav={activeNav} projects={projects} username={username} {...user}/>
-          <ContactForm activeNav={activeNav} username={username}/>
+          <ContactForm activeNav={activeNav} username={username} socialLinks={user?.socialLinks} />
         </div>
       </main>
     </>

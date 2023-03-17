@@ -1,11 +1,3 @@
-import Image from 'next/image'
-
-import Sidebar from '@/components/sidebar'
-import Navbar from '@/components/navbar'
-import About from '@/components/about'
-import Resume from '@/components/resume'
-import Portfolio from '@/components/portfolio'
-import ContactForm from '@/components/contactForm'
 import { useState, useEffect } from 'react'
 
 import axios from 'axios'
@@ -17,25 +9,6 @@ import { useRouter } from 'next/router'
 export default function Home() {
 
   const [isDomain, setIsDomain] = useState(false)
-
-  const [navLinks, setNavLinks] = useState([
-    {
-      name: "About"
-    },
-    {
-      name: "Resume"
-    },
-    {
-      name: "Portfolio"
-    },
-    // {
-    //   name: "Blog"
-    // },
-    {
-      name: "Contact"
-    }
-  ])
-
   const [username, setUsername] = useState("")
   const router = useRouter()
 
@@ -60,160 +33,69 @@ export default function Home() {
         .catch((err) => {
           console.log(err)
         })
-      
+
     } else {
-      
+
     }
   }, [])
 
-  // const [user, setUser] = {
-  //   user: {
-  //     id: 1,
-  //     email: "reachdarshanv@gmail.com",
-  //     name: "Darshan V",
-  //     password: "darshan",
-  //     address: "",
-  //     photoURL: "",
-  //     gender: "male",
-  //     shortDesc: "Full stack developer",
-  //     phone: "+91 8431143130",
-  //     birthday: "23 Sep 2002",
-  //     about: "A self-taught , quality-focused and passionate software developer interested in the field of Web development",
-  //   },
-  //   SocialLinks: [
-  //     {
-  //       email: "reachdarshanv@gmail.com",
-  //       linkName: "linkedin",
-  //       url: "https://www.linkedin.com/in/darshan-v-793b71234/"
-  //     },
-  //     {
-  //       email: "reachdarshanv@gmail.com",
-  //       linkName: "GitHub",
-  //       url: "https://github.com/DARSHAN-THE-CODER"
-  //     }
-  //   ],
-  //   projects: [
-  //     {
-  //       name: "Todo Website",
-  //       description: "to-do list website to manage tasks effectively",
-  //       github: "https://github.com/DARSHAN-THE-CODER",
-  //       category: "Web development",
-  //       techUsed: ["react", "express", "mongoose", "node js"],
-  //       date: "30 Jan 2023",
-  //       thumbnail: "https://codingnepalweb.com/wp-content/uploads/2021/05/img_6092ae49e2e72.jpg"
-  //     },
-  //     {
-  //       name: "Todo Website",
-  //       description: "to-do list website to manage tasks effectively",
-  //       github: "https://github.com/DARSHAN-THE-CODER",
-  //       category: "Web development",
-  //       techUsed: ["react", "express", "mongoose", "node js"],
-  //       date: "30 Jan 2023",
-  //       thumbnail: "https://codingnepalweb.com/wp-content/uploads/2021/05/img_6092ae49e2e72.jpg"
-  //     }
-  //   ],
-  // education: [
-  //   {
-  //     priority: 1,
-  //     from: 2010,
-  //     to: 2012,
-  //     institution: "XYZ institution, davanagere",
-  //     description: "lorel epsum ",
-  //     percentage: "80%"
-  //   },
-  //   {
-  //     priority: 2,
-  //     from: 2012,
-  //     to: 2015,
-  //     institution: "XYZ institution, Bangalore",
-  //     description: "lorel epsum xyzz ijdc ijdnc wi",
-  //     percentage: "89%"
-  //   }
-  // ],
-  // experience: [
-  //   {
-  //     priority: 1,
-  //     from: 2020,
-  //     to: 2022,
-  //     company: "XYZ institution, Bangalore",
-  //     description: "lorel epsum xyzz ijdc ijdnc wi",
-  //     role: "SDE"
-  //   },
-  //   {
-  //     priority: 2,
-  //     from: 2022,
-  //     to: 2023,
-  //     company: "XYZ institution, Bangalore",
-  //     description: "lorel epsum xyzz ijdc ijdnc wi",
-  //     role: "SDE 2"
-  //   }
-  // ]
-  // }
-
-  let user = {
-    user: {
-
-      id: 1,
-      email: "reachdarshanv@gmail.com",
-      name: "Darshan V",
-      password: "darshan",
-      address: "",
-      photoURL: "",
-      gender: "male",
-      shortDesc: "Full stack developer",
-      phone: "+91 8431143130",
-      birthday: "23 Sep 2002",
-      about: ["A self-taught , quality-focused and passionate software developer interested in the field of Web development", "I love to solve real world problems"]
-    }
-  }
-
-  let aboutCards = [{
-    title: "Web Design",
-    description: "The most modern and high-quality design made at a professional level"
-  }, {
-    title: "Mobile Apps",
-    description: "The most modern and high-quality design made at a professional level"
-  },
-  {
-    title: "Photography",
-    description: "The most modern and high-quality design made at a professional level"
-  }]
-
-  let projects = [
-    {
-      name: "Todo Website",
-      description: "to-do list website to manage tasks effectively",
-      github: "https://github.com/DARSHAN-THE-CODER",
-      category: "Web development",
-      techUsed: ["react", "express", "mongoose", "node js"],
-      date: "30 Jan 2023",
-      thumbnail: "https://codingnepalweb.com/wp-content/uploads/2021/05/img_6092ae49e2e72.jpg",
-      liveLink: ""
-    },
-    {
-      name: "Todo Website",
-      description: "to-do list website to manage tasks effectively",
-      github: "https://github.com/DARSHAN-THE-CODER",
-      category: "Web development",
-      techUsed: ["react", "express", "mongoose", "node js"],
-      date: "30 Jan 2023",
-      thumbnail: "https://learn.microsoft.com/en-us/azure/app-service/media/tutorial-java-spring-cosmosdb/spring-todo-app-running-locally.jpg",
-      liveLink: ""
-    }
-  ]
-  const [activeNav, setActiveNav] = useState("About")
   return (
     <>
 
-        {
-          isDomain ? <MainPage username={username} />
-            :
-            (
-              <div className='text-white m-auto'>
-                You are at right place :)
-              </div>
-            )
-        }
+      {
+        isDomain ? <MainPage username={username} />
+          :
+          (
+            <div className='text-white m-auto w-full h-full'>
+              <nav class="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+                <div class="container flex flex-wrap items-center justify-between mx-auto">
+                  {/* <a href="http://videoconf.darshanv.me/" class="flex items-center">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2zfAREgkmbvcbWq8CfWYnRK1TIQ2PD3QKcg&usqp=CAU" class="rounded-full" alt="Logo" width={40} height={40} />
+                  </a> */}
+                  <div class="flex md:order-2 gap-2">
+                    <button
+                      type='button'
+                      // onClick={() => handleSaveBasic()}
+                      className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                    >
+                      Login
+                    </button>
+                    <button
+                      type='button'
+                      // onClick={() => handleSaveBasic()}
+                      className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                    >
+                      Register
+                    </button>
+                  </div>
+                </div>
+              </nav>
+              You are at right place :)
+              <footer class="p-4 absolute bg-white rounded-lg flex justify-between flex-col shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 bottom-0 w-full">
+                <div class="sm:flex sm:items-center sm:justify-between w-full ">
+                  <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400 text-center mb-4 md:mb-0">© 2023 All Rights Reserved.
+                  </span>
+                  <div class="text-sm flex justify-center text-center font-bold">This site is built with <span className='text-pink-700 ml-1 mr-1'>♥</span> by <a href="mailto:reachdarshanv@gmail.com" className='italic ml-2'>Darshan V</a>
+                  </div>
+                  <div class="flex justify-center mt-4 md:mt-0 md:float-right md:right-0">
+                    <ul className="social-list">
+                      <li className="social-item">
+                        <a href={"https://www.linkedin.com/in/darshan-v-793b71234/"} target="_blank" className="icon-box">
+                          <ion-icon className='mt-4 hover:text-white' name={`logo-linkedin`}></ion-icon>
+                        </a>
+                      </li>
+                      <li className="social-item">
+                        <a href={"https://github.com/DARSHAN-THE-CODER"} target="_blank" className="icon-box">
+                          <ion-icon className='mt-4 hover:text-white' name={`logo-github`}></ion-icon>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </footer>
+            </div>
+          )
+      }
     </>
   )
 }
