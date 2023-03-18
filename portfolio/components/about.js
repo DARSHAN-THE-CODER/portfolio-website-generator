@@ -1,6 +1,6 @@
 // import {ion-icon} from "@ionic/react"
 
-function About({ about, activeNav, username, aboutCards }) {
+function About({ about, activeNav, username, aboutCards, photoURL }) {
 
     // let aboutCards = [{
     //     title: "Web Design",
@@ -21,7 +21,7 @@ function About({ about, activeNav, username, aboutCards }) {
                 <h2 className="h2 article-title">About me</h2>
             </header>
             <figure className="w-full m-auto flex justify-center mb-10">
-                <img src='https://i.ibb.co/42fb14D/New-doc-07-Mar-2023-6-22-pm.jpg' alt='dsjc' style={{ height: "300px", borderRadius: "30px" }} loading="lazy" />
+                <img src={photoURL} alt='dsjc' style={{ height: "300px", borderRadius: "30px" }} loading="lazy" />
             </figure>
             <section className="about-text">
                         <p >

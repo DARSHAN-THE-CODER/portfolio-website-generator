@@ -26,7 +26,8 @@ function SkillsInput({ id, skill, title, percentage, onInputChange, onRemoveClic
                 type="number"
                 value={percentage}
                 min="0"
-                onChange={(e) => onInputChange(id, "percentage", Number(e.target.value))}
+                max="100"
+                onChange={(e) => {Number(e.target.value) <=100 ? onInputChange(id, "percentage", Number(e.target.value)) : ""}}
                 className="border border-gray-300 rounded p-2"
             />
         </div>
