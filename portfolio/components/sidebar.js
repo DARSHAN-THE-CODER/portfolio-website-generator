@@ -13,7 +13,7 @@ function Sidebar({user}) {
             <div className="sidebar-info">
 
                 <figure className="avatar-box">
-                    <Image src={user?.gender === "male" ?  "/../public/assets/avatar1.png" : "/../assets/public/avatar2.png"} alt={user?.name} height={40} width={40} />
+                    <Image src={user?.gender === "male" ?  "/../public/assets/avatar4.png" : "/../assets/public/avatar2.png"} alt={user?.name} height={500} width={500} />
                 </figure>
 
                 <div className="info-content">

@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 function ContactFormResponses({ username, activeNav }) {
 
     const [formResponses, setFormResponses] = useState([])
-    
+
     useEffect(() => {
         if (username) {
             axios.get(`${APIURL}/user/form-response/${username}`)
@@ -38,6 +38,9 @@ function ContactFormResponses({ username, activeNav }) {
             <header>
                 <h2 className="h2 article-title">Your messages !</h2>
             </header>
+            <p className="xd italic cursor-pointer hover:underline w-min mb-4">
+                <a href={`https://${username}.mytechfolio.live/`} target="_blank">https://{username}.mytechfolio.live/</a>
+            </p>
             {
                 (formResponses?.length > 0) ? (
                     <ul className='flex flex-wrap'>

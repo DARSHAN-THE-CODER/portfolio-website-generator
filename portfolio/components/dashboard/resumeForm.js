@@ -248,6 +248,9 @@ function ResumeForm({ activeNav, username }) {
             <header>
                 <h2 className="h2 article-title">Enter details</h2>
             </header>
+            <p className="xd italic cursor-pointer hover:underline w-min mb-4">
+                <a href={`https://${username}.mytechfolio.live/`} target="_blank">https://{username}.mytechfolio.live/</a>
+            </p>
             <div className='flex flex-col-reverse'>
                 <section className='m-auto flex justify-evenly'>
                     <form className="form" onSubmit={handleSubmit} target="_blank">

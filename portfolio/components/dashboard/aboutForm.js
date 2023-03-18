@@ -177,7 +177,9 @@ function AboutForm({ activeNav, username }) {
             <header>
                 <h2 className="h2 article-title">Enter basic details</h2>
             </header>
-
+            <p className="xd italic cursor-pointer hover:underline w-min">
+                <a href={`https://${username}.mytechfolio.live/`} target="_blank">https://{username}.mytechfolio.live/</a>
+            </p>
             <div className="flex flex-col md:flex-row">
 
                 <section className="m-auto flex w-full md:w-[50vw] p-3">
