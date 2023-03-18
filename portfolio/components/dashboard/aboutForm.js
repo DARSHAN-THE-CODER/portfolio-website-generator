@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios";
 import { APIURL } from "@/utils/api.utils";
 import { toast } from "react-toastify"
+import Loader from "../common/loader";
 
 const InputSet = ({ id, title, description, onInputChange, onRemoveClick, nnn }) => {
     return (
@@ -54,6 +55,7 @@ function AboutForm({ activeNav, username }) {
 
     const [idCounter, setIdCounter] = useState(1)
     // const [username, setUsername] = useState("")
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
             if(username)
@@ -119,6 +121,7 @@ function AboutForm({ activeNav, username }) {
     console.log(aboutCards);
 
     function handleSaveAboutCards() {
+        setLoading(true)
         console.log(aboutCards)
         let temp = aboutCards;
 
@@ -133,16 +136,19 @@ function AboutForm({ activeNav, username }) {
         );
         console.log(hasEmptyValues)
         if (hasEmptyValues) {
+            setLoading(false)
             return toast.error("Please fill all the fields")
         } else{
             axios.post(`${APIURL}/user/about-cards/${username}`, { data: aboutCards })
                 .then((res) => {
                     console.log(res)
+                    setLoading(false)
                     toast.success("About cards saved successfully")
                 }
                 )
                 .catch((err) => {
                     console.log(err)
+                    setLoading(false)
                     toast.error("Error saving about cards")
                 }
                 )
@@ -151,14 +157,17 @@ function AboutForm({ activeNav, username }) {
 
     function handleSaveBasic() {
         console.log(about)
+        setLoading(true)
         axios.patch(`${APIURL}/user/${username}`, { data: about })
             .then((res) => {
                 console.log(res)
+                setLoading(false)
                 toast.success("Basic details saved successfully")
             }
             )
             .catch((err) => {
                 console.log(err)
+                setLoading(false)
                 toast.error("Error saving basic details")
             }
             )
@@ -345,8 +354,9 @@ function AboutForm({ activeNav, username }) {
                             </button>
                         </div> */}
                     </form>
+                    { loading && <Loader/> }
                 </section>
-
+                
                 <article className={`about active w-full md:w-[50vw] p-3`} data-page="about">
                     <header>
                         <h2 className="h2 article-title">About me (preview)</h2>

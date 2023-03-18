@@ -6,13 +6,18 @@ import MainPage from './main'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 
+import Loader from '@/components/common/loader'
+
 export default function Home() {
 
   const [isDomain, setIsDomain] = useState(false)
   const [username, setUsername] = useState("")
+  const [loading, setLoading] = useState(true);
+
   const router = useRouter()
   var console = {};
   console.log = function () { };
+
   useEffect(() => {
     let location = window.location.hostname;
     let check = location.split(".");
@@ -24,14 +29,17 @@ export default function Home() {
           if (res.status === 200) {
             setUsername(check[0])
             setIsDomain(true)
+            setLoading(false)
           }
           else {
             toast.error(`No user found with username ${check[0]}`)
+            setLoading(false)
             router.push('https://mytechfolio.live/');
             return
           }
         })
         .catch((err) => {
+          setLoading(false)
           console.log(err)
         })
 
@@ -40,17 +48,19 @@ export default function Home() {
     }
   }, [])
 
-  function handlePush(term){
-    if(term === "login"){
+  function handlePush(term) {
+    if (term === "login") {
       router.push("/auth/login")
-    } else{
+    } else {
       router.push("/auth/register")
     }
   }
   return (
     <>
-
+      
       {
+        loading ? <Loader title={"Fetching details"} description={"Hang on just a moment , we are fetching details. Thank you for your patience!"}/> 
+          : 
         isDomain ? <MainPage username={username} />
           :
           (
@@ -79,6 +89,7 @@ export default function Home() {
                 </div>
               </nav>
               You are at right place :)
+
               <footer class="p-4 absolute bg-white rounded-lg flex justify-between flex-col shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 bottom-0 w-full">
                 <div class="sm:flex sm:items-center sm:justify-between w-full ">
                   <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400 text-center mb-4 md:mb-0">© 2023 All Rights Reserved.
