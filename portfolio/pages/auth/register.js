@@ -76,13 +76,18 @@ function Register() {
         return !user.name || !user.email || !user.username || !user.password
     }
 
+    function handlePush(e){
+        e.preventDefault()
+        router.push("https://mytechfolio.live/")
+    }
+
     return (
         <article className="active md:w-[70vw] flex justify-center mt-[100px] m-auto">
             <header>
                 <h2 className="h2 article-title">Register</h2>
             </header>
             <section className="m-auto flex justify-center">
-                <form className="form w-[300px]" onSubmit={handleSubmit} target="_blank">
+                <form className="form w-[300px]" target="_blank">
                     <div className="form-group text-white">
                         <input required className="border-2 rounded-2xl p-2 m-2" type="text" name="name" id="" placeholder="Enter your Full name"
                             onChange={(e) => setUser({ ...user, name: e.target.value })}
@@ -118,14 +123,16 @@ function Register() {
                             onChange={(e) => setUser({ ...user, password: e.target.value })}
                         />
                     </div>
+
                     <p className="text-gray-400 italic flex">Already have an account ? <span className="text-white ml-2 hover:underline"><Link href={"/auth/login"}>Login</Link></span> </p>
+
                     <div className="form-group mt-4 flex" >
                         <button className={`form-btn m-auto`} data-nav-link
-                            onClick={() => router.push("/")}
+                            onClick={(e) => handlePush(e)}
                         >
                             Back
                         </button>
-                        <button className="form-btn m-auto" type="submit" disabled={isEmpty()}>
+                        <button className="form-btn m-auto" disabled={isEmpty()} onClick={(e) => handleSubmit(e)}>
                             Register
                         </button>
                     </div>

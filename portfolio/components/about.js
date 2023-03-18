@@ -1,22 +1,12 @@
-// import {ion-icon} from "@ionic/react"
+import Head from "next/head"
 
 function About({ about, activeNav, username, aboutCards, photoURL }) {
 
-    // let aboutCards = [{
-    //     title: "Web Design",
-    //     description: "The most modern and high-quality design made at a professional level"
-    // }, {
-    //     title: "Mobile Apps",
-    //     description: "The most modern and high-quality design made at a professional level"
-    // },
-    // {
-    //     title: "Photography",
-    //     description: "The most modern and high-quality design made at a professional level"
-    // }]
-
-
     return (
         <article className={`about ${activeNav === "About" ? "active" : ""}`} data-page="about">
+            <Head>
+                <title>About Me </title>
+            </Head>
             <header>
                 <h2 className="h2 article-title">About me</h2>
             </header>
@@ -24,9 +14,9 @@ function About({ about, activeNav, username, aboutCards, photoURL }) {
                 <img src={photoURL} alt='dsjc' style={{ height: "300px", borderRadius: "30px" }} loading="lazy" />
             </figure>
             <section className="about-text">
-                        <p >
-                            {about}
-                        </p>
+                <p >
+                    {about}
+                </p>
             </section>
 
             <section className="service">

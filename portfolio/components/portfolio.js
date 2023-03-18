@@ -1,12 +1,14 @@
 import { useState } from "react"
-
+import Head from "next/head"
 
 function Portfolio({ projects, activeNav }) {
     const [activeProject, setActiveProject] = useState({ status: false, pro: {} })
 
     return (
         <article className={`portfolio ${activeNav === "Portfolio" ? "active" : ""}`} data-page="portfolio">
-
+            <Head>
+                <title>My Projects</title>
+            </Head>
             {activeProject.status ? (
                 <section className="projects">
                     <header className="flex">
