@@ -3,6 +3,8 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import Head from 'next/head'
+
 function ContactFormResponses({ username, activeNav }) {
 
     const [formResponses, setFormResponses] = useState([])
@@ -35,6 +37,9 @@ function ContactFormResponses({ username, activeNav }) {
     }
     return (
         <article className={`contact ${activeNav === "ContactFormResponses" ? "active" : ""}`} data-page="contact">
+            <Head>
+                <title>Form responses</title>
+            </Head>
             <header>
                 <h2 className="h2 article-title">Your messages !</h2>
             </header>

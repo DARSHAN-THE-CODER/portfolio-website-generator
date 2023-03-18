@@ -4,6 +4,8 @@ import { APIURL } from "@/utils/api.utils";
 import { toast } from "react-toastify"
 import Loader from "../common/loader";
 
+import Head from 'next/head'
+
 const InputSet = ({ id, title, description, onInputChange, onRemoveClick, nnn }) => {
     return (
         <div className="flex mb-4 flex-col text-white ">
@@ -58,33 +60,33 @@ function AboutForm({ activeNav, username }) {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-            if(username)
-            {axios.get(`${APIURL}/user/username/${username}`)
-                .then((res) => {
-                    // console.log(res)
-                    if (res.status === 200) {
-                        axios.get(`${APIURL}/user/${username}`)
-                            .then((res) => {
-                                console.log(res.data)
-                                const { socialLinks, projects, education, experience, skills, contactResponses, updatedAt, id, ...imp } = res.data;
-                                console.log(imp)
-                                setAboutCards(imp?.aboutCards)
+        if (username) {
+            axios.get(`${APIURL}/user/username/${username}`)
+            .then((res) => {
+                // console.log(res)
+                if (res.status === 200) {
+                    axios.get(`${APIURL}/user/${username}`)
+                        .then((res) => {
+                            console.log(res.data)
+                            const { socialLinks, projects, education, experience, skills, contactResponses, updatedAt, id, ...imp } = res.data;
+                            console.log(imp)
+                            setAboutCards(imp?.aboutCards)
 
-                                setIdCounter(  (imp?.aboutCards[imp?.aboutCards?.length - 1]?.id + 1) || 1)
-                                delete imp.aboutCards;
-                                setAbout(imp)
-                            }
-                            )
-                    }
-                    else {
-                        return toast.error(`No user found with username ${username}`)
-                        // router.push('https://www.mytechfolio.tech');
-                        // router.push('http://www.mytechfolio.tech');
-                    }
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+                            setIdCounter((imp?.aboutCards[imp?.aboutCards?.length - 1]?.id + 1) || 1)
+                            delete imp.aboutCards;
+                            setAbout(imp)
+                        }
+                        )
+                }
+                else {
+                    return toast.error(`No user found with username ${username}`)
+                    // router.push('https://www.mytechfolio.tech');
+                    // router.push('http://www.mytechfolio.tech');
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         }
     }, [username])
 
@@ -138,7 +140,7 @@ function AboutForm({ activeNav, username }) {
         if (hasEmptyValues) {
             setLoading(false)
             return toast.error("Please fill all the fields")
-        } else{
+        } else {
             axios.post(`${APIURL}/user/about-cards/${username}`, { data: aboutCards })
                 .then((res) => {
                     console.log(res)
@@ -174,6 +176,9 @@ function AboutForm({ activeNav, username }) {
     }
     return (
         <article className={`about ${activeNav === "AboutForm" ? "active" : ""}`} data-page="about">
+            <Head>
+                <title>About Page | Add basic details</title>
+            </Head>
             <header>
                 <h2 className="h2 article-title">Enter basic details</h2>
             </header>
@@ -356,9 +361,9 @@ function AboutForm({ activeNav, username }) {
                             </button>
                         </div> */}
                     </form>
-                    { loading && <Loader/> }
+                    {loading && <Loader />}
                 </section>
-                
+
                 <article className={`about active w-full md:w-[50vw] p-3`} data-page="about">
                     <header>
                         <h2 className="h2 article-title">About me (preview)</h2>
