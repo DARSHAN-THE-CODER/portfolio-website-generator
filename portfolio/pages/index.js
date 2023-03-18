@@ -17,7 +17,7 @@ export default function Home() {
     let location = window.location.hostname;
     let check = location.split(".");
     console.log(check)
-    if (check[0] !== "localhost") {
+    if (check[0] !== "mytechfolio") {
       axios.get(`${APIURL}/user/username/${check[0]}`)
         .then((res) => {
           console.log(res)
@@ -27,7 +27,7 @@ export default function Home() {
           }
           else {
             toast.error(`No user found with username ${check[0]}`)
-            router.push('/');
+            router.push('https://mytechfolio.live/');
             return
           }
         })
