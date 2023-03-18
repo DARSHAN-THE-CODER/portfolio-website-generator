@@ -67,7 +67,7 @@ export default function Home() {
           :
           (
             <div className='text-white m-auto w-full h-full'>
-              <nav class="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+              <nav class="px-2 sm:px-4 py-2.5 bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-600 ">
                 <div class="container flex flex-wrap items-center justify-between mx-auto">
                   {/* <a href="http://videoconf.darshanv.me/" class="flex items-center">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2zfAREgkmbvcbWq8CfWYnRK1TIQ2PD3QKcg&usqp=CAU" class="rounded-full" alt="Logo" width={40} height={40} />
@@ -92,9 +92,9 @@ export default function Home() {
               </nav>
               You are at right place :)
 
-              <footer class="p-4 absolute bg-white rounded-lg flex justify-between flex-col shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 bottom-0 w-full">
+              <footer class="p-4 absolute bg-gray-800 rounded-lg flex justify-between flex-col shadow md:flex md:items-center md:justify-between md:p-6  bottom-0 w-full">
                 <div class="sm:flex sm:items-center sm:justify-between w-full ">
-                  <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400 text-center mb-4 md:mb-0">© 2023 All Rights Reserved.
+                  <span class="text-sm text-gray-400 sm:text-center text-center mb-4 md:mb-0">© 2023 All Rights Reserved.
                   </span>
                   <div class="text-sm flex justify-center text-center font-bold">This site is built with <span className='text-pink-700 ml-1 mr-1'>♥</span> by <a href="mailto:reachdarshanv@gmail.com" className='italic ml-2'>Darshan V</a>
                   </div>
