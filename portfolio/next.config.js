@@ -6,6 +6,11 @@ const nextConfig = {
   compiler: {
     removeConsole: true
   },
+  images: {
+    domains: [
+      "i.ibb.co"
+    ],
+  },
 }
 
 module.exports = nextConfig
