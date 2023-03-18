@@ -69,7 +69,7 @@ function Login() {
                     <p className="text-gray-400 italic flex">Don't have an account ? <span className="text-white ml-2 hover:underline"><Link href={"/auth/register"}>Register</Link></span> </p>
                     <div className="form-group mt-4 flex" >
                         <button className={`form-btn m-auto`} data-nav-link
-                            onClick={() => router.push("/")}
+                            onClick={() => router.push("https://mytechfolio.live/")}
                         >
                             Back
                         </button>
