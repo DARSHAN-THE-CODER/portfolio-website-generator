@@ -8,6 +8,8 @@ import { useRouter } from 'next/router'
 
 import Loader from '@/components/common/loader'
 
+// https://stickers.wiki/telegram/search/?q=memoji
+
 export default function Home() {
 
   const [isDomain, setIsDomain] = useState(false)

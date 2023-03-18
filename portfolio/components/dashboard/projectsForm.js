@@ -169,6 +169,9 @@ function ProjectsForm({ activeNav, username }) {
             <header>
                 <h2 className="h2 article-title">Enter Projects details</h2>
             </header>
+            <p className="xd italic cursor-pointer hover:underline w-min mb-4">
+                <a href={`https://${username}.mytechfolio.live/`} target="_blank">https://{username}.mytechfolio.live/</a>
+            </p>
             <div className='flex flex-col'>
                 <section className=''>
                     <Portfolio projects={projects} activeNav={"Portfolio"} />
