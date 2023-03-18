@@ -9,6 +9,8 @@ import ProjectsInput from '../form/ProjectsInput'
 import Portfolio from '../portfolio'
 import SocialLinksInput from '../form/SocialLinks'
 
+import Loader from '../common/loader'
+
 function ProjectsForm({ activeNav, username }) {
     // const [username, setUsername] = useState("")
 
@@ -19,6 +21,7 @@ function ProjectsForm({ activeNav, username }) {
 
     const [projId, setProjId] = useState(1)
     const [linkId, setLinkId] = useState(1)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
 
@@ -74,6 +77,7 @@ function ProjectsForm({ activeNav, username }) {
 
     function handleSaveProjects() {
         let temp = projects;
+        setLoading(true)
 
         const hasEmptyValues = temp.some(obj =>
             Object.values(obj).some(value => {
@@ -85,6 +89,7 @@ function ProjectsForm({ activeNav, username }) {
         console.log(hasEmptyValues)
         console.log(temp)
         if (hasEmptyValues) {
+            setLoading(false)
             return toast.error("Please fill all the fields")
         } else {
             temp.forEach((item) => { delete item.id; delete item?.username })
@@ -92,11 +97,13 @@ function ProjectsForm({ activeNav, username }) {
                 .then((res) => {
                     console.log(res)
                     if (res.status === 200) {
+                        setLoading(false)
                         toast.success("Projects details saved successfully")
                     }
                 })
                 .catch((err) => {
                     console.log(err)
+                    setLoading(false)
                     toast.error("Something went wrong")
                 })
         }
@@ -127,6 +134,7 @@ function ProjectsForm({ activeNav, username }) {
 
     const handleSaveSocialLinks = () => {
         let temp = socialLinks;
+        setLoading(true)
         const hasEmptyValues = temp.some(obj =>
             Object.values(obj).some(value => {
                 const trimmedValue = value.toString().trim();
@@ -137,6 +145,7 @@ function ProjectsForm({ activeNav, username }) {
         console.log(hasEmptyValues)
         console.log(temp)
         if (hasEmptyValues) {
+            setLoading(false);
             return toast.error("Please fill all the fields")
         } else {
             temp.forEach((item) => { delete item.id; delete item?.username })
@@ -144,11 +153,13 @@ function ProjectsForm({ activeNav, username }) {
                 .then((res) => {
                     console.log(res)
                     if (res.status === 201) {
+                        setLoading(false);
                         toast.success("Social Links details saved successfully")
                     }
                 })
                 .catch((err) => {
                     console.log(err)
+                    setLoading(false);
                     toast.error("Something went wrong")
                 })
         }
@@ -238,6 +249,7 @@ function ProjectsForm({ activeNav, username }) {
                         </div>
 
                     </form>
+                    {loading && <Loader />}
                 </section>
 
             </div>

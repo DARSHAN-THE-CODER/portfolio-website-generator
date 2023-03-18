@@ -10,6 +10,7 @@ import SkillsInput from '../form/SkillsInput'
 import Resume from '../resume'
 
 import { useRouter } from 'next/router';
+import Loader from '../common/loader'
 
 function ResumeForm({ activeNav, username }) {
 
@@ -25,39 +26,42 @@ function ResumeForm({ activeNav, username }) {
     const [edId, setEdId] = useState(1)
     const [expId, setExpId] = useState(1)
     const [skillId, setSkillId] = useState(1)
-
+    const [loading, setLoading] = useState(false)
     console.log(edId)
+
     useEffect(() => {
 
-            if (username){axios.get(`${APIURL}/user/username/${username}`)
-                .then((res) => {
-                    // console.log(res)
-                    if (res.status === 200) {
-                        axios.get(`${APIURL}/user/${username}`)
-                            .then((res) => {
-                                // console.log(res.data)
-                                // console.log(res.data.skills.length);
-                                // console.log(res.data.skills[res.data.skills.length - 1]?.id)
+        if (username) {
+            axios.get(`${APIURL}/user/username/${username}`)
+            .then((res) => {
+                // console.log(res)
+                if (res.status === 200) {
+                    axios.get(`${APIURL}/user/${username}`)
+                        .then((res) => {
+                            // console.log(res.data)
+                            // console.log(res.data.skills.length);
+                            // console.log(res.data.skills[res.data.skills.length - 1]?.id)
 
-                                setEdId(Number(res?.data?.education[res?.data?.education?.length - 1]?.id + 1) || 1)
-                                setExpId(Number(res?.data?.experience[res?.data?.experience?.length - 1]?.id + 1) || 1)
-                                setSkillId(Number(res.data.skills[res.data.skills.length - 1]?.id + 1) || 1)
+                            setEdId(Number(res?.data?.education[res?.data?.education?.length - 1]?.id + 1) || 1)
+                            setExpId(Number(res?.data?.experience[res?.data?.experience?.length - 1]?.id + 1) || 1)
+                            setSkillId(Number(res.data.skills[res.data.skills.length - 1]?.id + 1) || 1)
 
-                                setEducation(res.data.education)
-                                setExperience(res.data.experience)
-                                setSkills(res.data.skills)
-                            }
-                            )
-                    }
-                    else {
-                        return toast.error(`No user found with username ${username}`)
-                        // router.push('https://www.mytechfolio.tech');
-                        // router.push('http://www.mytechfolio.tech');
-                    }
-                })
-                .catch((err) => {
-                    console.log(err)
-                })}
+                            setEducation(res.data.education)
+                            setExperience(res.data.experience)
+                            setSkills(res.data.skills)
+                        }
+                        )
+                }
+                else {
+                    return toast.error(`No user found with username ${username}`)
+                    // router.push('https://www.mytechfolio.tech');
+                    // router.push('http://www.mytechfolio.tech');
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
     }, [username])
 
     // for education records
@@ -137,7 +141,7 @@ function ResumeForm({ activeNav, username }) {
     function handleSaveEducation() {
         console.log(education)
         let temp = education;
-
+        setLoading(true)
         console.log(temp)
 
         const hasEmptyValues = temp.some(obj =>
@@ -149,17 +153,20 @@ function ResumeForm({ activeNav, username }) {
         );
         console.log(hasEmptyValues)
         if (hasEmptyValues) {
+            setLoading(false);
             return toast.error("Please fill all the fields")
         } else {
             temp.forEach((item) => { delete item.id; delete item?.username })
             axios.post(`${APIURL}/education/${username}`, { data: temp })
                 .then((res) => {
                     console.log(res)
+                    setLoading(false);
                     toast.success("Education details saved")
                 }
                 )
                 .catch((err) => {
                     console.log(err)
+                    setLoading(false);
                     toast.error("Error saving education details")
                 }
                 )
@@ -170,6 +177,7 @@ function ResumeForm({ activeNav, username }) {
         console.log(experience)
         let temp = experience;
         console.log(temp)
+        setLoading(true)
 
         const hasEmptyValues = temp.some(obj =>
             Object.values(obj).some(value => {
@@ -180,17 +188,20 @@ function ResumeForm({ activeNav, username }) {
         );
         console.log(hasEmptyValues)
         if (hasEmptyValues) {
+            setLoading(false)
             return toast.error("Please fill all the fields")
         } else {
             temp.forEach((item) => { delete item.id; delete item?.username })
             axios.post(`${APIURL}/experience/${username}`, { data: temp })
                 .then((res) => {
                     console.log(res)
+                    setLoading(false)
                     toast.success("Experience details saved")
                 }
                 )
                 .catch((err) => {
                     console.log(err)
+                    setLoading(false)
                     toast.error("Error saving experience details")
                 }
                 )
@@ -200,6 +211,7 @@ function ResumeForm({ activeNav, username }) {
     function handleSaveSkills() {
         console.log(skills)
         let temp = skills;
+        setLoading(true)
 
         const hasEmptyValues = temp.some(obj =>
             Object.values(obj).some(value => {
@@ -210,18 +222,21 @@ function ResumeForm({ activeNav, username }) {
         );
         console.log(hasEmptyValues)
         if (hasEmptyValues) {
+            setLoading(false);
             return toast.error("Please fill all the fields")
-        } 
+        }
         else {
             temp.forEach((item) => { delete item.id; delete item?.username })
             axios.post(`${APIURL}/user/skills/${username}`, { data: temp })
                 .then((res) => {
                     console.log(res)
+                    setLoading(false);
                     toast.success("Skills details saved")
                 }
                 )
                 .catch((err) => {
                     console.log(err)
+                    setLoading(false);
                     toast.error("Error saving skills details")
                 }
                 )
@@ -257,7 +272,7 @@ function ResumeForm({ activeNav, username }) {
                                 </div>
                                 {education?.map((inputSet, index) => (
                                     <EducationInputSet
-                                        
+
                                         className="bg-gray-300"
                                         key={inputSet.id}
                                         id={inputSet.id}
@@ -345,6 +360,7 @@ function ResumeForm({ activeNav, username }) {
                         </div>
 
                     </form>
+                    {loading && <Loader />}
                 </section>
                 <section className='m-auto flex w-full  p-3'>
                     <Resume education={education} experience={experience} skills={skills} activeNav={"Resume"} isPreview={true} />
