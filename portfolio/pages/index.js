@@ -24,7 +24,7 @@ export default function Home() {
     let location = window.location.hostname;
     let check = location.split(".");
     console.log(check)
-    if (check[0] !== "mytechfolio") {
+    if (check[0] !== "localhost") {
       axios.get(`${APIURL}/user/username/${check[0]}`)
         .then((res) => {
           console.log(res)

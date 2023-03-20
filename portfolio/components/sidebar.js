@@ -13,7 +13,7 @@ function Sidebar({user}) {
             <div className="sidebar-info">
 
                 <figure className="avatar-box">
-                    <Image src={(user?.gender === "male" &&  "https://i.ibb.co/wgkWbX6/STK-20201216-WA0002.webp") ||  ( user?.gender === "female" && "https://i.ibb.co/3mLf5T6/2290702-512.webp")} alt={"Update gender to see memoji"} height={500} width={500} />
+                    <img src={(user?.gender === "male" &&  "https://i.ibb.co/wgkWbX6/STK-20201216-WA0002.webp") ||  ( user?.gender === "female" && "https://i.ibb.co/3mLf5T6/2290702-512.webp")} alt={"Update gender to see memoji"} className="w-[90px] h-[90px] md:h-full"/>
                 </figure>
 
                 <div className="info-content">

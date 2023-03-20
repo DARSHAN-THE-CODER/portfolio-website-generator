@@ -6,6 +6,10 @@ import { APIURL } from "@/utils/api.utils"
 import { toast } from "react-toastify"
 import { useRouter } from "next/router"
 
+import { getAnalytics, logEvent } from "firebase/analytics";
+
+import { app } from "@/utils/firebase";
+
 function Register() {
     const [user, setUser] = useState({})
     const [error, setError] = useState()
@@ -57,6 +61,7 @@ function Register() {
                             axios.post(`${APIURL}/user`, user)
                                 .then((res) => {
                                     console.log(res)
+                                    logEvent(getAnalytics(app), "Signed up");
                                     toast.success("User created successfully")
                                     router.push('/auth/login')
                                 })
