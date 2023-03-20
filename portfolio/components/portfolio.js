@@ -11,7 +11,7 @@ function Portfolio({ projects, activeNav }) {
             </Head>
             {activeProject.status ? (
                 <section className="projects">
-                    <header className="flex">
+                    <header className="flex mt-6">
                         <span className="icon-box mr-3 cursor-pointer hover:shadow-lg" onClick={() => (setActiveProject({ status: false }))}>
                             <ion-icon name="arrow-back"></ion-icon>
                         </span>
@@ -37,7 +37,7 @@ function Portfolio({ projects, activeNav }) {
                     </section>
 
 
-                    <h2 className="project-title mt-3">{activeProject?.pro?.description}</h2>
+                    <h2 className="mt-3 text-white">{activeProject?.pro?.description}</h2>
 
                     <h3 class="h3 service-title m-4">Tech used </h3>
                     <div className="flex flex-wrap w-full">
