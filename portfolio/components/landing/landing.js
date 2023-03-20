@@ -13,7 +13,7 @@ const LandingPage = () => {
     function handleRegister() {
 
         logEvent(getAnalytics(app), "clicked register from home");
-
+        
         router.push("/auth/register")
     }
     return (

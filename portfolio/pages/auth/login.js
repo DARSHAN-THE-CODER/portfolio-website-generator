@@ -7,6 +7,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { APIURL } from "@/utils/api.utils";
 import bcrypt from 'bcryptjs';
+import { getAnalytics, logEvent } from "firebase/analytics";
+
+import { app } from "@/utils/firebase";
 
 function Login() {
     const [user, setUser] = useState({})
@@ -32,7 +35,7 @@ function Login() {
                     // const isMatch = bcrypt.compareSync(res.data.username, hashedPassword);
 
                     localStorage.setItem('logintoken', hashedPassword)
-
+                    logEvent(getAnalytics(app), "user logged in");
                     router.push(`/dashboard/${res.data.username}`)
                 } else {
                     toast.error("Login failed")

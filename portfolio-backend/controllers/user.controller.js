@@ -403,6 +403,17 @@ const deleteResponseById = async (req, res) => {
     }
 }
 
+// change password
+
+// const changePassword = async (req, res) => {
+//     const { username } = req.params;
+//     const { password } = req.body;
+
+//     try {
+//         const user = await prisma.user.findUnique({
+
+
+
 module.exports = {
     getAllUsers,
     checkUsername,

@@ -13,6 +13,10 @@ import { APIURL } from '@/utils/api.utils'
 
 import Loader from '@/components/common/loader'
 
+import { getAnalytics, logEvent, setUserId } from "firebase/analytics";
+
+import { app } from "@/utils/firebase";
+
 export default function MainPage({username}) {
 
   const [navLinks, setNavLinks] = useState([
@@ -41,6 +45,7 @@ export default function MainPage({username}) {
         axios.get(`${APIURL}/user/${username}`)
         .then((res) => {
             console.log(res.data)
+            setUserId(getAnalytics(app), username);
             setUser(res.data)
             setLoading(false)
         })
