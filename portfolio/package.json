@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
@@ -16,6 +17,7 @@
     "eslint-config-next": "13.2.4",
     "firebase": "^9.18.0",
     "next": "13.2.4",
+    "next-sitemap": "^4.0.6",
     "react": "18.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",

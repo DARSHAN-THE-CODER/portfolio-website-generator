@@ -1,5 +1,5 @@
-# @baseURL=http://localhost:8080/api/v1/user
-@baseURL = https://portfolio.darshanv.website/api/v1/user
+@baseURL=http://localhost:8080/api/v1/user
+# @baseURL = https://portfolio.darshanv.website/api/v1/user
 
 ### Get all users
 GET {{baseURL}}
@@ -107,3 +107,6 @@ GET {{baseURL}}/form-response/darshanv
 
 ### delete form response
 DELETE {{baseURL}}/form-response/darshanv
+
+# ### hash all passwords
+# PATCH {{baseURL}}
