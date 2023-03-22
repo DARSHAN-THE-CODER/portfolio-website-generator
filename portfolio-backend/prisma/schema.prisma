@@ -26,6 +26,7 @@ model User {
   phone         String?
   dob           String?
   githubUsername String?
+  secretKey     String?
   isPaid        Boolean        @default(false)  
   socialLinks   SocialLinks[]
   projects      Projects[]

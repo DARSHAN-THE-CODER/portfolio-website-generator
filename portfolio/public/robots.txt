@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://mytechfolio.live
+
+# Sitemaps
+Sitemap: https://mytechfolio.live/sitemap.xml
+Sitemap: https://mytechfolio.live/server-sitemap-index.xml

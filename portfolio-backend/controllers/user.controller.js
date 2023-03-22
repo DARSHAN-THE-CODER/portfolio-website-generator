@@ -1,10 +1,25 @@
 const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL,
+      },
+    },
+    errorFormat: 'pretty',
+    log: ['query', 'info', 'warn'],
+  });
+
+const bcrypt = require('bcrypt');
 
 const getAllUsers = async (req, res) => {
     try {
+        // also return count of users
+        const count = await prisma.user.count();
+        console.log(count);
         const users = await prisma.user.findMany();
-        res.json(users);
+        res.json({ "count": count, "length": users?.length, "users": users });
+        // return number of users and all user details in response , dont use select statement
+
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -65,7 +80,7 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
     const { username } = req.params;
     const data = req.body.data
-    ;
+        ;
     try {
         const user = await prisma.user.update({
             where: { username: username },
@@ -372,7 +387,7 @@ const getFormResponses = async (req, res) => {
 }
 
 const deleteFormResponses = async (req, res) => {
-    const { username} = req.params;
+    const { username } = req.params;
     try {
         const deleteFormResponses = await prisma.contactFormResponses.deleteMany({
             where: {
@@ -391,13 +406,13 @@ const deleteResponseById = async (req, res) => {
     const { id } = req.params;
     try {
         const deleteFormResponse = await prisma.contactFormResponses.delete({
-            where:{
+            where: {
                 id: parseInt(id)
             }
         })
         res.status(200).json(deleteFormResponse)
     }
-    catch(err){
+    catch (err) {
         console.log(err)
         res.status(500).json({ error: err.message });
     }
@@ -412,6 +427,40 @@ const deleteResponseById = async (req, res) => {
 //     try {
 //         const user = await prisma.user.findUnique({
 
+const hashAllPasswords = async (req, res) => {
+    
+
+   
+    const transaction = await prisma.$transaction([]);
+    // use transaction
+    try {
+        const users = await prisma.user.findMany();
+        // return res.json(users)
+        console.log(users)
+        // loop through all users and update their password
+        for (const user of users) {
+            const hashedPassword = await bcrypt.hash(user.password, 10);
+
+            // add the update operation to the transaction
+            // transaction.push(
+                await prisma.user.update({
+                  where: { id: user.id },
+                  data: { password: hashedPassword },
+                  transaction
+                })
+            //   );
+        }
+
+        await transaction.$commit();
+        res.json({ message: "All passwords have been hashed" });
+    }
+    catch (err) {
+        // rollback the transaction if any update fails
+        console.log(err)
+        await transaction.$rollback;
+        // throw err;
+    }
+}
 
 
 module.exports = {
@@ -438,5 +487,7 @@ module.exports = {
     contactFormSend,
     getFormResponses,
     deleteFormResponses,
-    deleteResponseById
+    deleteResponseById,
+
+    hashAllPasswords
 }

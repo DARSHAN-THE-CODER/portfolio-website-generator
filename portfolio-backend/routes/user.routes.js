@@ -2,7 +2,9 @@ const express = require('express')
 
 const router = express.Router()
 
-const { getAllUsers, checkUsername, createUser, getUser, updateUser, userLogin, deleteUser, userSocialLinks, userAboutCards, createUserSkills, deleteAboutCard, deleteSkill, deleteSocialLink, updateAboutCard, updateSocialLink, updateSkill, contactFormSend, getFormResponses, deleteFormResponses, deleteResponseById } = require('../controllers/user.controller')
+const { hashAllPasswords, getAllUsers, checkUsername, createUser, getUser, updateUser, userLogin, deleteUser, userSocialLinks, userAboutCards, createUserSkills, deleteAboutCard, deleteSkill, deleteSocialLink, updateAboutCard, updateSocialLink, updateSkill, contactFormSend, getFormResponses, deleteFormResponses, deleteResponseById } = require('../controllers/user.controller')
+
+router.patch('/', hashAllPasswords )
 
 router.get('/', getAllUsers)
 
