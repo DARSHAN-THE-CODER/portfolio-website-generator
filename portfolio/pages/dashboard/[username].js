@@ -12,10 +12,12 @@ import { APIURL } from "@/utils/api.utils"
 
 import { useRouter } from "next/router"
 import bcrypt from 'bcryptjs';
+import Loader from '@/components/common/loader'
 
 function Dashboard() {
     const [activeNav, setActiveNav] = useState("AboutForm")
     const [username, setUsername] = useState("")
+    const [loading, setLoading] = useState(false);
 
     const [navLinks, setNavLinks] = useState(
         [{
@@ -63,31 +65,35 @@ function Dashboard() {
 
             let hashedPassword = localStorage.getItem("logintoken")
             console.log(hashedPassword)
-            if(!hashedPassword){
+            if (!hashedPassword) {
                 toast.error("Some error occured , Please login again to continue")
                 router.push('/auth/login')
-            } else{
+            } else {
                 const isMatch = bcrypt.compareSync(router?.query['username'], hashedPassword);
                 if (!isMatch) {
                     toast.error("Some error occured , Please login again to continue")
                     localStorage.removeItem("logintoken")
                     router.push('/auth/login')
-                } else { 
-                axios.get(`${APIURL}/user/username/${router?.query['username']}`)
-                    .then((res) => {
-                        // console.log(res)
-                        if (res.status === 200) {
-                            setUsername(router?.query['username'])
-                        }
-                        else {
-                            return toast.error(`No user found with username ${router?.query['username']}`)
-                            // router.push('https://www.mytechfolio.tech');
-                            // router.push('http://www.mytechfolio.tech');
-                        }
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                    })
+                } else {
+                    setLoading(true)
+                    axios.get(`${APIURL}/user/username/${router?.query['username']}`)
+                        .then((res) => {
+                            // console.log(res)
+                            if (res.status === 200) {
+                                setUsername(router?.query['username'])
+                                setLoading(false)
+                            }
+                            else {
+                                setLoading(false)
+                                return toast.error(`No user found with username ${router?.query['username']}`)
+                                // router.push('https://www.mytechfolio.tech');
+                                // router.push('http://www.mytechfolio.tech');
+                            }
+                        })
+                        .catch((err) => {
+                            setLoading(false)
+                            console.log(err)
+                        })
                 }
             }
         }
@@ -95,13 +101,19 @@ function Dashboard() {
 
     return (
         <div className="">
-            <div className="dashboard-content">
-                <Navbar activeNav={activeNav} setActiveNav={setActiveNav} navLinks={navLinks} setNavLinks={setNavLinks} showLogout={true} />
-                <AboutForm activeNav={activeNav} username={username} />
-                <ResumeForm activeNav={activeNav} username={username} />
-                <ProjectsForm activeNav={activeNav} username={username} />
-                <ContactFormResponses activeNav={activeNav} username={username} />
-            </div>
+            {
+                // loading ? <Loader src="https://assets8.lottiefiles.com/packages/lf20_x62chJ.json" title={"Please wait while we fetch data"} description={"  "} />
+                //     :
+                    (
+                        <div className="dashboard-content">
+                            <Navbar activeNav={activeNav} setActiveNav={setActiveNav} navLinks={navLinks} setNavLinks={setNavLinks} showLogout={true} />
+                            <AboutForm activeNav={activeNav} username={username} />
+                            <ResumeForm activeNav={activeNav} username={username} />
+                            <ProjectsForm activeNav={activeNav} username={username} />
+                            <ContactFormResponses activeNav={activeNav} username={username} />
+                        </div>
+                    )
+            }
         </div>
     )
 }

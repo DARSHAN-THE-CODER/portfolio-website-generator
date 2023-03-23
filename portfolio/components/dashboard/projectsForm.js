@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import ProjectsInput from '../form/ProjectsInput'
 import Portfolio from '../portfolio'
 import SocialLinksInput from '../form/SocialLinks'
+import Head from "next/head";
 
 import Loader from '../common/loader'
 
@@ -22,6 +23,8 @@ function ProjectsForm({ activeNav, username }) {
     const [projId, setProjId] = useState(1)
     const [linkId, setLinkId] = useState(1)
     const [loading, setLoading] = useState(false)
+
+    const [floading, setFloading] = useState(true)
 
     useEffect(() => {
 
@@ -38,10 +41,12 @@ function ProjectsForm({ activeNav, username }) {
 
                                 setLinkId(Number(res.data.socialLinks[res.data.socialLinks.length - 1]?.id + 1) || 1)
                                 setSocialLinks(res.data.socialLinks)
+                                setFloading(false)
                             }
                             )
                     }
                     else {
+                        setFloading(false)
                         return toast.error(`No user found with username ${username}`)
                         // router.push('https://www.mytechfolio.tech');
                         // router.push('http://www.mytechfolio.tech');
@@ -166,96 +171,109 @@ function ProjectsForm({ activeNav, username }) {
     }
     return (
         <article className={`resume ${activeNav === "PortfolioForm" ? "active" : ""}`} data-page="portfolio">
-            <header>
-                <h2 className="h2 article-title">Enter Projects details</h2>
-            </header>
-            <p className="xd italic cursor-pointer hover:underline w-min mb-4">
-                <a href={`https://${username}.mytechfolio.live/`} target="_blank">https://{username}.mytechfolio.live/</a>
-            </p>
-            <div className='flex flex-col'>
-                <section className=''>
-                    <Portfolio projects={projects} activeNav={"Portfolio"} />
-                </section>
-                <section className=' m-auto flex w-full p-3 justify-evenly '>
-                    <form className="form" target="_blank">
-                        <div className='flex md:flex-row flex-col '>
-                            <div className='text-white h-[80vh] w-full md:w-[50vw] overflow-auto border-2 rounded-xl p-3 m-2'>
-                                <p>Enter Project details</p>
-                                <div className='flex flex-col md:flex-row justify-evenly'>
-                                    <button
-                                        type="button"
-                                        onClick={handleAddInput}
-                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                    >
-                                        Add +
-                                    </button>
-                                    <button
-                                        type='button'
-                                        onClick={handleSaveProjects}
-                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                    >
-                                        Save details
-                                    </button>
-                                </div>
-                                {
-                                    projects?.map((inputSet, index) => (
-                                        <ProjectsInput
-                                            key={inputSet.id}
-                                            id={inputSet.id}
-                                            name={inputSet.name}
-                                            description={inputSet.description}
-                                            github={inputSet.github}
-                                            category={inputSet.category}
-                                            date={inputSet.date}
-                                            thumbnail={inputSet.thumbnail}
-                                            liveLink={inputSet.liveLink}
-                                            techUsed={inputSet.techUsed}
-                                            number={index + 1}
-                                            onInputChange={handleInputChange}
-                                            onRemoveClick={handleRemoveInputSet}
-                                        />
-                                    ))
-                                }
-                            </div>
-                            <div className='text-white h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
-                                <p>Enter Links , Ex: github, linkedin</p>
-                                <div className='flex flex-col md:flex-row justify-evenly'>
-                                    <button
-                                        type="button"
-                                        onClick={handleLinksAddInput}
-                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                    >
-                                        Add +
-                                    </button>
-                                    <button
-                                        type='button'
-                                        onClick={handleSaveSocialLinks}
-                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                    >
-                                        Save details
-                                    </button>
-                                </div>
-                                {
-                                    socialLinks?.map((inputSet, index) => (
-                                        <SocialLinksInput
-                                            key={inputSet.id}
-                                            id={inputSet.id}
-                                            linkName={inputSet.linkName}
-                                            url={inputSet.url}
-                                            number={index + 1}
-                                            onInputChange={handleLinksInputChange}
-                                            onRemoveClick={handleRemoveInputLinksSet}
-                                        />
-                                    ))
-                                }
-                            </div>
-                        </div>
+            <Head>
+                <title>Awesome Portfolio | Build free portfolio website</title>
+                <meta name="description" content="Build free portfolio website" />
+                <meta name="author" content="Darshan V" />
+            </Head>
+            {
+                floading ? <Loader src="https://assets8.lottiefiles.com/packages/lf20_robeep7z.json" title={"Please wait while we fetch data"} description={"  "} />
+                    :
+                    (
+                        <>
+                            <header>
+                                <h2 className="h2 article-title">Enter Projects details</h2>
+                            </header>
+                            <p className="xd italic cursor-pointer hover:underline w-min mb-4">
+                                <a href={`https://${username}.mytechfolio.live/`} target="_blank">https://{username}.mytechfolio.live/</a>
+                            </p>
+                            <div className='flex flex-col'>
+                                <section className=''>
+                                    <Portfolio projects={projects} activeNav={"Portfolio"} />
+                                </section>
+                                <section className=' m-auto flex w-full p-3 justify-evenly '>
+                                    <form className="form" target="_blank">
+                                        <div className='flex md:flex-row flex-col '>
+                                            <div className='text-white h-[80vh] w-full md:w-[50vw] overflow-auto border-2 rounded-xl p-3 m-2'>
+                                                <p>Enter Project details</p>
+                                                <div className='flex flex-col md:flex-row justify-evenly'>
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleAddInput}
+                                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                                    >
+                                                        Add +
+                                                    </button>
+                                                    <button
+                                                        type='button'
+                                                        onClick={handleSaveProjects}
+                                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                                    >
+                                                        Save details
+                                                    </button>
+                                                </div>
+                                                {
+                                                    projects?.map((inputSet, index) => (
+                                                        <ProjectsInput
+                                                            key={inputSet.id}
+                                                            id={inputSet.id}
+                                                            name={inputSet.name}
+                                                            description={inputSet.description}
+                                                            github={inputSet.github}
+                                                            category={inputSet.category}
+                                                            date={inputSet.date}
+                                                            thumbnail={inputSet.thumbnail}
+                                                            liveLink={inputSet.liveLink}
+                                                            techUsed={inputSet.techUsed}
+                                                            number={index + 1}
+                                                            onInputChange={handleInputChange}
+                                                            onRemoveClick={handleRemoveInputSet}
+                                                        />
+                                                    ))
+                                                }
+                                            </div>
+                                            <div className='text-white h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
+                                                <p>Enter Links , Ex: github, linkedin</p>
+                                                <div className='flex flex-col md:flex-row justify-evenly'>
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleLinksAddInput}
+                                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                                    >
+                                                        Add +
+                                                    </button>
+                                                    <button
+                                                        type='button'
+                                                        onClick={handleSaveSocialLinks}
+                                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                                    >
+                                                        Save details
+                                                    </button>
+                                                </div>
+                                                {
+                                                    socialLinks?.map((inputSet, index) => (
+                                                        <SocialLinksInput
+                                                            key={inputSet.id}
+                                                            id={inputSet.id}
+                                                            linkName={inputSet.linkName}
+                                                            url={inputSet.url}
+                                                            number={index + 1}
+                                                            onInputChange={handleLinksInputChange}
+                                                            onRemoveClick={handleRemoveInputLinksSet}
+                                                        />
+                                                    ))
+                                                }
+                                            </div>
+                                        </div>
 
-                    </form>
-                    {loading && <Loader />}
-                </section>
+                                    </form>
+                                    {loading && <Loader />}
+                                </section>
 
-            </div>
+                            </div>
+                        </>
+                    )
+            }
         </article>
     )
 }

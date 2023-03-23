@@ -58,35 +58,39 @@ function AboutForm({ activeNav, username }) {
     const [idCounter, setIdCounter] = useState(1)
     // const [username, setUsername] = useState("")
     const [loading, setLoading] = useState(false)
+    const [floading, setFloading] = useState(true)
 
     useEffect(() => {
         if (username) {
             axios.get(`${APIURL}/user/username/${username}`)
-            .then((res) => {
-                // console.log(res)
-                if (res.status === 200) {
-                    axios.get(`${APIURL}/user/${username}`)
-                        .then((res) => {
-                            console.log(res.data)
-                            const { socialLinks, projects, education, experience, skills, contactResponses, updatedAt, id, ...imp } = res.data;
-                            console.log(imp)
-                            setAboutCards(imp?.aboutCards)
+                .then((res) => {
+                    // console.log(res)
+                    if (res.status === 200) {
+                        axios.get(`${APIURL}/user/${username}`)
+                            .then((res) => {
+                                console.log(res.data)
+                                const { socialLinks, projects, education, experience, skills, contactResponses, updatedAt, id, ...imp } = res.data;
+                                console.log(imp)
+                                setAboutCards(imp?.aboutCards)
 
-                            setIdCounter((imp?.aboutCards[imp?.aboutCards?.length - 1]?.id + 1) || 1)
-                            delete imp.aboutCards;
-                            setAbout(imp)
-                        }
-                        )
-                }
-                else {
-                    return toast.error(`No user found with username ${username}`)
-                    // router.push('https://www.mytechfolio.tech');
-                    // router.push('http://www.mytechfolio.tech');
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+                                setIdCounter((imp?.aboutCards[imp?.aboutCards?.length - 1]?.id + 1) || 1)
+                                delete imp.aboutCards;
+                                setAbout(imp)
+                                setFloading(false)
+                            }
+                            )
+                    }
+                    else {
+                        setFloading(false)
+                        return toast.error(`No user found with username ${username}`)
+                        // router.push('https://www.mytechfolio.tech');
+                        // router.push('http://www.mytechfolio.tech');
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                    setFloading(false)
+                })
         }
     }, [username])
 
@@ -177,228 +181,239 @@ function AboutForm({ activeNav, username }) {
     return (
         <article className={`about ${activeNav === "AboutForm" ? "active" : ""}`} data-page="about">
             <Head>
-                <title>About Page | Add basic details</title>
+                <title>Awesome Portfolio | Build free portfolio website</title>
+                <meta name="description" content="Build free portfolio website" />
+                <meta name="author" content="Darshan V" />
             </Head>
-            <header>
-                <h2 className="h2 article-title">Enter basic details</h2>
-            </header>
-            <p className="xd italic cursor-pointer hover:underline w-min">
-                <a href={`https://${username}.mytechfolio.live/`} target="_blank">https://{username}.mytechfolio.live/</a>
-            </p>
-            <div className="flex flex-col md:flex-row">
+            {
+                floading ? <Loader src="https://assets8.lottiefiles.com/packages/lf20_robeep7z.json" title={"Please wait while we fetch data"} description={"  "}  />
+                    :
+                    (
 
-                <section className="m-auto flex w-full md:w-[50vw] p-3">
-                    <form className="form" onSubmit={handleSubmit} target="_blank">
+                        <>
+                            <header>
+                                <h2 className="h2 article-title">Enter basic details</h2>
+                            </header>
+                            <p className="xd italic cursor-pointer hover:underline w-min">
+                                <a href={`https://${username}.mytechfolio.live/`} target="_blank">https://{username}.mytechfolio.live/</a>
+                            </p>
+                            <div className="flex flex-col md:flex-row">
 
-                        <button
-                            type='button'
-                            onClick={() => handleSaveBasic()}
-                            className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                        >
-                            Save Basic details
-                        </button>
-                        <div className="flex md:flex-row w-full flex-col justify-around gap-3 mt-4 text-center">
-                            <div className="form-group text-white ">
-                                <p>email</p>
-                                <input required type="email" className="border-2 rounded-2xl p-2 m-2" name="email" id="email" placeholder="email id"
-                                    onChange={(e) => setAbout({ ...about, email: e.target.value })}
-                                    value={about.email}
-                                />
-                            </div>
+                                <section className="m-auto flex w-full md:w-[50vw] p-3">
+                                    <form className="form" onSubmit={handleSubmit} target="_blank">
 
-                            <div className="form-group text-white">
-                                <p>Name</p>
-                                <input required type="text" className="border-2 rounded-2xl p-2 m-2" name="name" id="name" placeholder="Your name "
-                                    onChange={(e) => setAbout({ ...about, name: e.target.value })}
-                                    value={about.name}
-                                />
-                            </div>
+                                        <button
+                                            type='button'
+                                            onClick={() => handleSaveBasic()}
+                                            className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                        >
+                                            Save Basic details
+                                        </button>
+                                        <div className="flex md:flex-row w-full flex-col justify-around gap-3 mt-4 text-center">
+                                            <div className="form-group text-white ">
+                                                <p>email</p>
+                                                <input required type="email" className="border-2 rounded-2xl p-2 m-2" name="email" id="email" placeholder="email id"
+                                                    onChange={(e) => setAbout({ ...about, email: e.target.value })}
+                                                    value={about.email}
+                                                />
+                                            </div>
 
-                            <div className="flex justify-around text-white gap-4 align-middle">
-                                <div className="flex items-center">
-                                    <label className="flex font-bold mr-4" htmlFor="gender">
-                                        Gender{" "}
-                                    </label>
-                                    <input
-                                        type="radio"
-                                        id="male"
-                                        name="gender"
-                                        value="male"
-                                        checked={about?.gender === "male"}
-                                        onChange={(e) => setAbout((prev) => ({ ...prev, gender: e.target.value }))}
-                                        className="mr-2"
-                                    />
-                                    <label htmlFor="male">Male</label>
-                                </div>
-                                <div className="flex items-center">
-                                    <input
-                                        type="radio"
-                                        id="female"
-                                        name="gender"
-                                        value="female"
-                                        checked={about?.gender === "female"}
-                                        onChange={(e) => setAbout((prev) => ({ ...prev, gender: e.target.value }))}
-                                        className="mr-2"
-                                    />
-                                    <label htmlFor="female">Female</label>
-                                </div>
-                            </div>
-                        </div>
+                                            <div className="form-group text-white">
+                                                <p>Name</p>
+                                                <input required type="text" className="border-2 rounded-2xl p-2 m-2" name="name" id="name" placeholder="Your name "
+                                                    onChange={(e) => setAbout({ ...about, name: e.target.value })}
+                                                    value={about.name}
+                                                />
+                                            </div>
 
-                        <div className="flex md:flex-row flex-col justify-around gap-3 mt-4 text-center">
-                            <div className="form-group text-white">
-                                <p>Location</p>
-                                <input required type="text" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="Address"
-                                    onChange={(e) => setAbout({ ...about, address: e.target.value })}
-                                    value={about.address}
-                                />
-                            </div>
-                            <div className="form-group text-white">
-                                <p>Describe yourself in max 3 - 4 words </p>
-                                <input required type="text" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="I am..."
-                                    onChange={(e) => setAbout({ ...about, shortDesc: e.target.value })}
-                                    value={about.shortDesc}
-                                />
-                            </div>
-                        </div>
+                                            <div className="flex justify-around text-white gap-4 align-middle">
+                                                <div className="flex items-center">
+                                                    <label className="flex font-bold mr-4" htmlFor="gender">
+                                                        Gender{" "}
+                                                    </label>
+                                                    <input
+                                                        type="radio"
+                                                        id="male"
+                                                        name="gender"
+                                                        value="male"
+                                                        checked={about?.gender === "male"}
+                                                        onChange={(e) => setAbout((prev) => ({ ...prev, gender: e.target.value }))}
+                                                        className="mr-2"
+                                                    />
+                                                    <label htmlFor="male">Male</label>
+                                                </div>
+                                                <div className="flex items-center">
+                                                    <input
+                                                        type="radio"
+                                                        id="female"
+                                                        name="gender"
+                                                        value="female"
+                                                        checked={about?.gender === "female"}
+                                                        onChange={(e) => setAbout((prev) => ({ ...prev, gender: e.target.value }))}
+                                                        className="mr-2"
+                                                    />
+                                                    <label htmlFor="female">Female</label>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                        <div className="flex md:flex-row flex-col justify-around gap-3  text-center mt-4">
-                            <div className="form-group text-white">
-                                <p>Phone number</p>
-                                <input required type="text" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="Enter your mobile number"
-                                    onChange={(e) => setAbout({ ...about, phone: e.target.value })}
-                                    value={about.phone}
-                                />
-                            </div>
-                            <div className="form-group text-white">
-                                <p>Date of birth</p>
-                                <input required type="text" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="DOB"
-                                    onChange={(e) => setAbout({ ...about, dob: e.target.value })}
-                                    value={about.dob}
-                                />
-                            </div>
+                                        <div className="flex md:flex-row flex-col justify-around gap-3 mt-4 text-center">
+                                            <div className="form-group text-white">
+                                                <p>Location</p>
+                                                <input required type="text" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="Address"
+                                                    onChange={(e) => setAbout({ ...about, address: e.target.value })}
+                                                    value={about.address}
+                                                />
+                                            </div>
+                                            <div className="form-group text-white">
+                                                <p>Describe yourself in max 3 - 4 words </p>
+                                                <input required type="text" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="I am..."
+                                                    onChange={(e) => setAbout({ ...about, shortDesc: e.target.value })}
+                                                    value={about.shortDesc}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="flex md:flex-row flex-col justify-around gap-3  text-center mt-4">
+                                            <div className="form-group text-white">
+                                                <p>Phone number</p>
+                                                <input required type="text" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="Enter your mobile number"
+                                                    onChange={(e) => setAbout({ ...about, phone: e.target.value })}
+                                                    value={about.phone}
+                                                />
+                                            </div>
+                                            <div className="form-group text-white">
+                                                <p>Date of birth</p>
+                                                <input required type="text" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="DOB"
+                                                    onChange={(e) => setAbout({ ...about, dob: e.target.value })}
+                                                    value={about.dob}
+                                                />
+                                            </div>
 
 
-                        </div>
+                                        </div>
 
 
-                        <div className="form-group text-white mt-4">
-                            <p>Tell about yourself in more detailed manner</p>
-                            <textarea required type="text" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="I am..."
-                                onChange={(e) => setAbout({ ...about, about: e.target.value })}
-                                value={about.about}
-                            />
-                        </div>
+                                        <div className="form-group text-white mt-4">
+                                            <p>Tell about yourself in more detailed manner</p>
+                                            <textarea required type="text" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="I am..."
+                                                onChange={(e) => setAbout({ ...about, about: e.target.value })}
+                                                value={about.about}
+                                            />
+                                        </div>
 
-                        <div className="flex justify-evenly gap-3 mt-5 flex-col text-white">
-                            <div className="form-group text-white">
-                                <p className="bold">Please provide the URL of your photo</p>
-                                <p className="flex text-white italic">use {" "} <a href="https://imgbb.com/" target="_blank" className="ml-2 mr-2 underline hover:text-blue-500">imgbb</a> to generate link <br></br> </p>
-                                <p className="flex text-white italic">Set Don't autodelete and copy image address by right clicking on the image once you paste the link in browser</p>
+                                        <div className="flex justify-evenly gap-3 mt-5 flex-col text-white">
+                                            <div className="form-group text-white">
+                                                <p className="bold">Please provide the URL of your photo</p>
+                                                <p className="flex text-white italic">use {" "} <a href="https://imgbb.com/" target="_blank" className="ml-2 mr-2 underline hover:text-blue-500">imgbb</a> to generate link <br></br> </p>
+                                                <p className="flex text-white italic">Set Don't autodelete and copy image address by right clicking on the image once you paste the link in browser</p>
 
-                            </div>
-                            <div className="flex ">
-                                <input required type="url" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="URL"
-                                    onChange={(e) => setAbout({ ...about, photoURL: e.target.value })}
-                                    value={about.photoURL}
-                                />
-                                {/* {
+                                            </div>
+                                            <div className="flex ">
+                                                <input required type="url" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="URL"
+                                                    onChange={(e) => setAbout({ ...about, photoURL: e.target.value })}
+                                                    value={about.photoURL}
+                                                />
+                                                {/* {
                                 about.photoURL && <img src={about.photoURL} alt="URL might be incorrect" className="w-20 h-20 m-auto mt-4 text-white" />
                             } */}
-                            </div>
-                        </div>
-                        <p className="h2 article-title mt-10">Information about your tech interests </p>
-
-                        <div>
-                            <div className="w-full m-auto rounded-xl flex items-center justify-between p-4">
-                                <p className="text-white">Example  </p>
-                                <ul className=" w-full">
-                                    <li className="service-item w-full">
-                                        <div className="service-content-box">
-                                            <h4 className="h4 service-item-title">Web Design</h4>
-
-                                            <p className="service-item-text">
-                                                The most modern and high-quality design made at a professional level
-                                            </p>
+                                            </div>
                                         </div>
-                                    </li>
-                                </ul>
-                            </div>
+                                        <p className="h2 article-title mt-10">Information about your tech interests </p>
 
-                            <div className="flex flex-col md:flex-row md:gap-6">
-                                <button
-                                    type="button"
-                                    onClick={handleAddInputSet}
-                                    className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                >
-                                    Add +
-                                </button>
-                                <button
-                                    type='button'
-                                    onClick={() => handleSaveAboutCards()}
-                                    className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                >
-                                    Save details
-                                </button>
-                            </div>
-                            {aboutCards?.map((inputSet, index) => (
-                                <InputSet
-                                    className="bg-gray-300"
-                                    key={inputSet.id}
-                                    id={inputSet.id}
-                                    title={inputSet.title}
-                                    description={inputSet.description}
-                                    onInputChange={handleInputChange}
-                                    onRemoveClick={handleRemoveInputSet}
-                                    nnn={index + 1}
-                                />
-                            ))}
+                                        <div>
+                                            <div className="w-full m-auto rounded-xl flex items-center justify-between p-4">
+                                                <p className="text-white">Example  </p>
+                                                <ul className=" w-full">
+                                                    <li className="service-item w-full">
+                                                        <div className="service-content-box">
+                                                            <h4 className="h4 service-item-title">Web Design</h4>
 
-                        </div>
-                        {/* <div className="form-group mt-4" >
+                                                            <p className="service-item-text">
+                                                                The most modern and high-quality design made at a professional level
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div className="flex flex-col md:flex-row md:gap-6">
+                                                <button
+                                                    type="button"
+                                                    onClick={handleAddInputSet}
+                                                    className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                                >
+                                                    Add +
+                                                </button>
+                                                <button
+                                                    type='button'
+                                                    onClick={() => handleSaveAboutCards()}
+                                                    className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                                >
+                                                    Save details
+                                                </button>
+                                            </div>
+                                            {aboutCards?.map((inputSet, index) => (
+                                                <InputSet
+                                                    className="bg-gray-300"
+                                                    key={inputSet.id}
+                                                    id={inputSet.id}
+                                                    title={inputSet.title}
+                                                    description={inputSet.description}
+                                                    onInputChange={handleInputChange}
+                                                    onRemoveClick={handleRemoveInputSet}
+                                                    nnn={index + 1}
+                                                />
+                                            ))}
+
+                                        </div>
+                                        {/* <div className="form-group mt-4" >
                             <button className="form-btn m-auto" type="submit" >
                                 Save Details
                             </button>
                         </div> */}
-                    </form>
-                    {loading && <Loader />}
-                </section>
+                                    </form>
+                                    {loading && <Loader />}
+                                </section>
 
-                <article className={`about active w-full md:w-[50vw] p-3`} data-page="about">
-                    <header>
-                        <h2 className="h2 article-title">About me (preview)</h2>
-                    </header>
-                    <figure className="w-full m-auto flex justify-center mb-10">
-                        <img src={about?.photoURL} alt='URL might be incorrect' className="text-white" style={{ height: "300px", borderRadius: "30px" }} loading="lazy" />
-                    </figure>
-                    <section className="about-text flex-wrap break-all">
-                        {about?.about}
-                    </section>
+                                <article className={`about active w-full md:w-[50vw] p-3`} data-page="about">
+                                    <header>
+                                        <h2 className="h2 article-title">About me (preview)</h2>
+                                    </header>
+                                    <figure className="w-full m-auto flex justify-center mb-10">
+                                        <img src={about?.photoURL} alt='URL might be incorrect' className="text-white" style={{ height: "300px", borderRadius: "30px" }} loading="lazy" />
+                                    </figure>
+                                    <section className="about-text flex-wrap break-all">
+                                        {about?.about}
+                                    </section>
 
-                    <section className="service">
+                                    <section className="service">
 
-                        <h3 className="h3 service-title">What i'm doing</h3>
+                                        <h3 className="h3 service-title">What i'm doing</h3>
 
-                        <ul className="service-list">
-                            {
-                                aboutCards?.map((card, index) => (
-                                    <li className="service-item" key={index}>
-                                        <div className="service-content-box">
-                                            <h4 className="h4 service-item-title">{card?.title}</h4>
+                                        <ul className="service-list">
+                                            {
+                                                aboutCards?.map((card, index) => (
+                                                    <li className="service-item" key={index}>
+                                                        <div className="service-content-box">
+                                                            <h4 className="h4 service-item-title">{card?.title}</h4>
 
-                                            <p className="service-item-text">
-                                                {card?.description}
-                                            </p>
-                                        </div>
-                                    </li>
-                                ))
-                            }
-                        </ul>
+                                                            <p className="service-item-text">
+                                                                {card?.description}
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                ))
+                                            }
+                                        </ul>
 
-                    </section>
+                                    </section>
 
-                </article>
-            </div>
+                                </article>
+                            </div>
+                        </>
+                    )
+            }
         </article>
     )
 }
