@@ -36,7 +36,7 @@ export default function Home() {
           else {
             toast.error(`No user found with username ${check[0]}`)
             setLoading(false)
-            router.push('https://mytechfolio.live/');
+            router.push('/');
             return
           }
         })
@@ -61,7 +61,8 @@ export default function Home() {
     <>
 
       {
-        loading ? <Loader title={"Fetching details"} description={"Hang on just a moment , we are fetching details. Thank you for your patience!"} />
+        loading ?
+          <Loader title={"Fetching details"} description={"Hang on just a moment , we are fetching details. Thank you for your patience!"} />
           :
           isDomain ? <MainPage username={username} />
             :
@@ -72,7 +73,7 @@ export default function Home() {
                   <div class="sm:flex sm:items-center sm:justify-between w-full ">
                     <span class="text-sm text-gray-400 sm:text-center text-center mb-4 md:mb-0">© 2023 All Rights Reserved.
                     </span>
-                    <div class="text-xl flex justify-center text-center font-bold">This site is built with <span className='text-pink-700 ml-1 mr-1'>♥</span> by <a href="mailto:reachdarshanv@gmail.com" className='italic ml-2'>Darshan V</a>
+                    <div class="text-lg flex justify-center text-center font-bold">This site is built with <span className='text-pink-700 ml-1 mr-1'>♥</span> by <a href="mailto:reachdarshanv@gmail.com" className='italic ml-2'>Darshan V</a>
                     </div>
                     <div className="flex justify-center mt-4 md:mt-0 md:float-right md:right-0">
                       <ul className="social-list">

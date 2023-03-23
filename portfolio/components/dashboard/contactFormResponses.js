@@ -38,7 +38,9 @@ function ContactFormResponses({ username, activeNav }) {
     return (
         <article className={`contact ${activeNav === "ContactFormResponses" ? "active" : ""}`} data-page="contact">
             <Head>
-                <title>Form responses</title>
+                <title>Awesome Portfolio | Build free portfolio website</title>
+                <meta name="description" content="Build free portfolio website" />
+                <meta name="author" content="Darshan V" />
             </Head>
             <header>
                 <h2 className="h2 article-title">Your messages !</h2>

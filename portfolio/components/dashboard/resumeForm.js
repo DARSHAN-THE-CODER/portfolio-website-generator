@@ -8,6 +8,7 @@ import EducationInputSet from '../form/EducationInput'
 import ExperienceInputSet from '../form/ExperienceInput'
 import SkillsInput from '../form/SkillsInput'
 import Resume from '../resume'
+import Head from "next/head";
 
 import { useRouter } from 'next/router';
 import Loader from '../common/loader'
@@ -27,40 +28,46 @@ function ResumeForm({ activeNav, username }) {
     const [expId, setExpId] = useState(1)
     const [skillId, setSkillId] = useState(1)
     const [loading, setLoading] = useState(false)
+    const [floading, setFloading] = useState(true)
+
     console.log(edId)
 
     useEffect(() => {
 
         if (username) {
             axios.get(`${APIURL}/user/username/${username}`)
-            .then((res) => {
-                // console.log(res)
-                if (res.status === 200) {
-                    axios.get(`${APIURL}/user/${username}`)
-                        .then((res) => {
-                            // console.log(res.data)
-                            // console.log(res.data.skills.length);
-                            // console.log(res.data.skills[res.data.skills.length - 1]?.id)
+                .then((res) => {
+                    // console.log(res)
+                    if (res.status === 200) {
+                        axios.get(`${APIURL}/user/${username}`)
+                            .then((res) => {
+                                // console.log(res.data)
+                                // console.log(res.data.skills.length);
+                                // console.log(res.data.skills[res.data.skills.length - 1]?.id)
 
-                            setEdId(Number(res?.data?.education[res?.data?.education?.length - 1]?.id + 1) || 1)
-                            setExpId(Number(res?.data?.experience[res?.data?.experience?.length - 1]?.id + 1) || 1)
-                            setSkillId(Number(res.data.skills[res.data.skills.length - 1]?.id + 1) || 1)
+                                setEdId(Number(res?.data?.education[res?.data?.education?.length - 1]?.id + 1) || 1)
+                                setExpId(Number(res?.data?.experience[res?.data?.experience?.length - 1]?.id + 1) || 1)
+                                setSkillId(Number(res.data.skills[res.data.skills.length - 1]?.id + 1) || 1)
 
-                            setEducation(res.data.education)
-                            setExperience(res.data.experience)
-                            setSkills(res.data.skills)
-                        }
-                        )
-                }
-                else {
-                    return toast.error(`No user found with username ${username}`)
-                    // router.push('https://www.mytechfolio.tech');
-                    // router.push('http://www.mytechfolio.tech');
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+                                setEducation(res.data.education)
+                                setExperience(res.data.experience)
+                                setSkills(res.data.skills)
+
+                                setFloading(false)
+                            }
+                            )
+                    }
+                    else {
+                        setFloading(false);
+                        return toast.error(`No user found with username ${username}`)
+                        // router.push('https://www.mytechfolio.tech');
+                        // router.push('http://www.mytechfolio.tech');
+                    }
+                })
+                .catch((err) => {
+                    setFloading(false)
+                    console.log(err)
+                })
         }
     }, [username])
 
@@ -245,133 +252,147 @@ function ResumeForm({ activeNav, username }) {
 
     return (
         <article className={`resume ${activeNav === "ResumeForm" ? "active" : ""}`} data-page="resume">
-            <header>
-                <h2 className="h2 article-title">Enter details</h2>
-            </header>
-            <p className="xd italic cursor-pointer hover:underline w-min mb-4">
-                <a href={`https://${username}.mytechfolio.live/`} target="_blank">https://{username}.mytechfolio.live/</a>
-            </p>
-            <div className='flex flex-col-reverse'>
-                <section className='m-auto flex justify-evenly'>
-                    <form className="form" onSubmit={handleSubmit} target="_blank">
-                        <div className='flex md:flex-row flex-col '>
-                            <div className='text-white h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
-                                <p>Enter education details</p>
-                                <div className='flex flex-col md:flex-row justify-evenly'>
-                                    <button
-                                        type="button"
-                                        onClick={handleAddEducationInput}
-                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                    >
-                                        Add +
-                                    </button>
-                                    <button
-                                        type='button'
-                                        onClick={handleSaveEducation}
-                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                    >
-                                        Save details
-                                    </button>
-                                </div>
-                                {education?.map((inputSet, index) => (
-                                    <EducationInputSet
+            <Head>
+                <title>Awesome Portfolio | Build free portfolio website</title>
+                <meta name="description" content="Build free portfolio website" />
+                <meta name="author" content="Darshan V" />
+            </Head>
+            {
+                floading ? <Loader src="https://assets8.lottiefiles.com/packages/lf20_robeep7z.json" title={"Please wait while we fetch data"} description={"  "} />
+                    :
+                    (
 
-                                        className="bg-gray-300"
-                                        key={inputSet.id}
-                                        id={inputSet.id}
-                                        institution={inputSet.institution}
-                                        description={inputSet.description}
-                                        from={inputSet.from}
-                                        to={inputSet.to}
-                                        percentage={inputSet.percentage}
-                                        onInputChange={handleEducationInputChange}
-                                        onRemoveClick={handleRemoveEducationInputSet}
-                                        number={index + 1}
-                                    />
-                                ))}
-                            </div>
+                        <>
+                            <header>
+                                <h2 className="h2 article-title">Enter details</h2>
+                            </header>
+                            <p className="xd italic cursor-pointer hover:underline w-min mb-4">
+                                <a href={`https://${username}.mytechfolio.live/`} target="_blank">https://{username}.mytechfolio.live/</a>
+                            </p>
+                            <div className='flex flex-col-reverse'>
+                                <section className='m-auto flex justify-evenly'>
+                                    <form className="form" onSubmit={handleSubmit} target="_blank">
+                                        <div className='flex md:flex-row flex-col '>
+                                            <div className='text-white h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
+                                                <p>Enter education details</p>
+                                                <div className='flex flex-col md:flex-row justify-evenly'>
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleAddEducationInput}
+                                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                                    >
+                                                        Add +
+                                                    </button>
+                                                    <button
+                                                        type='button'
+                                                        onClick={handleSaveEducation}
+                                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                                    >
+                                                        Save details
+                                                    </button>
+                                                </div>
+                                                {education?.map((inputSet, index) => (
+                                                    <EducationInputSet
 
-                            <div className='text-white h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
-                                <p>Enter experience details</p>
-                                <div className='flex flex-col md:flex-row justify-evenly'>
-                                    <button
-                                        type="button"
-                                        onClick={handleAddExperienceInput}
-                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                    >
-                                        Add +
-                                    </button>
-                                    <button
-                                        type='button'
-                                        onClick={handleSaveExperience}
-                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                    >
-                                        Save details
-                                    </button>
-                                </div>
-                                {experience?.map((inputSet, index) => (
-                                    <ExperienceInputSet
-                                        className="bg-gray-300"
-                                        key={inputSet.id}
-                                        id={inputSet.id}
-                                        company={inputSet.company}
-                                        description={inputSet.description}
-                                        from={inputSet.from}
-                                        to={inputSet.to}
-                                        role={inputSet.role}
-                                        onInputChange={handleExperienceInputChange}
-                                        onRemoveClick={handleRemoveExperienceInputSet}
-                                        number={index + 1}
+                                                        className="bg-gray-300"
+                                                        key={inputSet.id}
+                                                        id={inputSet.id}
+                                                        institution={inputSet.institution}
+                                                        description={inputSet.description}
+                                                        from={inputSet.from}
+                                                        to={inputSet.to}
+                                                        percentage={inputSet.percentage}
+                                                        onInputChange={handleEducationInputChange}
+                                                        onRemoveClick={handleRemoveEducationInputSet}
+                                                        number={index + 1}
+                                                    />
+                                                ))}
+                                            </div>
 
-                                    />
-                                ))}
-                            </div>
+                                            <div className='text-white h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
+                                                <p>Enter experience details</p>
+                                                <div className='flex flex-col md:flex-row justify-evenly'>
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleAddExperienceInput}
+                                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                                    >
+                                                        Add +
+                                                    </button>
+                                                    <button
+                                                        type='button'
+                                                        onClick={handleSaveExperience}
+                                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                                    >
+                                                        Save details
+                                                    </button>
+                                                </div>
+                                                {experience?.map((inputSet, index) => (
+                                                    <ExperienceInputSet
+                                                        className="bg-gray-300"
+                                                        key={inputSet.id}
+                                                        id={inputSet.id}
+                                                        company={inputSet.company}
+                                                        description={inputSet.description}
+                                                        from={inputSet.from}
+                                                        to={inputSet.to}
+                                                        role={inputSet.role}
+                                                        onInputChange={handleExperienceInputChange}
+                                                        onRemoveClick={handleRemoveExperienceInputSet}
+                                                        number={index + 1}
 
-                            <div className='text-white h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
-                                <p>Enter skills details</p>
-                                <div className='flex flex-col justify-evenly'>
+                                                    />
+                                                ))}
+                                            </div>
 
-                                    <button
-                                        type="button"
-                                        onClick={handleAddSkillsInput}
-                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                    >
-                                        Add +
-                                    </button>
+                                            <div className='text-white h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
+                                                <p>Enter skills details</p>
+                                                <div className='flex flex-col justify-evenly'>
 
-                                    <button
-                                        type='button'
-                                        onClick={handleSaveSkills}
-                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                    >
-                                        Save details
-                                    </button>
-                                </div>
-                                {skills?.map((inputSet, index) => (
-                                    <SkillsInput
-                                        className="bg-gray-300"
-                                        key={inputSet.id}
-                                        id={inputSet.id}
-                                        title={inputSet.title}
-                                        percentage={inputSet.percentage}
-                                        onInputChange={handleSkillsInputChange}
-                                        onRemoveClick={handleRemoveSkillsInputSet}
-                                        number={index + 1}
-                                    />
-                                ))}
-                            </div>
-                        </div>
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleAddSkillsInput}
+                                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                                    >
+                                                        Add +
+                                                    </button>
 
-                    </form>
-                    {loading && <Loader />}
-                </section>
-                <section className='m-auto flex w-full  p-3'>
-                    <Resume education={education} experience={experience} skills={skills} activeNav={"Resume"} isPreview={true} />
-                </section>
-                {/* <article className={`resume active `} data-page="resume">
+                                                    <button
+                                                        type='button'
+                                                        onClick={handleSaveSkills}
+                                                        className="mb-4 mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                                                    >
+                                                        Save details
+                                                    </button>
+                                                </div>
+                                                {skills?.map((inputSet, index) => (
+                                                    <SkillsInput
+                                                        className="bg-gray-300"
+                                                        key={inputSet.id}
+                                                        id={inputSet.id}
+                                                        title={inputSet.title}
+                                                        percentage={inputSet.percentage}
+                                                        onInputChange={handleSkillsInputChange}
+                                                        onRemoveClick={handleRemoveSkillsInputSet}
+                                                        number={index + 1}
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                    {loading && <Loader />}
+                                </section>
+                                <section className='m-auto flex w-full  p-3'>
+                                    <Resume education={education} experience={experience} skills={skills} activeNav={"Resume"} isPreview={true} />
+                                </section>
+                                {/* <article className={`resume active `} data-page="resume">
 
                 </article> */}
-            </div>
+                            </div>
+                        </>
+                    )
+            }
         </article>
     )
 }
