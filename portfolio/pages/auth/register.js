@@ -5,7 +5,7 @@ import axios from "axios"
 import { APIURL } from "@/utils/api.utils"
 import { toast } from "react-toastify"
 import { useRouter } from "next/router"
-
+import Head from "next/head";
 import { getAnalytics, logEvent } from "firebase/analytics";
 
 import { app } from "@/utils/firebase";
@@ -88,23 +88,29 @@ function Register() {
 
     return (
         <article className="active md:w-[70vw] flex justify-center mt-[100px] m-auto">
+            
+            <Head>
+                <title>Awesome Portfolio | Build free portfolio website</title>
+                <meta name="description" content="Build free portfolio website" />
+                <meta name="author" content="Darshan V" />
+            </Head>
             <header>
                 <h2 className="h2 article-title">Register</h2>
             </header>
             <section className="m-auto flex justify-center">
                 <form className="form w-[300px]" target="_blank">
                     <div className="form-group text-white">
-                        <input required className="border-2 rounded-2xl p-2 m-2" type="text" name="name" id="" placeholder="Enter your Full name"
+                        <input required className="border-2 rounded-2xl p-2 m-2" type="text" name="name" id="name" placeholder="Enter your Full name"
                             onChange={(e) => setUser({ ...user, name: e.target.value })}
                         />
                     </div>
                     <div className="form-group text-white">
-                        <input required className="border-2 rounded-2xl p-2 m-2" type="email" name="email" id="" placeholder="Enter your email"
+                        <input required className="border-2 rounded-2xl p-2 m-2" type="email" name="email" id="email" placeholder="Enter your email"
                             onChange={(e) => setUser({ ...user, email: e.target.value })}
                         />
                     </div>
                     <div className="form-group text-white">
-                        <input required className="border-2 rounded-2xl p-2 m-2" type="text" name="username" id="" placeholder="Enter your username"
+                        <input required className="border-2 rounded-2xl p-2 m-2" type="text" name="username" id="username" placeholder="Enter your username"
                             onChange={handleUsernameChange}
                         />
                     </div>

@@ -6,7 +6,7 @@ export default function Document() {
       <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
       <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-      <meta charset="utf-8" />
+      {/* <meta charset="utf-8" />
       <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
       <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       
@@ -20,7 +20,28 @@ export default function Document() {
       
       <meta property="og:url" content="https://mytechfolio.live/" />
       <link rel="icon" href="https://ph-files.imgix.net/26c548fe-7bfb-4319-ab61-660ef987b6f2.png" />
+      <meta property="og:type" content="website" /> */}
+
+
+      {/* <!-- HTML Meta Tags --> */}
+      <title>Awesome Portfolio | Build free portfolio website</title>
+      <meta name="description" content="Everything you need to build better apps." />
+      <link rel="shortcut icon" href="https://ph-files.imgix.net/26c548fe-7bfb-4319-ab61-660ef987b6f2.png" />
+      {/* <!-- Facebook Meta Tags --> */}
+      <meta property="og:url" content="https://mytechfolio.live/" />
       <meta property="og:type" content="website" />
+      <meta property="og:title" content="Awesome Portfolio | Build free portfolio website" />
+      <meta property="og:description" content="Everything you need to build free portfolio under 5 mins" />
+      <meta property="og:image" content="https://ph-files.imgix.net/26c548fe-7bfb-4319-ab61-660ef987b6f2.png" />
+
+      {/* <!-- Twitter Meta Tags --> */}
+      <meta name="twitter:card" content="https://ph-files.imgix.net/26c548fe-7bfb-4319-ab61-660ef987b6f2.png" />
+      <meta property="twitter:domain" content="mytechfolio.live/" />
+      <meta property="twitter:url" content="https://mytechfolio.live/" />
+      <meta name="twitter:title" content="Awesome Portfolio | Build free portfolio website" />
+      <meta name="twitter:description" content="Everything you need to build free portfolio under 5 mins" />
+      <meta name="twitter:image" content="https://ph-files.imgix.net/26c548fe-7bfb-4319-ab61-660ef987b6f2.png" />
+
       <Head />
       <body>
         <Main />
