@@ -16,11 +16,16 @@ const getAllUsers = async (req, res) => {
         // also return count of users
         const count = await prisma.user.count();
         console.log(count);
-        const users = await prisma.user.findMany();
+        const users = await prisma.user.findMany({
+            // where:{
+            //     NOT: [{about:null}]
+            // }
+        });
         res.json({ "count": count, "length": users?.length, "users": users });
         // return number of users and all user details in response , dont use select statement
 
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: error.message });
     }
 }

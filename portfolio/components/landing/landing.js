@@ -19,7 +19,9 @@ const LandingPage = () => {
     return (
         <div className="relative flex-col bg-gray w-full h-[90vh] overflow-hidden m-auto flex text-left text-[1rem] text-whitesmoke font-poppins">
             <Head>
-                <title>Home</title>
+                <title>Awesome Portfolio | Build free portfolio website</title>
+                <meta name="description" content="Build free portfolio website" />
+                <meta name="author" content="Darshan V" />
             </Head>
             <img
                 className="absolute top-[0rem] left-[30vw] w-[46.98rem] h-[33.79rem] opacity-[0.8]"
