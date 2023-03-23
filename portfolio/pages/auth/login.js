@@ -3,13 +3,15 @@ import Link from "next/link"
 
 import { toast } from "react-toastify";
 import axios from "axios";
-
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { APIURL } from "@/utils/api.utils";
 import bcrypt from 'bcryptjs';
 import { getAnalytics, logEvent } from "firebase/analytics";
 
 import { app } from "@/utils/firebase";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 
 function Login() {
     const [user, setUser] = useState({})
@@ -17,9 +19,24 @@ function Login() {
 
     const router = useRouter();
 
+    const auth = getAuth();
+
     function handleSubmit(e) {
         e.preventDefault()
         console.log("inside fn", user)
+
+        // signInWithEmailAndPassword(auth, "reachdarshanv@gmail.com", user.password)
+        //     .then((userCredential) => {
+        //         // Signed in 
+        //         console.log("jkdsnc",userCredential)
+        //         const user = userCredential.user;
+        //         // ...
+        //     })
+        //     .catch((error) => {
+        //         console.log("error is ",error.message)
+        //         const errorCode = error.code;
+        //         const errorMessage = error.message;
+        //     });
 
         axios.post(`${APIURL}/user/login`, { data: user })
             .then((res) => {
@@ -52,7 +69,7 @@ function Login() {
         return !user.username || !user.password
     }
 
-    function handlePush(e){
+    function handlePush(e) {
         e.preventDefault()
         router.push("https://mytechfolio.live/")
     }
@@ -60,6 +77,13 @@ function Login() {
     return (
         <article className="active md:w-[70vw] flex justify-center mt-[100px] m-auto">
 
+            <Head>
+                <title>Awesome Portfolio | Build free portfolio website</title>
+                <meta name="description" content="Build free portfolio website" />
+                <meta name="author" content="Darshan V" />
+                <meta property="og:url" content="https://mytechfolio.live/" />
+                <meta property="og:description" content="Everything you need to build free portfolio under 5 mins" />
+            </Head>
             <header>
                 <h2 className="h2 article-title">Login</h2>
             </header>

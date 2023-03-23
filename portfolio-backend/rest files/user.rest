@@ -90,7 +90,7 @@ Content-Type: application/json
 }
 
 ### delete user
-DELETE {{baseURL}}/darshanv2
+DELETE {{baseURL}}/admin
 
 ### POST contact form
 POST {{baseURL}}/form-response/darshanv
