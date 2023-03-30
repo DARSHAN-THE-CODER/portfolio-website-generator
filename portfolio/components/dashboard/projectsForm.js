@@ -102,8 +102,20 @@ function ProjectsForm({ activeNav, username }) {
                 .then((res) => {
                     console.log(res)
                     if (res.status === 200) {
-                        setLoading(false)
-                        toast.success("Projects details saved successfully")
+                        axios.get(`${APIURL}/user/${username}`)
+                            .then((res) => {
+                                console.log(res.data.projects)
+                                setProjId(Number(res.data.projects[res.data.projects.length - 1]?.id + 1) || 1)
+                                setProjects(res.data.projects)
+
+                                setLinkId(Number(res.data.socialLinks[res.data.socialLinks.length - 1]?.id + 1) || 1)
+                                setSocialLinks(res.data.socialLinks)
+                                setFloading(false)
+                                setLoading(false)
+                                toast.success("Projects details saved successfully")
+                            }
+                            )
+
                     }
                 })
                 .catch((err) => {
@@ -158,8 +170,19 @@ function ProjectsForm({ activeNav, username }) {
                 .then((res) => {
                     console.log(res)
                     if (res.status === 201) {
-                        setLoading(false);
-                        toast.success("Social Links details saved successfully")
+                        axios.get(`${APIURL}/user/${username}`)
+                            .then((res) => {
+                                console.log(res.data.projects)
+                                setProjId(Number(res.data.projects[res.data.projects.length - 1]?.id + 1) || 1)
+                                setProjects(res.data.projects)
+
+                                setLinkId(Number(res.data.socialLinks[res.data.socialLinks.length - 1]?.id + 1) || 1)
+                                setSocialLinks(res.data.socialLinks)
+                                setLoading(false);
+                                toast.success("Social Links details saved successfully")
+                            }
+                            )
+
                     }
                 })
                 .catch((err) => {
@@ -194,7 +217,7 @@ function ProjectsForm({ activeNav, username }) {
                                 <section className=' m-auto flex w-full p-3 justify-evenly '>
                                     <form className="form" target="_blank">
                                         <div className='flex md:flex-row flex-col '>
-                                            <div className='text-white h-[80vh] w-full md:w-[50vw] overflow-auto border-2 rounded-xl p-3 m-2'>
+                                            <div className='text-white flex-2 h-[80vh] w-full md:w-[50vw] overflow-auto border-2 rounded-xl p-3 m-2'>
                                                 <p>Enter Project details</p>
                                                 <div className='flex flex-col md:flex-row justify-evenly'>
                                                     <button
@@ -232,7 +255,7 @@ function ProjectsForm({ activeNav, username }) {
                                                     ))
                                                 }
                                             </div>
-                                            <div className='text-white h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
+                                            <div className='text-white flex-2 h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
                                                 <p>Enter Links , Ex: github, linkedin</p>
                                                 <div className='flex flex-col md:flex-row justify-evenly'>
                                                     <button

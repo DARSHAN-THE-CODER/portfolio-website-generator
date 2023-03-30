@@ -1,4 +1,5 @@
 import React from 'react'
+import Markup from '../common/markup';
 
 const EducationInputSet = ({ id, institution, priority, from, to, description, percentage, onInputChange, onRemoveClick, number }) => {
     return (
@@ -49,13 +50,19 @@ const EducationInputSet = ({ id, institution, priority, from, to, description, p
                 <label htmlFor={`description_${id}`} className="block mb-1">
                     Description
                 </label>
-                <textarea
+                {/* <textarea
                     id={`description_${id}`}
                     name={`description_${id}`}
                     value={description}
                     onChange={(e) => onInputChange(id, "description", e.target.value)}
                     className="border border-gray-300 rounded w-full p-2"
                     rows={3}
+                /> */}
+                <Markup
+                    id={`description_${id}`}
+                    name={`description_${id}`}
+                    data={description}
+                    setData={(e) => onInputChange(id, "description", e)}
                 />
             </div>
             <div className="mt-2">

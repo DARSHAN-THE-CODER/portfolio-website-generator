@@ -167,8 +167,26 @@ function ResumeForm({ activeNav, username }) {
             axios.post(`${APIURL}/education/${username}`, { data: temp })
                 .then((res) => {
                     console.log(res)
-                    setLoading(false);
-                    toast.success("Education details saved")
+                    axios.get(`${APIURL}/user/${username}`)
+                        .then((res) => {
+                            // console.log(res.data)
+                            // console.log(res.data.skills.length);
+                            // console.log(res.data.skills[res.data.skills.length - 1]?.id)
+
+                            setEdId(Number(res?.data?.education[res?.data?.education?.length - 1]?.id + 1) || 1)
+                            setExpId(Number(res?.data?.experience[res?.data?.experience?.length - 1]?.id + 1) || 1)
+                            setSkillId(Number(res.data.skills[res.data.skills.length - 1]?.id + 1) || 1)
+
+                            setEducation(res.data.education)
+                            setExperience(res.data.experience)
+                            setSkills(res.data.skills)
+
+                            setFloading(false)
+                            setLoading(false);
+                            toast.success("Education details saved")
+                        }
+                        )
+
                 }
                 )
                 .catch((err) => {
@@ -202,8 +220,26 @@ function ResumeForm({ activeNav, username }) {
             axios.post(`${APIURL}/experience/${username}`, { data: temp })
                 .then((res) => {
                     console.log(res)
-                    setLoading(false)
-                    toast.success("Experience details saved")
+
+                    axios.get(`${APIURL}/user/${username}`)
+                        .then((res) => {
+                            // console.log(res.data)
+                            // console.log(res.data.skills.length);
+                            // console.log(res.data.skills[res.data.skills.length - 1]?.id)
+
+                            setEdId(Number(res?.data?.education[res?.data?.education?.length - 1]?.id + 1) || 1)
+                            setExpId(Number(res?.data?.experience[res?.data?.experience?.length - 1]?.id + 1) || 1)
+                            setSkillId(Number(res.data.skills[res.data.skills.length - 1]?.id + 1) || 1)
+
+                            setEducation(res.data.education)
+                            setExperience(res.data.experience)
+                            setSkills(res.data.skills)
+
+                            setFloading(false)
+                            setLoading(false)
+                            toast.success("Experience details saved")
+                        }
+                        )
                 }
                 )
                 .catch((err) => {
@@ -237,8 +273,25 @@ function ResumeForm({ activeNav, username }) {
             axios.post(`${APIURL}/user/skills/${username}`, { data: temp })
                 .then((res) => {
                     console.log(res)
-                    setLoading(false);
-                    toast.success("Skills details saved")
+                    axios.get(`${APIURL}/user/${username}`)
+                        .then((res) => {
+                            // console.log(res.data)
+                            // console.log(res.data.skills.length);
+                            // console.log(res.data.skills[res.data.skills.length - 1]?.id)
+
+                            setEdId(Number(res?.data?.education[res?.data?.education?.length - 1]?.id + 1) || 1)
+                            setExpId(Number(res?.data?.experience[res?.data?.experience?.length - 1]?.id + 1) || 1)
+                            setSkillId(Number(res.data.skills[res.data.skills.length - 1]?.id + 1) || 1)
+
+                            setEducation(res.data.education)
+                            setExperience(res.data.experience)
+                            setSkills(res.data.skills)
+
+                            setFloading(false)
+                            setLoading(false);
+                            toast.success("Skills details saved")
+                        }
+                        )
                 }
                 )
                 .catch((err) => {
@@ -270,10 +323,10 @@ function ResumeForm({ activeNav, username }) {
                                 <a href={`https://${username}.mytechfolio.live/`} target="_blank">https://{username}.mytechfolio.live/</a>
                             </p>
                             <div className='flex flex-col-reverse'>
-                                <section className='m-auto flex justify-evenly'>
+                                <section className='m-auto flex justify-evenly break-all'>
                                     <form className="form" onSubmit={handleSubmit} target="_blank">
                                         <div className='flex md:flex-row flex-col '>
-                                            <div className='text-white h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
+                                            <div className='text-white h-[80vh] flex-1 overflow-auto border-2 rounded-xl p-3 m-2'>
                                                 <p>Enter education details</p>
                                                 <div className='flex flex-col md:flex-row justify-evenly'>
                                                     <button
@@ -309,7 +362,7 @@ function ResumeForm({ activeNav, username }) {
                                                 ))}
                                             </div>
 
-                                            <div className='text-white h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
+                                            <div className='text-white h-[80vh] flex-1 overflow-auto border-2 rounded-xl p-3 m-2'>
                                                 <p>Enter experience details</p>
                                                 <div className='flex flex-col md:flex-row justify-evenly'>
                                                     <button
@@ -345,7 +398,7 @@ function ResumeForm({ activeNav, username }) {
                                                 ))}
                                             </div>
 
-                                            <div className='text-white h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
+                                            <div className='text-white flex-[0.5] h-[80vh] overflow-auto border-2 rounded-xl p-3 m-2'>
                                                 <p>Enter skills details</p>
                                                 <div className='flex flex-col justify-evenly'>
 

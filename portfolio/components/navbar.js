@@ -9,7 +9,7 @@ function Navbar({ activeNav, setActiveNav, navLinks, setNavLinks, showLogout=fal
     function handleLogout(){
         localStorage.removeItem("logintoken")
         toast.success("Logged out successfully")
-        router.push(`/auth/login`)
+        router.push(`/`)
     }
     return (
         <nav className="navbar">

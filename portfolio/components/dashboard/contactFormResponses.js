@@ -53,13 +53,14 @@ function ContactFormResponses({ username, activeNav }) {
                     <ul className='flex flex-wrap'>
                         {
                             formResponses?.map((response, index) => (
-                                <li key={index} className='service-item text-white m-4'>
-                                    <div className="card w-full">
-                                        <div className='ml-2 mt-7 px-2 py-1 w-max flex justify-end items-end float-right m-auto cursor-pointer text-center bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400'
+                                <li key={index} className='service-item text-white m-4 flex flex-col'>
+                                    <div className='ml-2 px-2 py-1 w-max flex right-0 justify-end items-end text-right float-right cursor-pointer bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400'
                                             onClick={() => handleRemove(response)}
                                         >
                                             Remove
                                         </div>
+                                    <div className="card w-full flex flex-col">
+                                        
                                         <div className="card-header">
                                             <h4>Name: {response.senderName}</h4>
                                         </div>
