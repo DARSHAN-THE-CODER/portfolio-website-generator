@@ -487,11 +487,11 @@
   .about-text {
     color: var(--light-gray);
     font-size: var(--fs-6);
-    font-weight: var(--fw-300);
+    /* font-weight: var(--fw-300); */
     line-height: 1.6;
   }
   
-  .about-text p { margin-bottom: 15px; }
+  /* .about-text p { margin-bottom: 15px; } */
   
   
   
@@ -1871,3 +1871,13 @@
   .xd {
     color: var(--orange-yellow-crayola);
   }
+
+
+.ql-toolbar .ql-snow {
+    background: white !important;
+  }
+
+/* .ql-container .ql-snow .ql-editor {
+  max-height: 200px !important;
+  overflow-y: scroll !important;
+} */

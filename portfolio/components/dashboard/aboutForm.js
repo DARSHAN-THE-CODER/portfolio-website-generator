@@ -3,8 +3,9 @@ import axios from "axios";
 import { APIURL } from "@/utils/api.utils";
 import { toast } from "react-toastify"
 import Loader from "../common/loader";
-
+import Markup from "../common/markup";
 import Head from 'next/head'
+import Modal from "../common/modal";
 
 const InputSet = ({ id, title, description, onInputChange, onRemoveClick, nnn }) => {
     return (
@@ -27,13 +28,17 @@ const InputSet = ({ id, title, description, onInputChange, onRemoveClick, nnn })
                 <label htmlFor={`description_${id}`} className="block mb-1">
                     Description
                 </label>
-                <textarea
+                {/* <textarea
                     id={`description_${id}`}
                     name={`description_${id}`}
                     value={description}
                     onChange={(e) => onInputChange(id, "description", e.target.value)}
                     className="border border-gray-300 rounded w-full p-2"
                     rows={3}
+                /> */}
+                <Markup
+                    data={description}
+                    setData={(e) => onInputChange(id, "description", e)}
                 />
             </div>
             <div className="flex justify-end">
@@ -59,6 +64,8 @@ function AboutForm({ activeNav, username }) {
     // const [username, setUsername] = useState("")
     const [loading, setLoading] = useState(false)
     const [floading, setFloading] = useState(true)
+
+    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
         if (username) {
@@ -148,8 +155,21 @@ function AboutForm({ activeNav, username }) {
             axios.post(`${APIURL}/user/about-cards/${username}`, { data: aboutCards })
                 .then((res) => {
                     console.log(res)
-                    setLoading(false)
-                    toast.success("About cards saved successfully")
+                    axios.get(`${APIURL}/user/${username}`)
+                        .then((res) => {
+                            console.log(res.data)
+                            const { socialLinks, projects, education, experience, skills, contactResponses, updatedAt, id, ...imp } = res.data;
+                            console.log(imp)
+                            setAboutCards(imp?.aboutCards)
+
+                            setIdCounter((imp?.aboutCards[imp?.aboutCards?.length - 1]?.id + 1) || 1)
+                            delete imp.aboutCards;
+                            setAbout(imp)
+                            setFloading(false)
+                            setLoading(false)
+                            toast.success("About cards saved successfully")
+                        }
+                        )
                 }
                 )
                 .catch((err) => {
@@ -167,8 +187,21 @@ function AboutForm({ activeNav, username }) {
         axios.patch(`${APIURL}/user/${username}`, { data: about })
             .then((res) => {
                 console.log(res)
-                setLoading(false)
-                toast.success("Basic details saved successfully")
+                axios.get(`${APIURL}/user/${username}`)
+                    .then((res) => {
+                        console.log(res.data)
+                        const { socialLinks, projects, education, experience, skills, contactResponses, updatedAt, id, ...imp } = res.data;
+                        console.log(imp)
+                        setAboutCards(imp?.aboutCards)
+
+                        setIdCounter((imp?.aboutCards[imp?.aboutCards?.length - 1]?.id + 1) || 1)
+                        delete imp.aboutCards;
+                        setAbout(imp)
+                        setFloading(false)
+                        setLoading(false)
+                        toast.success("Basic details saved successfully")
+                    }
+                    )
             }
             )
             .catch((err) => {
@@ -186,7 +219,7 @@ function AboutForm({ activeNav, username }) {
                 <meta name="author" content="Darshan V" />
             </Head>
             {
-                floading ? <Loader src="https://assets8.lottiefiles.com/packages/lf20_robeep7z.json" title={"Please wait while we fetch data"} description={"  "}  />
+                floading ? <Loader src="https://assets8.lottiefiles.com/packages/lf20_robeep7z.json" title={"Please wait while we fetch data"} description={"  "} />
                     :
                     (
 
@@ -197,7 +230,7 @@ function AboutForm({ activeNav, username }) {
                             <p className="xd italic cursor-pointer hover:underline w-min">
                                 <a href={`https://${username}.mytechfolio.live/`} target="_blank">https://{username}.mytechfolio.live/</a>
                             </p>
-                            <div className="flex flex-col md:flex-row">
+                            <div className={`flex flex-col md:flex-row ${showModal ? "blur-sm" : ""}`}>
 
                                 <section className="m-auto flex w-full md:w-[50vw] p-3">
                                     <form className="form" onSubmit={handleSubmit} target="_blank">
@@ -296,9 +329,13 @@ function AboutForm({ activeNav, username }) {
 
                                         <div className="form-group text-white mt-4">
                                             <p>Tell about yourself in more detailed manner</p>
-                                            <textarea required type="text" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="I am..."
+                                            {/* <textarea required type="text" className="border-2 rounded-2xl p-2 m-2" name="phone" id="phone" placeholder="I am..."
                                                 onChange={(e) => setAbout({ ...about, about: e.target.value })}
                                                 value={about.about}
+                                            /> */}
+                                            <Markup
+                                                data={about?.about}
+                                                setData={(data) => setAbout((prev) => ({ ...prev, about: data }))}
                                             />
                                         </div>
 
@@ -383,8 +420,8 @@ function AboutForm({ activeNav, username }) {
                                     <figure className="w-full m-auto flex justify-center mb-10">
                                         <img src={about?.photoURL} alt='URL might be incorrect' className="text-white" style={{ height: "300px", borderRadius: "30px" }} loading="lazy" />
                                     </figure>
-                                    <section className="about-text flex-wrap break-all">
-                                        {about?.about}
+                                    <section className="about-text flex-wrap break-all" dangerouslySetInnerHTML={{ __html: about?.about }}>
+                                        {/* {about?.about} */}
                                     </section>
 
                                     <section className="service">
@@ -398,8 +435,8 @@ function AboutForm({ activeNav, username }) {
                                                         <div className="service-content-box">
                                                             <h4 className="h4 service-item-title">{card?.title}</h4>
 
-                                                            <p className="service-item-text">
-                                                                {card?.description}
+                                                            <p className="service-item-text" dangerouslySetInnerHTML={{ __html: card?.description }} >
+                                                                {/* {card?.description} */}
                                                             </p>
                                                         </div>
                                                     </li>
@@ -414,6 +451,23 @@ function AboutForm({ activeNav, username }) {
                         </>
                     )
             }
+            {/* {
+                showModal && (
+                    <Modal
+                        open={showModal}
+                        setOpen={setShowModal}
+                    >
+                        <div className="flex flex-col text-white">
+                            <div>
+                                Please set 6 digit security pin to continue
+                            </div>
+                            <p>
+                                Please note that, you can recover lost password only using this pin
+                            </p>
+                        </div>
+                    </Modal>
+                )
+            } */}
         </article>
     )
 }

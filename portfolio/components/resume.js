@@ -26,8 +26,8 @@ function Resume({activeNav, education, experience, skills, isPreview=false}) {
 
                                 <span>{edu.from} - {edu.to}</span>
 
-                                <p className="timeline-text">
-                                    {edu.description}
+                                <p className="timeline-text" dangerouslySetInnerHTML={{__html: edu?.description}}>
+                                    {/* {edu.description} */}
                                 </p>
 
                             </li>
@@ -56,8 +56,8 @@ function Resume({activeNav, education, experience, skills, isPreview=false}) {
                                 <h5 className="timeline-text timeline-item-title">{exp.company}</h5>
                                 <span>{exp.from} - {exp.to}</span>
 
-                                <p className="timeline-text">
-                                    {exp.description}
+                                <p className="timeline-text" dangerouslySetInnerHTML={{__html: exp?.description}}>
+                                    {/* {exp.description} */}
                                 </p>
                             </li>
                         ))

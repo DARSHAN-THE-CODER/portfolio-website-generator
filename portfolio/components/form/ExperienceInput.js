@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Markup from '../common/markup'
+
 function ExperienceInputSet({ id, company, priority, from, to, description, role, onInputChange, onRemoveClick, number }) {
     return (
         <div className='flex mb-4 flex-col text-white '>
@@ -60,17 +62,24 @@ function ExperienceInputSet({ id, company, priority, from, to, description, role
                     />
                 </div>
             </div>
-            <div className="mt-2">
+            <div className="mt-2 break-all">
                 <label htmlFor={`description_${id}`} className="block mb-1">
                     Description
                 </label>
-                <textarea
+                {/* <textarea
                     id={`description_${id}`}
                     name={`description_${id}`}
                     value={description}
                     onChange={(e) => onInputChange(id, "description", e.target.value)}
                     className="border border-gray-300 rounded w-full p-2"
                     rows={3}
+                /> */}
+                <Markup
+                    // id={`description_${id}`}
+                    // name={`description_${id}`}
+                    data={description}
+                    setData={(data) => onInputChange(id, "description", data)}
+                    className="border border-gray-300 rounded p-10"
                 />
             </div>
             <div className="flex justify-end">

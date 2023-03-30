@@ -6,9 +6,9 @@ function Portfolio({ projects, activeNav }) {
 
     return (
         <article className={`portfolio ${activeNav === "Portfolio" ? "active" : ""}`} data-page="portfolio">
-            <Head>
+            {/* <Head>
                 <title>My Projects</title>
-            </Head>
+            </Head> */}
             {activeProject.status ? (
                 <section className="projects">
                     <header className="flex mt-6">
@@ -37,7 +37,7 @@ function Portfolio({ projects, activeNav }) {
                     </section>
 
 
-                    <h2 className="mt-3 text-white">{activeProject?.pro?.description}</h2>
+                    <h2 className="mt-3 text-white" dangerouslySetInnerHTML={{__html:activeProject?.pro?.description}}></h2>
 
                     <h3 class="h3 service-title m-4">Tech used </h3>
                     <div className="flex flex-wrap w-full">

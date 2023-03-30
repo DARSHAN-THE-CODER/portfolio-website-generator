@@ -5,7 +5,9 @@ function About({ about, activeNav, username, aboutCards, photoURL }) {
     return (
         <article className={`about ${activeNav === "About" ? "active" : ""}`} data-page="about">
             <Head>
-                <title>About Me </title>
+                <title>Awesome Portfolio | Build free portfolio website</title>
+                <meta name="description" content="Build free portfolio website" />
+                <meta property="og:image" content="https://i.ibb.co/vHQFXJK/dv.jpg" />
             </Head>
             <header>
                 <h2 className="h2 article-title">About me</h2>
@@ -13,10 +15,10 @@ function About({ about, activeNav, username, aboutCards, photoURL }) {
             <figure className="w-full m-auto flex justify-center mb-10">
                 <img src={photoURL} alt='dsjc' style={{ height: "300px", borderRadius: "30px" }} loading="lazy" />
             </figure>
-            <section className="about-text">
-                <p >
+            <section className="about-text" dangerouslySetInnerHTML={{ __html: about }}>
+                {/* <p >
                     {about}
-                </p>
+                </p> */}
             </section>
 
             <section className="service">
@@ -30,8 +32,8 @@ function About({ about, activeNav, username, aboutCards, photoURL }) {
                                 <div className="service-content-box">
                                     <h4 className="h4 service-item-title">{card?.title}</h4>
 
-                                    <p className="service-item-text">
-                                        {card?.description}
+                                    <p className="service-item-text" dangerouslySetInnerHTML={{ __html: card?.description }}>
+                                        {/* {card?.description} */}
                                     </p>
                                 </div>
                             </li>

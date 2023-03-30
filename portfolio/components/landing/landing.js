@@ -22,6 +22,7 @@ const LandingPage = () => {
                 <title>Awesome Portfolio | Build free portfolio website</title>
                 <meta name="description" content="Build free portfolio website" />
                 <meta name="author" content="Darshan V" />
+                <meta property="og:image" content="https://i.ibb.co/vHQFXJK/dv.jpg" />
             </Head>
             <img
                 className="absolute top-[0rem] left-[30vw] w-[46.98rem] h-[33.79rem] opacity-[0.8]"

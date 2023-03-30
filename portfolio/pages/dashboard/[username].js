@@ -13,6 +13,7 @@ import { APIURL } from "@/utils/api.utils"
 import { useRouter } from "next/router"
 import bcrypt from 'bcryptjs';
 import Loader from '@/components/common/loader'
+import Settings from "@/components/dashboard/settings"
 
 function Dashboard() {
     const [activeNav, setActiveNav] = useState("AboutForm")
@@ -34,7 +35,11 @@ function Dashboard() {
         // },
         {
             name: "ContactFormResponses"
-        }]
+        },
+        // {
+        //     name: "Settings"
+        // }
+    ]
     )
 
     const router = useRouter();
@@ -99,20 +104,22 @@ function Dashboard() {
         }
     }, [router])
 
+
     return (
         <div className="">
             {
                 // loading ? <Loader src="https://assets8.lottiefiles.com/packages/lf20_x62chJ.json" title={"Please wait while we fetch data"} description={"  "} />
                 //     :
-                    (
-                        <div className="dashboard-content">
-                            <Navbar activeNav={activeNav} setActiveNav={setActiveNav} navLinks={navLinks} setNavLinks={setNavLinks} showLogout={true} />
-                            <AboutForm activeNav={activeNav} username={username} />
-                            <ResumeForm activeNav={activeNav} username={username} />
-                            <ProjectsForm activeNav={activeNav} username={username} />
-                            <ContactFormResponses activeNav={activeNav} username={username} />
-                        </div>
-                    )
+                (
+                    <div className="dashboard-content">
+                        <Navbar activeNav={activeNav} setActiveNav={setActiveNav} navLinks={navLinks} setNavLinks={setNavLinks} showLogout={true} />
+                        <AboutForm activeNav={activeNav} username={username} />
+                        <ResumeForm activeNav={activeNav} username={username} />
+                        <ProjectsForm activeNav={activeNav} username={username} />
+                        <ContactFormResponses activeNav={activeNav} username={username} />
+                        {/* <Settings activeNav={activeNav} username={username}/> */}
+                    </div>
+                )
             }
         </div>
     )

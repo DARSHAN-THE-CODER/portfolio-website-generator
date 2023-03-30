@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import TagsInput from './TagsInput'
+import Markup from '../common/markup';
 
 function ProjectsInput({ id, name, description, github, category, date, thumbnail, liveLink, techUsed, onInputChange, onRemoveClick, number }) {
 
@@ -30,13 +31,19 @@ function ProjectsInput({ id, name, description, github, category, date, thumbnai
                 <label htmlFor={`description_${id}`} className="flex mb-1">
                     <p className="mr-2 text-xl">Description</p>
                 </label>
-                <textarea
+                {/* <textarea
                     id={`description_${id}`}
                     name={`description_${id}`}
                     value={description}
                     onChange={(e) => onInputChange(id, "description", e.target.value)}
                     className="border border-gray-300 rounded w-full p-2"
                     rows={3}
+                /> */}
+                <Markup
+                    // id={`description_${id}`}
+                    // name={`description_${id}`}
+                    data={description}
+                    setData={(e) => onInputChange(id, "description", e)}
                 />
             </div>
             <div className=''>
