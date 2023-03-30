@@ -444,41 +444,42 @@ const deleteResponseById = async (req, res) => {
 //     try {
 //         const user = await prisma.user.findUnique({
 
-const hashAllPasswords = async (req, res) => {
+
+// const hashAllPasswords = async (req, res) => {
 
 
 
-    // const transaction = await prisma.$transaction([]);
-    // use transaction
-    try {
-        const users = await prisma.user.findMany();
-        // return res.json(users)
-        console.log(users)
-        let promises=[]
+//     // const transaction = await prisma.$transaction([]);
+//     // use transaction
+//     try {
+//         const users = await prisma.user.findMany();
+//         // return res.json(users)
+//         console.log(users)
+//         let promises=[]
         
-        // loop through all users and update their password
-        for (const user of users) {
-            const hashedPassword=bcrypt.hashSync(user.password, 10)
+//         // loop through all users and update their password
+//         for (const user of users) {
+//             const hashedPassword=bcrypt.hashSync(user.password, 10)
         
-            // add the update operation to the transaction
-            // transaction.push(
-            promises.push(prisma.user.update({
-                where: { id: user.id },
-                data: { password: hashedPassword }
-            }))
-            //   );
-        }
+//             // add the update operation to the transaction
+//             // transaction.push(
+//             promises.push(prisma.user.update({
+//                 where: { id: user.id },
+//                 data: { password: hashedPassword }
+//             }))
+//             //   );
+//         }
 
-        const updatedData=await prisma.$transaction([...promises])
-        res.json({ message: "All passwords have been hashed",data:updatedData });
-    }
-    catch (err) {
-        // rollback the transaction if any update fails
-        console.log(err)
-        await transaction.$rollback;
-        // throw err;
-    }
-}
+//         const updatedData=await prisma.$transaction([...promises])
+//         res.json({ message: "All passwords have been hashed",data:updatedData });
+//     }
+//     catch (err) {
+//         // rollback the transaction if any update fails
+//         console.log(err)
+//         await transaction.$rollback;
+//         // throw err;
+//     }
+// }
 
 
 module.exports = {
