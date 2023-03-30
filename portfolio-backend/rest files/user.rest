@@ -1,4 +1,4 @@
-@baseURL=http://localhost:8080/api/v1/user
+@baseURL=http://localhost:8000/api/v1/user
 # @baseURL = https://portfolio.darshanv.website/api/v1/user
 
 ### Get all users
@@ -16,29 +16,25 @@ Content-Type: application/json
 }
 
 ### Get User
-GET {{baseURL}}/darshanv
+GET {{baseURL}}/testuser
 
 ### Update User
 PATCH {{baseURL}}/testuser
 Content-Type: application/json
 
 {
-    "name": "Darshan V",
-    "address": "PES , Bangalore",
-    "photoURL": "https://i.ibb.co/42fb14D/New-doc-07-Mar-2023-6-22-pm.jpg",
-    "gender": "male",
-    "shortDesc": "Full stack developer",
-    "about": "A self-taught , quality-focused and passionate software developer interested in the field of Web development, I love to solve real world problems",
-    "phone": "+91 8431143130"
+    
+    "data" : {"password": "password"}
 }
 
 ### Login user
 POST {{baseURL}}/login
 Content-Type: application/json
 
-{
-    "username": "darshanv",
+{ "data" : {
+    "username": "testuser",
     "password": "1234"
+}
 }
 
 ### add social links
@@ -108,5 +104,5 @@ GET {{baseURL}}/form-response/darshanv
 ### delete form response
 DELETE {{baseURL}}/form-response/darshanv
 
-# ### hash all passwords
-# PATCH {{baseURL}}
+### hash all passwords
+PATCH {{baseURL}}

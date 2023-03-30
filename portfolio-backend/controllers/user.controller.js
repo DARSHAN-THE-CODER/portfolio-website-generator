@@ -1,13 +1,13 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient({
     datasources: {
-      db: {
-        url: process.env.DATABASE_URL,
-      },
+        db: {
+            url: process.env.DATABASE_URL,
+        },
     },
-    errorFormat: 'pretty',
-    log: ['query', 'info', 'warn'],
-  });
+    // errorFormat: 'pretty',
+    // log: ['query', 'info', 'warn'],
+});
 
 const bcrypt = require('bcrypt');
 
@@ -17,9 +17,14 @@ const getAllUsers = async (req, res) => {
         const count = await prisma.user.count();
         console.log(count);
         const users = await prisma.user.findMany({
-            // where:{
-            //     NOT: [{about:null}]
-            // }
+            // where: {
+            //     NOT: [{ photoURL: null }]
+            // },
+            orderBy: [
+                {
+                    id: 'desc',
+                },
+            ],
         });
         res.json({ "count": count, "length": users?.length, "users": users });
         // return number of users and all user details in response , dont use select statement
@@ -65,17 +70,19 @@ const createUser = async (req, res) => {
             return res.status(400).json({ error: 'User already exists' });
         }
         // if not, create user
-
+        const hashedPassword=bcrypt.hashSync(password, 10)
+        // console.log(hashedPassword)
         const user = await prisma.user.create({
             data: {
                 name,
                 email,
-                password,
+                password : hashedPassword,
                 username
             },
         });
 
         res.json(user);
+        // res.json("ok")
     } catch (error) {
         res.status(500).json({ error: error.message });
         console.log(error)
@@ -84,8 +91,8 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { username } = req.params;
-    const data = req.body.data
-        ;
+    const data = req.body.data;
+    console.log(data)
     try {
         const user = await prisma.user.update({
             where: { username: username },
@@ -115,6 +122,7 @@ const getUser = async (req, res) => {
                 contactResponses: true,
             }
         });
+        delete user.password;
         res.json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -132,7 +140,11 @@ const userLogin = async (req, res) => {
         if (!user) {
             return res.status(401).json({ error: "user not found" });
         }
-        if (user.password === password) {
+        let temp = bcrypt.compareSync(password, user.password)
+        console.log("temp is ",temp)
+        if (temp) {
+            delete user.password;
+            console.log(user)
             return res.status(200).json(user);
         } else {
             return res.status(401).json({ error: "Invalid credentials" });
@@ -432,40 +444,42 @@ const deleteResponseById = async (req, res) => {
 //     try {
 //         const user = await prisma.user.findUnique({
 
-const hashAllPasswords = async (req, res) => {
-    
 
-   
-    const transaction = await prisma.$transaction([]);
-    // use transaction
-    try {
-        const users = await prisma.user.findMany();
-        // return res.json(users)
-        console.log(users)
-        // loop through all users and update their password
-        for (const user of users) {
-            const hashedPassword = await bcrypt.hash(user.password, 10);
+// const hashAllPasswords = async (req, res) => {
 
-            // add the update operation to the transaction
-            // transaction.push(
-                await prisma.user.update({
-                  where: { id: user.id },
-                  data: { password: hashedPassword },
-                  transaction
-                })
-            //   );
-        }
 
-        await transaction.$commit();
-        res.json({ message: "All passwords have been hashed" });
-    }
-    catch (err) {
-        // rollback the transaction if any update fails
-        console.log(err)
-        await transaction.$rollback;
-        // throw err;
-    }
-}
+
+//     // const transaction = await prisma.$transaction([]);
+//     // use transaction
+//     try {
+//         const users = await prisma.user.findMany();
+//         // return res.json(users)
+//         console.log(users)
+//         let promises=[]
+        
+//         // loop through all users and update their password
+//         for (const user of users) {
+//             const hashedPassword=bcrypt.hashSync(user.password, 10)
+        
+//             // add the update operation to the transaction
+//             // transaction.push(
+//             promises.push(prisma.user.update({
+//                 where: { id: user.id },
+//                 data: { password: hashedPassword }
+//             }))
+//             //   );
+//         }
+
+//         const updatedData=await prisma.$transaction([...promises])
+//         res.json({ message: "All passwords have been hashed",data:updatedData });
+//     }
+//     catch (err) {
+//         // rollback the transaction if any update fails
+//         console.log(err)
+//         await transaction.$rollback;
+//         // throw err;
+//     }
+// }
 
 
 module.exports = {

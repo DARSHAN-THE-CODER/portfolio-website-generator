@@ -25,6 +25,7 @@ export default function Document() {
 
       {/* <!-- HTML Meta Tags --> */}
       <title>Awesome Portfolio | Build free portfolio website</title>
+      <meta property="og:site_name" content="Awesome Portfolio | Build free portfolio website"></meta>
       <meta name="description" content="Everything you need to build better apps." />
       <link rel="shortcut icon" href="https://i.ibb.co/vHQFXJK/dv.jpg" />
       {/* <!-- Facebook Meta Tags --> */}
@@ -34,6 +35,8 @@ export default function Document() {
       <meta property="og:description" content="Everything you need to build free portfolio under 5 mins" />
       <meta property="og:image" content="https://i.ibb.co/vHQFXJK/dv.jpg" />
 
+      <meta property="og:image:width" content="300" />
+      <meta property="og:image:height" content="300" />
       {/* <!-- Twitter Meta Tags --> */}
       <meta name="twitter:card" content="https://i.ibb.co/vHQFXJK/dv.jpg" />
       <meta property="twitter:domain" content="mytechfolio.live/" />
