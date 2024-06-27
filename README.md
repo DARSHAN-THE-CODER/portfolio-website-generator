@@ -32,4 +32,4 @@ If you haven't signed up yet, now is the perfect time to join and showcase your 
 
 Thank you for your interest in Awesome Portfolio. We look forward to seeing your stunning portfolio website and contributions to the project. Let's make portfolio-building hassle-free and enjoyable for everyone! 🚀🚀🚀
 
-Connect with me on LinkedIn: [Your Name](https://www.linkedin.com/in/darshan-v-793b71234/)
+Connect with me on LinkedIn: [Darshan V](https://www.linkedin.com/in/darshan-v-793b71234/)
